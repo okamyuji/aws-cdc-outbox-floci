@@ -1,19 +1,44 @@
 # AWS DMS。Auroraのbinlogからoutboxテーブルの変更のみを読み取り、Kinesisへ流す
 # ローカル環境ではGo製リレー(cmd/relay)がこの役割を担う
 
+# DMSがVPCリソースを操作するためのアカウント共通ロール。
+# この固定名(dms-vpc-role)が存在しないと、サブネットグループ作成が
+# 「The IAM Role ... is not configured properly」で失敗する
+resource "aws_iam_role" "dms_vpc_role" {
+  name = "dms-vpc-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "dms.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "dms_vpc_role" {
+  role       = aws_iam_role.dms_vpc_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole"
+}
+
 resource "aws_dms_replication_subnet_group" "main" {
+  # IAM反映待ちを含め、ロール整備後に作成する
+  depends_on = [aws_iam_role_policy_attachment.dms_vpc_role]
+
   replication_subnet_group_id          = "${var.name_prefix}-dms-subnet"
   replication_subnet_group_description = "DMS subnet group"
   subnet_ids                           = [aws_subnet.private_a.id, aws_subnet.private_c.id]
 }
 
 resource "aws_dms_replication_instance" "main" {
-  replication_instance_id     = "${var.name_prefix}-dms"
-  replication_instance_class  = "dms.t3.micro"
+  replication_instance_id = "${var.name_prefix}-dms"
+  # dms.t3.microは提供終了(describe-orderable-replication-instancesに無い)。最小はt3.small
+  replication_instance_class  = "dms.t3.small"
   allocated_storage           = 20
   replication_subnet_group_id = aws_dms_replication_subnet_group.main.id
   vpc_security_group_ids      = [aws_security_group.dms.id]
-  publicly_accessible         = false
+  publicly_accessible         = true # 検証用。NATを置かない構成でKinesisエンドポイントへ到達させる
   multi_az                    = false
 }
 
@@ -26,7 +51,9 @@ resource "aws_dms_endpoint" "source" {
   database_name = "source_orders"
   username      = var.db_master_username
   password      = var.db_master_password
-  ssl_mode      = "require"
+  # auroraエンジンのDMSエンドポイントはssl_mode=requireを受け付けない
+  # (InvalidParameterCombinationException)。検証では既定のnoneを使い、
+  # 暗号化が必要な場合はverify-ca(CA証明書のインポートが必要)を使う
 }
 
 # DMSがKinesisへ書き込むためのIAMロール

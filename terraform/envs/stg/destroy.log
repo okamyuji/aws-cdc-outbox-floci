@@ -1,0 +1,1543 @@
+[0m[1mdata.aws_iam_policy_document.dms_assume: Reading...[0m[0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.lambda_assume: Reading...[0m[0m
+[0m[1maws_iam_role.dms_vpc_role: Refreshing state... [id=dms-vpc-role][0m
+[0m[1maws_vpc.main: Refreshing state... [id=vpc-03d88350fc9dd76fd][0m
+[0m[1maws_rds_cluster_parameter_group.source: Refreshing state... [id=cdc-stg-source-params][0m
+[0m[1mmodule.pipeline.aws_kinesis_stream.cdc: Refreshing state... [id=arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Refreshing state... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Refreshing state... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq][0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.lambda_assume: Read complete after 0s [id=2690255455][0m
+[0m[1mdata.aws_iam_policy_document.dms_assume: Read complete after 0s [id=3935035000][0m
+[0m[1maws_iam_role.dms_kinesis: Refreshing state... [id=cdc-stg-dms-kinesis-role][0m
+[0m[1mmodule.pipeline.aws_iam_role.fanout: Refreshing state... [id=cdc-stg-fanout-role][0m
+[0m[1mmodule.pipeline.aws_iam_role.delivery: Refreshing state... [id=cdc-stg-delivery-role][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Refreshing state... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo][0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.delivery: Reading...[0m[0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.delivery: Read complete after 0s [id=431009911][0m
+[0m[1mdata.aws_iam_policy_document.dms_kinesis: Reading...[0m[0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.fanout: Reading...[0m[0m
+[0m[1mdata.aws_iam_policy_document.dms_kinesis: Read complete after 0s [id=3141570068][0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.fanout: Read complete after 0s [id=412058112][0m
+[0m[1maws_internet_gateway.main: Refreshing state... [id=igw-0434ff1ba735b94ab][0m
+[0m[1maws_subnet.private_a: Refreshing state... [id=subnet-0b30edb83b5f4f7c0][0m
+[0m[1maws_subnet.private_c: Refreshing state... [id=subnet-0e6fb64c5cd113466][0m
+[0m[1maws_security_group.dms: Refreshing state... [id=sg-0c75f7638794e6d28][0m
+[0m[1maws_route_table.public: Refreshing state... [id=rtb-025a9ebd97e173153][0m
+[0m[1maws_security_group.aurora: Refreshing state... [id=sg-074e82f1817c592aa][0m
+[0m[1maws_route_table_association.c: Refreshing state... [id=rtbassoc-026d3b39145f38d13][0m
+[0m[1maws_route_table_association.a: Refreshing state... [id=rtbassoc-03ae21557fc76f804][0m
+[0m[1maws_db_subnet_group.main: Refreshing state... [id=cdc-stg-db-subnet][0m
+[0m[1maws_iam_role_policy_attachment.dms_vpc_role: Refreshing state... [id=dms-vpc-role/arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole][0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.fanout: Refreshing state... [id=cdc-stg-fanout-role:cdc-stg-fanout-policy][0m
+[0m[1mmodule.pipeline.aws_lambda_function.fanout: Refreshing state... [id=cdc-stg-fanout][0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.delivery: Refreshing state... [id=cdc-stg-delivery-role:cdc-stg-delivery-policy][0m
+[0m[1mmodule.pipeline.aws_lambda_function.delivery: Refreshing state... [id=cdc-stg-delivery][0m
+[0m[1maws_rds_cluster.target: Refreshing state... [id=cdc-stg-target][0m
+[0m[1maws_rds_cluster.source: Refreshing state... [id=cdc-stg-source][0m
+[0m[1maws_dms_replication_subnet_group.main: Refreshing state... [id=cdc-stg-dms-subnet][0m
+[0m[1maws_iam_role_policy.dms_kinesis: Refreshing state... [id=cdc-stg-dms-kinesis-role:cdc-stg-dms-kinesis-policy][0m
+[0m[1maws_dms_endpoint.kinesis_target: Refreshing state... [id=cdc-stg-target-kinesis][0m
+[0m[1maws_rds_cluster_instance.source: Refreshing state... [id=cdc-stg-source-1][0m
+[0m[1maws_dms_endpoint.source: Refreshing state... [id=cdc-stg-source-aurora][0m
+[0m[1maws_rds_cluster_instance.target: Refreshing state... [id=cdc-stg-target-1][0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery: Refreshing state... [id=575bf92a-f200-4dee-ac65-af94bfe8cf73][0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.kinesis_to_fanout: Refreshing state... [id=63827540-a18b-4eec-b823-ded152ef8536][0m
+[0m[1maws_dms_replication_instance.main: Refreshing state... [id=cdc-stg-dms][0m
+[0m[1maws_dms_replication_task.outbox_cdc: Refreshing state... [id=cdc-stg-outbox-cdc][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_db_subnet_group.main[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_db_subnet_group" "main" {
+      [31m-[0m[0m arn                     = "arn:aws:rds:ap-northeast-1:018356302326:subgrp:cdc-stg-db-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m description             = "Managed by Terraform" [90m-> null[0m[0m
+      [31m-[0m[0m id                      = "cdc-stg-db-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m name                    = "cdc-stg-db-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m region                  = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m subnet_ids              = [
+          [31m-[0m[0m "subnet-0b30edb83b5f4f7c0",
+          [31m-[0m[0m "subnet-0e6fb64c5cd113466",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m supported_network_types = [
+          [31m-[0m[0m "IPV4",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m tags                    = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                = {} [90m-> null[0m[0m
+      [31m-[0m[0m vpc_id                  = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # aws_dms_endpoint.kinesis_target[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_dms_endpoint" "kinesis_target" {
+      [31m-[0m[0m endpoint_arn                = "arn:aws:dms:ap-northeast-1:018356302326:endpoint:PSZX4W5XNFB75E2F5DKSEVL5LA" [90m-> null[0m[0m
+      [31m-[0m[0m endpoint_id                 = "cdc-stg-target-kinesis" [90m-> null[0m[0m
+      [31m-[0m[0m endpoint_type               = "target" [90m-> null[0m[0m
+      [31m-[0m[0m engine_name                 = "kinesis" [90m-> null[0m[0m
+      [31m-[0m[0m id                          = "cdc-stg-target-kinesis" [90m-> null[0m[0m
+      [31m-[0m[0m region                      = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m ssl_mode                    = "none" [90m-> null[0m[0m
+      [31m-[0m[0m tags                        = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                    = {} [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m kinesis_settings {
+          [31m-[0m[0m include_control_details        = false [90m-> null[0m[0m
+          [31m-[0m[0m include_null_and_empty         = false [90m-> null[0m[0m
+          [31m-[0m[0m include_partition_value        = true [90m-> null[0m[0m
+          [31m-[0m[0m include_table_alter_operations = false [90m-> null[0m[0m
+          [31m-[0m[0m include_transaction_details    = false [90m-> null[0m[0m
+          [31m-[0m[0m message_format                 = "json" [90m-> null[0m[0m
+          [31m-[0m[0m partition_include_schema_table = false [90m-> null[0m[0m
+          [31m-[0m[0m service_access_role_arn        = "arn:aws:iam::018356302326:role/cdc-stg-dms-kinesis-role" [90m-> null[0m[0m
+          [31m-[0m[0m stream_arn                     = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream" [90m-> null[0m[0m
+          [31m-[0m[0m use_large_integer_value        = false [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_dms_endpoint.source[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_dms_endpoint" "source" {
+      [31m-[0m[0m database_name                   = "source_orders" [90m-> null[0m[0m
+      [31m-[0m[0m endpoint_arn                    = "arn:aws:dms:ap-northeast-1:018356302326:endpoint:IKBIJRJYXVDPBG6IC7364QDJ3A" [90m-> null[0m[0m
+      [31m-[0m[0m endpoint_id                     = "cdc-stg-source-aurora" [90m-> null[0m[0m
+      [31m-[0m[0m endpoint_type                   = "source" [90m-> null[0m[0m
+      [31m-[0m[0m engine_name                     = "aurora" [90m-> null[0m[0m
+      [31m-[0m[0m id                              = "cdc-stg-source-aurora" [90m-> null[0m[0m
+      [31m-[0m[0m kms_key_arn                     = "arn:aws:kms:ap-northeast-1:018356302326:key/5d5959f8-5602-4197-ab68-402052d6c534" [90m-> null[0m[0m
+      [31m-[0m[0m password                        = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m port                            = 3306 [90m-> null[0m[0m
+      [31m-[0m[0m region                          = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m server_name                     = "cdc-stg-source.cluster-cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m ssl_mode                        = "none" [90m-> null[0m[0m
+      [31m-[0m[0m tags                            = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                        = {} [90m-> null[0m[0m
+      [31m-[0m[0m username                        = "admin_user" [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m mysql_settings {}
+    }
+
+[1m  # aws_dms_replication_instance.main[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_dms_replication_instance" "main" {
+      [31m-[0m[0m allocated_storage                = 20 [90m-> null[0m[0m
+      [31m-[0m[0m auto_minor_version_upgrade       = false [90m-> null[0m[0m
+      [31m-[0m[0m availability_zone                = "ap-northeast-1a" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version                   = "3.5.4" [90m-> null[0m[0m
+      [31m-[0m[0m id                               = "cdc-stg-dms" [90m-> null[0m[0m
+      [31m-[0m[0m kms_key_arn                      = "arn:aws:kms:ap-northeast-1:018356302326:key/5d5959f8-5602-4197-ab68-402052d6c534" [90m-> null[0m[0m
+      [31m-[0m[0m multi_az                         = false [90m-> null[0m[0m
+      [31m-[0m[0m network_type                     = "IPV4" [90m-> null[0m[0m
+      [31m-[0m[0m preferred_maintenance_window     = "tue:06:55-tue:07:25" [90m-> null[0m[0m
+      [31m-[0m[0m publicly_accessible              = true [90m-> null[0m[0m
+      [31m-[0m[0m region                           = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m replication_instance_arn         = "arn:aws:dms:ap-northeast-1:018356302326:rep:GAJSVPKMUZFZTKFSVX6M4OJA4A" [90m-> null[0m[0m
+      [31m-[0m[0m replication_instance_class       = "dms.t3.small" [90m-> null[0m[0m
+      [31m-[0m[0m replication_instance_id          = "cdc-stg-dms" [90m-> null[0m[0m
+      [31m-[0m[0m replication_instance_private_ips = [
+          [31m-[0m[0m "10.10.1.204",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m replication_instance_public_ips  = [
+          [31m-[0m[0m "52.194.0.216",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m replication_subnet_group_id      = "cdc-stg-dms-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m tags                             = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                         = {} [90m-> null[0m[0m
+      [31m-[0m[0m vpc_security_group_ids           = [
+          [31m-[0m[0m "sg-0c75f7638794e6d28",
+        ] [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # aws_dms_replication_subnet_group.main[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_dms_replication_subnet_group" "main" {
+      [31m-[0m[0m id                                   = "cdc-stg-dms-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m region                               = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m replication_subnet_group_arn         = "arn:aws:dms:ap-northeast-1:018356302326:subgrp:cdc-stg-dms-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m replication_subnet_group_description = "DMS subnet group" [90m-> null[0m[0m
+      [31m-[0m[0m replication_subnet_group_id          = "cdc-stg-dms-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m subnet_ids                           = [
+          [31m-[0m[0m "subnet-0b30edb83b5f4f7c0",
+          [31m-[0m[0m "subnet-0e6fb64c5cd113466",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m tags                                 = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                             = {} [90m-> null[0m[0m
+      [31m-[0m[0m vpc_id                               = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+    }
+
+[1m  # aws_dms_replication_task.outbox_cdc[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_dms_replication_task" "outbox_cdc" {
+      [31m-[0m[0m cdc_start_position        = "2026-07-12T09:47:03" [90m-> null[0m[0m
+      [31m-[0m[0m id                        = "cdc-stg-outbox-cdc" [90m-> null[0m[0m
+      [31m-[0m[0m migration_type            = "cdc" [90m-> null[0m[0m
+      [31m-[0m[0m region                    = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m replication_instance_arn  = "arn:aws:dms:ap-northeast-1:018356302326:rep:GAJSVPKMUZFZTKFSVX6M4OJA4A" [90m-> null[0m[0m
+      [31m-[0m[0m replication_task_arn      = "arn:aws:dms:ap-northeast-1:018356302326:task:KVJWIDHEPNEQLBXNGL7KOMBH4A" [90m-> null[0m[0m
+      [31m-[0m[0m replication_task_id       = "cdc-stg-outbox-cdc" [90m-> null[0m[0m
+      [31m-[0m[0m replication_task_settings = jsonencode(
+            {
+              [31m-[0m[0m BeforeImageSettings                 = [90mnull[0m[0m
+              [31m-[0m[0m ChangeProcessingDdlHandlingPolicy   = {
+                  [31m-[0m[0m HandleSourceTableAltered   = true
+                  [31m-[0m[0m HandleSourceTableDropped   = true
+                  [31m-[0m[0m HandleSourceTableTruncated = true
+                }
+              [31m-[0m[0m ChangeProcessingTuning              = {
+                  [31m-[0m[0m BatchApplyMemoryLimit         = 500
+                  [31m-[0m[0m BatchApplyPreserveTransaction = true
+                  [31m-[0m[0m BatchApplyTimeoutMax          = 30
+                  [31m-[0m[0m BatchApplyTimeoutMin          = 1
+                  [31m-[0m[0m BatchSplitSize                = 0
+                  [31m-[0m[0m CommitTimeout                 = 1
+                  [31m-[0m[0m MemoryKeepTime                = 60
+                  [31m-[0m[0m MemoryLimitTotal              = 1024
+                  [31m-[0m[0m MinTransactionSize            = 1000
+                  [31m-[0m[0m RecoveryTimeout               = -1
+                  [31m-[0m[0m StatementCacheSize            = 50
+                }
+              [31m-[0m[0m CharacterSetSettings                = [90mnull[0m[0m
+              [31m-[0m[0m ControlTablesSettings               = {
+                  [31m-[0m[0m ControlSchema                 = ""
+                  [31m-[0m[0m FullLoadExceptionTableEnabled = false
+                  [31m-[0m[0m HistoryTableEnabled           = false
+                  [31m-[0m[0m HistoryTimeslotInMinutes      = 5
+                  [31m-[0m[0m StatusTableEnabled            = false
+                  [31m-[0m[0m SuspendedTablesTableEnabled   = false
+                  [31m-[0m[0m historyTimeslotInMinutes      = 5
+                }
+              [31m-[0m[0m ErrorBehavior                       = {
+                  [31m-[0m[0m ApplyErrorDeletePolicy                      = "IGNORE_RECORD"
+                  [31m-[0m[0m ApplyErrorEscalationCount                   = 0
+                  [31m-[0m[0m ApplyErrorEscalationPolicy                  = "LOG_ERROR"
+                  [31m-[0m[0m ApplyErrorFailOnTruncationDdl               = false
+                  [31m-[0m[0m ApplyErrorInsertPolicy                      = "LOG_ERROR"
+                  [31m-[0m[0m ApplyErrorUpdatePolicy                      = "LOG_ERROR"
+                  [31m-[0m[0m DataErrorEscalationCount                    = 0
+                  [31m-[0m[0m DataErrorEscalationPolicy                   = "SUSPEND_TABLE"
+                  [31m-[0m[0m DataErrorPolicy                             = "LOG_ERROR"
+                  [31m-[0m[0m DataMaskingErrorPolicy                      = "STOP_TASK"
+                  [31m-[0m[0m DataTruncationErrorPolicy                   = "LOG_ERROR"
+                  [31m-[0m[0m EventErrorPolicy                            = "IGNORE"
+                  [31m-[0m[0m FailOnNoTablesCaptured                      = true
+                  [31m-[0m[0m FailOnTransactionConsistencyBreached        = false
+                  [31m-[0m[0m FullLoadIgnoreConflicts                     = true
+                  [31m-[0m[0m RecoverableErrorCount                       = -1
+                  [31m-[0m[0m RecoverableErrorInterval                    = 5
+                  [31m-[0m[0m RecoverableErrorStopRetryAfterThrottlingMax = true
+                  [31m-[0m[0m RecoverableErrorThrottling                  = true
+                  [31m-[0m[0m RecoverableErrorThrottlingMax               = 1800
+                  [31m-[0m[0m TableErrorEscalationCount                   = 0
+                  [31m-[0m[0m TableErrorEscalationPolicy                  = "STOP_TASK"
+                  [31m-[0m[0m TableErrorPolicy                            = "SUSPEND_TABLE"
+                }
+              [31m-[0m[0m FailTaskWhenCleanTaskResourceFailed = false
+              [31m-[0m[0m FullLoadSettings                    = {
+                  [31m-[0m[0m CommitRate                      = 10000
+                  [31m-[0m[0m CreatePkAfterFullLoad           = false
+                  [31m-[0m[0m MaxFullLoadSubTasks             = 8
+                  [31m-[0m[0m StopTaskCachedChangesApplied    = false
+                  [31m-[0m[0m StopTaskCachedChangesNotApplied = false
+                  [31m-[0m[0m TargetTablePrepMode             = "DO_NOTHING"
+                  [31m-[0m[0m TransactionConsistencyTimeout   = 600
+                }
+              [31m-[0m[0m Logging                             = {
+                  [31m-[0m[0m CloudWatchLogGroup  = "dms-tasks-cdc-stg-dms"
+                  [31m-[0m[0m CloudWatchLogStream = "dms-task-KVJWIDHEPNEQLBXNGL7KOMBH4A"
+                  [31m-[0m[0m EnableLogContext    = false
+                  [31m-[0m[0m EnableLogging       = true
+                  [31m-[0m[0m LogComponents       = [
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "DATA_STRUCTURE"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "COMMUNICATION"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "IO"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "COMMON"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "FILE_FACTORY"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "FILE_TRANSFER"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "REST_SERVER"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "ADDONS"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "TARGET_LOAD"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "TARGET_APPLY"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "SOURCE_UNLOAD"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "SOURCE_CAPTURE"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "TRANSFORMATION"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "SORTER"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "TASK_MANAGER"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "TABLES_MANAGER"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "METADATA_MANAGER"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "PERFORMANCE"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Id       = "VALIDATOR_EXT"
+                          [31m-[0m[0m Severity = "LOGGER_SEVERITY_DEFAULT"
+                        },
+                    ]
+                }
+              [31m-[0m[0m LoopbackPreventionSettings          = [90mnull[0m[0m
+              [31m-[0m[0m PostProcessingRules                 = [90mnull[0m[0m
+              [31m-[0m[0m StreamBufferSettings                = {
+                  [31m-[0m[0m CtrlStreamBufferSizeInMB = 5
+                  [31m-[0m[0m StreamBufferCount        = 3
+                  [31m-[0m[0m StreamBufferSizeInMB     = 8
+                }
+              [31m-[0m[0m TTSettings                          = {
+                  [31m-[0m[0m EnableTT         = false
+                  [31m-[0m[0m TTRecordSettings = [90mnull[0m[0m
+                  [31m-[0m[0m TTS3Settings     = [90mnull[0m[0m
+                }
+              [31m-[0m[0m TargetMetadata                      = {
+                  [31m-[0m[0m BatchApplyEnabled            = false
+                  [31m-[0m[0m FullLobMode                  = false
+                  [31m-[0m[0m InlineLobMaxSize             = 0
+                  [31m-[0m[0m LimitedSizeLobMode           = true
+                  [31m-[0m[0m LoadMaxFileSize              = 0
+                  [31m-[0m[0m LobChunkSize                 = 64
+                  [31m-[0m[0m LobMaxSize                   = 32
+                  [31m-[0m[0m ParallelApplyBufferSize      = 0
+                  [31m-[0m[0m ParallelApplyQueuesPerThread = 0
+                  [31m-[0m[0m ParallelApplyThreads         = 0
+                  [31m-[0m[0m ParallelLoadBufferSize       = 0
+                  [31m-[0m[0m ParallelLoadQueuesPerThread  = 0
+                  [31m-[0m[0m ParallelLoadThreads          = 0
+                  [31m-[0m[0m SupportLobs                  = true
+                  [31m-[0m[0m TargetSchema                 = ""
+                  [31m-[0m[0m TaskRecoveryTableEnabled     = false
+                }
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m source_endpoint_arn       = "arn:aws:dms:ap-northeast-1:018356302326:endpoint:IKBIJRJYXVDPBG6IC7364QDJ3A" [90m-> null[0m[0m
+      [31m-[0m[0m start_replication_task    = false [90m-> null[0m[0m
+      [31m-[0m[0m status                    = "stopped" [90m-> null[0m[0m
+      [31m-[0m[0m table_mappings            = jsonencode(
+            {
+              [31m-[0m[0m rules = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m object-locator = {
+                          [31m-[0m[0m schema-name = "source_orders"
+                          [31m-[0m[0m table-name  = "outbox"
+                        }
+                      [31m-[0m[0m rule-action    = "include"
+                      [31m-[0m[0m rule-id        = "1"
+                      [31m-[0m[0m rule-name      = "select-outbox"
+                      [31m-[0m[0m rule-type      = "selection"
+                    },
+                ]
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m tags                      = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m target_endpoint_arn       = "arn:aws:dms:ap-northeast-1:018356302326:endpoint:PSZX4W5XNFB75E2F5DKSEVL5LA" [90m-> null[0m[0m
+    }
+
+[1m  # aws_iam_role.dms_kinesis[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role" "dms_kinesis" {
+      [31m-[0m[0m arn                   = "arn:aws:iam::018356302326:role/cdc-stg-dms-kinesis-role" [90m-> null[0m[0m
+      [31m-[0m[0m assume_role_policy    = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "sts:AssumeRole"
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Principal = {
+                          [31m-[0m[0m Service = "dms.amazonaws.com"
+                        }
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m create_date           = "2026-07-12T09:24:52Z" [90m-> null[0m[0m
+      [31m-[0m[0m force_detach_policies = false [90m-> null[0m[0m
+      [31m-[0m[0m id                    = "cdc-stg-dms-kinesis-role" [90m-> null[0m[0m
+      [31m-[0m[0m managed_policy_arns   = [] [90m-> null[0m[0m
+      [31m-[0m[0m max_session_duration  = 3600 [90m-> null[0m[0m
+      [31m-[0m[0m name                  = "cdc-stg-dms-kinesis-role" [90m-> null[0m[0m
+      [31m-[0m[0m path                  = "/" [90m-> null[0m[0m
+      [31m-[0m[0m tags                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all              = {} [90m-> null[0m[0m
+      [31m-[0m[0m unique_id             = "AROAQIRQ66H3PGY3Z5KYZ" [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m inline_policy {
+          [31m-[0m[0m name   = "cdc-stg-dms-kinesis-policy" [90m-> null[0m[0m
+          [31m-[0m[0m policy = jsonencode(
+                {
+                  [31m-[0m[0m Statement = [
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Action   = [
+                              [31m-[0m[0m "kinesis:PutRecords",
+                              [31m-[0m[0m "kinesis:PutRecord",
+                              [31m-[0m[0m "kinesis:DescribeStream",
+                            ]
+                          [31m-[0m[0m Effect   = "Allow"
+                          [31m-[0m[0m Resource = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream"
+                        },
+                    ]
+                  [31m-[0m[0m Version   = "2012-10-17"
+                }
+            ) [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_iam_role.dms_vpc_role[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role" "dms_vpc_role" {
+      [31m-[0m[0m arn                   = "arn:aws:iam::018356302326:role/dms-vpc-role" [90m-> null[0m[0m
+      [31m-[0m[0m assume_role_policy    = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "sts:AssumeRole"
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Principal = {
+                          [31m-[0m[0m Service = "dms.amazonaws.com"
+                        }
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m create_date           = "2026-07-12T09:37:19Z" [90m-> null[0m[0m
+      [31m-[0m[0m force_detach_policies = false [90m-> null[0m[0m
+      [31m-[0m[0m id                    = "dms-vpc-role" [90m-> null[0m[0m
+      [31m-[0m[0m managed_policy_arns   = [
+          [31m-[0m[0m "arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m max_session_duration  = 3600 [90m-> null[0m[0m
+      [31m-[0m[0m name                  = "dms-vpc-role" [90m-> null[0m[0m
+      [31m-[0m[0m path                  = "/" [90m-> null[0m[0m
+      [31m-[0m[0m tags                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all              = {} [90m-> null[0m[0m
+      [31m-[0m[0m unique_id             = "AROAQIRQ66H3BQIJMHEJM" [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # aws_iam_role_policy.dms_kinesis[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role_policy" "dms_kinesis" {
+      [31m-[0m[0m id          = "cdc-stg-dms-kinesis-role:cdc-stg-dms-kinesis-policy" [90m-> null[0m[0m
+      [31m-[0m[0m name        = "cdc-stg-dms-kinesis-policy" [90m-> null[0m[0m
+      [31m-[0m[0m policy      = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "kinesis:PutRecords",
+                          [31m-[0m[0m "kinesis:PutRecord",
+                          [31m-[0m[0m "kinesis:DescribeStream",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m role        = "cdc-stg-dms-kinesis-role" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # aws_iam_role_policy_attachment.dms_vpc_role[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role_policy_attachment" "dms_vpc_role" {
+      [31m-[0m[0m id         = "dms-vpc-role/arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole" [90m-> null[0m[0m
+      [31m-[0m[0m policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonDMSVPCManagementRole" [90m-> null[0m[0m
+      [31m-[0m[0m role       = "dms-vpc-role" [90m-> null[0m[0m
+    }
+
+[1m  # aws_internet_gateway.main[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_internet_gateway" "main" {
+      [31m-[0m[0m arn      = "arn:aws:ec2:ap-northeast-1:018356302326:internet-gateway/igw-0434ff1ba735b94ab" [90m-> null[0m[0m
+      [31m-[0m[0m id       = "igw-0434ff1ba735b94ab" [90m-> null[0m[0m
+      [31m-[0m[0m owner_id = "018356302326" [90m-> null[0m[0m
+      [31m-[0m[0m region   = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m tags     = {
+          [31m-[0m[0m "Name" = "cdc-stg-igw"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all = {
+          [31m-[0m[0m "Name" = "cdc-stg-igw"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m vpc_id   = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+    }
+
+[1m  # aws_rds_cluster.source[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_rds_cluster" "source" {
+      [31m-[0m[0m allocated_storage                     = 1 [90m-> null[0m[0m
+      [31m-[0m[0m arn                                   = "arn:aws:rds:ap-northeast-1:018356302326:cluster:cdc-stg-source" [90m-> null[0m[0m
+      [31m-[0m[0m auto_minor_version_upgrade            = true [90m-> null[0m[0m
+      [31m-[0m[0m availability_zones                    = [
+          [31m-[0m[0m "ap-northeast-1a",
+          [31m-[0m[0m "ap-northeast-1c",
+          [31m-[0m[0m "ap-northeast-1d",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m backtrack_window                      = 0 [90m-> null[0m[0m
+      [31m-[0m[0m backup_retention_period               = 1 [90m-> null[0m[0m
+      [31m-[0m[0m cluster_identifier                    = "cdc-stg-source" [90m-> null[0m[0m
+      [31m-[0m[0m cluster_members                       = [
+          [31m-[0m[0m "cdc-stg-source-1",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m cluster_resource_id                   = "cluster-SVKJV3GJGVQIOS5YMG3V453YQQ" [90m-> null[0m[0m
+      [31m-[0m[0m copy_tags_to_snapshot                 = false [90m-> null[0m[0m
+      [31m-[0m[0m database_insights_mode                = "standard" [90m-> null[0m[0m
+      [31m-[0m[0m database_name                         = "source_orders" [90m-> null[0m[0m
+      [31m-[0m[0m db_cluster_parameter_group_name       = "cdc-stg-source-params" [90m-> null[0m[0m
+      [31m-[0m[0m db_subnet_group_name                  = "cdc-stg-db-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m delete_automated_backups              = true [90m-> null[0m[0m
+      [31m-[0m[0m deletion_protection                   = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_global_write_forwarding        = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_http_endpoint                  = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_local_write_forwarding         = false [90m-> null[0m[0m
+      [31m-[0m[0m enabled_cloudwatch_logs_exports       = [] [90m-> null[0m[0m
+      [31m-[0m[0m endpoint                              = "cdc-stg-source.cluster-cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m engine                                = "aurora-mysql" [90m-> null[0m[0m
+      [31m-[0m[0m engine_lifecycle_support              = "open-source-rds-extended-support" [90m-> null[0m[0m
+      [31m-[0m[0m engine_mode                           = "provisioned" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version                        = "8.0.mysql_aurora.3.10.0" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version_actual                 = "8.0.mysql_aurora.3.10.0" [90m-> null[0m[0m
+      [31m-[0m[0m hosted_zone_id                        = "Z24O6O9L7SGTNB" [90m-> null[0m[0m
+      [31m-[0m[0m iam_database_authentication_enabled   = false [90m-> null[0m[0m
+      [31m-[0m[0m iam_roles                             = [] [90m-> null[0m[0m
+      [31m-[0m[0m id                                    = "cdc-stg-source" [90m-> null[0m[0m
+      [31m-[0m[0m iops                                  = 0 [90m-> null[0m[0m
+      [31m-[0m[0m master_password                       = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m master_password_wo                    = (write-only attribute) [90m-> null[0m[0m
+      [31m-[0m[0m master_user_secret                    = [] [90m-> null[0m[0m
+      [31m-[0m[0m master_username                       = "admin_user" [90m-> null[0m[0m
+      [31m-[0m[0m monitoring_interval                   = 0 [90m-> null[0m[0m
+      [31m-[0m[0m network_type                          = "IPV4" [90m-> null[0m[0m
+      [31m-[0m[0m performance_insights_enabled          = false [90m-> null[0m[0m
+      [31m-[0m[0m performance_insights_retention_period = 0 [90m-> null[0m[0m
+      [31m-[0m[0m port                                  = 3306 [90m-> null[0m[0m
+      [31m-[0m[0m preferred_backup_window               = "15:40-16:10" [90m-> null[0m[0m
+      [31m-[0m[0m preferred_maintenance_window          = "sun:14:02-sun:14:32" [90m-> null[0m[0m
+      [31m-[0m[0m reader_endpoint                       = "cdc-stg-source.cluster-ro-cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m region                                = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m skip_final_snapshot                   = true [90m-> null[0m[0m
+      [31m-[0m[0m storage_encrypted                     = false [90m-> null[0m[0m
+      [31m-[0m[0m tags                                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                              = {} [90m-> null[0m[0m
+      [31m-[0m[0m upgrade_rollout_order                 = "second" [90m-> null[0m[0m
+      [31m-[0m[0m vpc_security_group_ids                = [
+          [31m-[0m[0m "sg-074e82f1817c592aa",
+        ] [90m-> null[0m[0m
+        [90m# (12 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m serverlessv2_scaling_configuration {
+          [31m-[0m[0m max_capacity             = 1 [90m-> null[0m[0m
+          [31m-[0m[0m min_capacity             = 0.5 [90m-> null[0m[0m
+          [31m-[0m[0m seconds_until_auto_pause = 0 [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_rds_cluster.target[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_rds_cluster" "target" {
+      [31m-[0m[0m allocated_storage                     = 1 [90m-> null[0m[0m
+      [31m-[0m[0m arn                                   = "arn:aws:rds:ap-northeast-1:018356302326:cluster:cdc-stg-target" [90m-> null[0m[0m
+      [31m-[0m[0m auto_minor_version_upgrade            = true [90m-> null[0m[0m
+      [31m-[0m[0m availability_zones                    = [
+          [31m-[0m[0m "ap-northeast-1a",
+          [31m-[0m[0m "ap-northeast-1c",
+          [31m-[0m[0m "ap-northeast-1d",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m backtrack_window                      = 0 [90m-> null[0m[0m
+      [31m-[0m[0m backup_retention_period               = 1 [90m-> null[0m[0m
+      [31m-[0m[0m cluster_identifier                    = "cdc-stg-target" [90m-> null[0m[0m
+      [31m-[0m[0m cluster_members                       = [
+          [31m-[0m[0m "cdc-stg-target-1",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m cluster_resource_id                   = "cluster-XMMGG3DDM6PS2VKD2XYRIKBQ5I" [90m-> null[0m[0m
+      [31m-[0m[0m copy_tags_to_snapshot                 = false [90m-> null[0m[0m
+      [31m-[0m[0m database_insights_mode                = "standard" [90m-> null[0m[0m
+      [31m-[0m[0m database_name                         = "target_orders" [90m-> null[0m[0m
+      [31m-[0m[0m db_cluster_parameter_group_name       = "default.aurora-mysql8.0" [90m-> null[0m[0m
+      [31m-[0m[0m db_subnet_group_name                  = "cdc-stg-db-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m delete_automated_backups              = true [90m-> null[0m[0m
+      [31m-[0m[0m deletion_protection                   = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_global_write_forwarding        = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_http_endpoint                  = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_local_write_forwarding         = false [90m-> null[0m[0m
+      [31m-[0m[0m enabled_cloudwatch_logs_exports       = [] [90m-> null[0m[0m
+      [31m-[0m[0m endpoint                              = "cdc-stg-target.cluster-cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m engine                                = "aurora-mysql" [90m-> null[0m[0m
+      [31m-[0m[0m engine_lifecycle_support              = "open-source-rds-extended-support" [90m-> null[0m[0m
+      [31m-[0m[0m engine_mode                           = "provisioned" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version                        = "8.0.mysql_aurora.3.10.0" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version_actual                 = "8.0.mysql_aurora.3.10.0" [90m-> null[0m[0m
+      [31m-[0m[0m hosted_zone_id                        = "Z24O6O9L7SGTNB" [90m-> null[0m[0m
+      [31m-[0m[0m iam_database_authentication_enabled   = false [90m-> null[0m[0m
+      [31m-[0m[0m iam_roles                             = [] [90m-> null[0m[0m
+      [31m-[0m[0m id                                    = "cdc-stg-target" [90m-> null[0m[0m
+      [31m-[0m[0m iops                                  = 0 [90m-> null[0m[0m
+      [31m-[0m[0m master_password                       = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m master_password_wo                    = (write-only attribute) [90m-> null[0m[0m
+      [31m-[0m[0m master_user_secret                    = [] [90m-> null[0m[0m
+      [31m-[0m[0m master_username                       = "admin_user" [90m-> null[0m[0m
+      [31m-[0m[0m monitoring_interval                   = 0 [90m-> null[0m[0m
+      [31m-[0m[0m network_type                          = "IPV4" [90m-> null[0m[0m
+      [31m-[0m[0m performance_insights_enabled          = false [90m-> null[0m[0m
+      [31m-[0m[0m performance_insights_retention_period = 0 [90m-> null[0m[0m
+      [31m-[0m[0m port                                  = 3306 [90m-> null[0m[0m
+      [31m-[0m[0m preferred_backup_window               = "17:59-18:29" [90m-> null[0m[0m
+      [31m-[0m[0m preferred_maintenance_window          = "thu:14:58-thu:15:28" [90m-> null[0m[0m
+      [31m-[0m[0m reader_endpoint                       = "cdc-stg-target.cluster-ro-cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m region                                = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m skip_final_snapshot                   = true [90m-> null[0m[0m
+      [31m-[0m[0m storage_encrypted                     = false [90m-> null[0m[0m
+      [31m-[0m[0m tags                                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                              = {} [90m-> null[0m[0m
+      [31m-[0m[0m upgrade_rollout_order                 = "second" [90m-> null[0m[0m
+      [31m-[0m[0m vpc_security_group_ids                = [
+          [31m-[0m[0m "sg-074e82f1817c592aa",
+        ] [90m-> null[0m[0m
+        [90m# (12 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m serverlessv2_scaling_configuration {
+          [31m-[0m[0m max_capacity             = 1 [90m-> null[0m[0m
+          [31m-[0m[0m min_capacity             = 0.5 [90m-> null[0m[0m
+          [31m-[0m[0m seconds_until_auto_pause = 0 [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_rds_cluster_instance.source[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_rds_cluster_instance" "source" {
+      [31m-[0m[0m arn                                   = "arn:aws:rds:ap-northeast-1:018356302326:db:cdc-stg-source-1" [90m-> null[0m[0m
+      [31m-[0m[0m auto_minor_version_upgrade            = true [90m-> null[0m[0m
+      [31m-[0m[0m availability_zone                     = "ap-northeast-1a" [90m-> null[0m[0m
+      [31m-[0m[0m ca_cert_identifier                    = "rds-ca-rsa2048-g1" [90m-> null[0m[0m
+      [31m-[0m[0m cluster_identifier                    = "cdc-stg-source" [90m-> null[0m[0m
+      [31m-[0m[0m copy_tags_to_snapshot                 = false [90m-> null[0m[0m
+      [31m-[0m[0m db_parameter_group_name               = "default.aurora-mysql8.0" [90m-> null[0m[0m
+      [31m-[0m[0m db_subnet_group_name                  = "cdc-stg-db-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m dbi_resource_id                       = "db-BXDCWWZKMCQPT4R4ZDDCEYBA4Y" [90m-> null[0m[0m
+      [31m-[0m[0m endpoint                              = "cdc-stg-source-1.cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m engine                                = "aurora-mysql" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version                        = "8.0.mysql_aurora.3.10.0" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version_actual                 = "8.0.mysql_aurora.3.10.0" [90m-> null[0m[0m
+      [31m-[0m[0m force_destroy                         = false [90m-> null[0m[0m
+      [31m-[0m[0m id                                    = "cdc-stg-source-1" [90m-> null[0m[0m
+      [31m-[0m[0m identifier                            = "cdc-stg-source-1" [90m-> null[0m[0m
+      [31m-[0m[0m instance_class                        = "db.serverless" [90m-> null[0m[0m
+      [31m-[0m[0m monitoring_interval                   = 0 [90m-> null[0m[0m
+      [31m-[0m[0m network_type                          = "IPV4" [90m-> null[0m[0m
+      [31m-[0m[0m performance_insights_enabled          = false [90m-> null[0m[0m
+      [31m-[0m[0m performance_insights_retention_period = 0 [90m-> null[0m[0m
+      [31m-[0m[0m port                                  = 3306 [90m-> null[0m[0m
+      [31m-[0m[0m preferred_backup_window               = "15:40-16:10" [90m-> null[0m[0m
+      [31m-[0m[0m preferred_maintenance_window          = "wed:14:04-wed:14:34" [90m-> null[0m[0m
+      [31m-[0m[0m promotion_tier                        = 0 [90m-> null[0m[0m
+      [31m-[0m[0m publicly_accessible                   = true [90m-> null[0m[0m
+      [31m-[0m[0m region                                = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m storage_encrypted                     = false [90m-> null[0m[0m
+      [31m-[0m[0m tags                                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                              = {} [90m-> null[0m[0m
+      [31m-[0m[0m writer                                = true [90m-> null[0m[0m
+        [90m# (5 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # aws_rds_cluster_instance.target[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_rds_cluster_instance" "target" {
+      [31m-[0m[0m arn                                   = "arn:aws:rds:ap-northeast-1:018356302326:db:cdc-stg-target-1" [90m-> null[0m[0m
+      [31m-[0m[0m auto_minor_version_upgrade            = true [90m-> null[0m[0m
+      [31m-[0m[0m availability_zone                     = "ap-northeast-1a" [90m-> null[0m[0m
+      [31m-[0m[0m ca_cert_identifier                    = "rds-ca-rsa2048-g1" [90m-> null[0m[0m
+      [31m-[0m[0m cluster_identifier                    = "cdc-stg-target" [90m-> null[0m[0m
+      [31m-[0m[0m copy_tags_to_snapshot                 = false [90m-> null[0m[0m
+      [31m-[0m[0m db_parameter_group_name               = "default.aurora-mysql8.0" [90m-> null[0m[0m
+      [31m-[0m[0m db_subnet_group_name                  = "cdc-stg-db-subnet" [90m-> null[0m[0m
+      [31m-[0m[0m dbi_resource_id                       = "db-PJUOYTC7XIQCXG7IYFWXFI5GXM" [90m-> null[0m[0m
+      [31m-[0m[0m endpoint                              = "cdc-stg-target-1.cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+      [31m-[0m[0m engine                                = "aurora-mysql" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version                        = "8.0.mysql_aurora.3.10.0" [90m-> null[0m[0m
+      [31m-[0m[0m engine_version_actual                 = "8.0.mysql_aurora.3.10.0" [90m-> null[0m[0m
+      [31m-[0m[0m force_destroy                         = false [90m-> null[0m[0m
+      [31m-[0m[0m id                                    = "cdc-stg-target-1" [90m-> null[0m[0m
+      [31m-[0m[0m identifier                            = "cdc-stg-target-1" [90m-> null[0m[0m
+      [31m-[0m[0m instance_class                        = "db.serverless" [90m-> null[0m[0m
+      [31m-[0m[0m monitoring_interval                   = 0 [90m-> null[0m[0m
+      [31m-[0m[0m network_type                          = "IPV4" [90m-> null[0m[0m
+      [31m-[0m[0m performance_insights_enabled          = false [90m-> null[0m[0m
+      [31m-[0m[0m performance_insights_retention_period = 0 [90m-> null[0m[0m
+      [31m-[0m[0m port                                  = 3306 [90m-> null[0m[0m
+      [31m-[0m[0m preferred_backup_window               = "17:59-18:29" [90m-> null[0m[0m
+      [31m-[0m[0m preferred_maintenance_window          = "wed:15:51-wed:16:21" [90m-> null[0m[0m
+      [31m-[0m[0m promotion_tier                        = 0 [90m-> null[0m[0m
+      [31m-[0m[0m publicly_accessible                   = true [90m-> null[0m[0m
+      [31m-[0m[0m region                                = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m storage_encrypted                     = false [90m-> null[0m[0m
+      [31m-[0m[0m tags                                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                              = {} [90m-> null[0m[0m
+      [31m-[0m[0m writer                                = true [90m-> null[0m[0m
+        [90m# (5 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # aws_rds_cluster_parameter_group.source[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_rds_cluster_parameter_group" "source" {
+      [31m-[0m[0m arn         = "arn:aws:rds:ap-northeast-1:018356302326:cluster-pg:cdc-stg-source-params" [90m-> null[0m[0m
+      [31m-[0m[0m description = "Managed by Terraform" [90m-> null[0m[0m
+      [31m-[0m[0m family      = "aurora-mysql8.0" [90m-> null[0m[0m
+      [31m-[0m[0m id          = "cdc-stg-source-params" [90m-> null[0m[0m
+      [31m-[0m[0m name        = "cdc-stg-source-params" [90m-> null[0m[0m
+      [31m-[0m[0m region      = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m tags        = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all    = {} [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+
+      [31m-[0m[0m parameter {
+          [31m-[0m[0m apply_method = "pending-reboot" [90m-> null[0m[0m
+          [31m-[0m[0m name         = "binlog_format" [90m-> null[0m[0m
+          [31m-[0m[0m value        = "ROW" [90m-> null[0m[0m
+        }
+      [31m-[0m[0m parameter {
+          [31m-[0m[0m apply_method = "pending-reboot" [90m-> null[0m[0m
+          [31m-[0m[0m name         = "binlog_row_image" [90m-> null[0m[0m
+          [31m-[0m[0m value        = "full" [90m-> null[0m[0m
+        }
+    }
+
+[1m  # aws_route_table.public[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_route_table" "public" {
+      [31m-[0m[0m arn              = "arn:aws:ec2:ap-northeast-1:018356302326:route-table/rtb-025a9ebd97e173153" [90m-> null[0m[0m
+      [31m-[0m[0m id               = "rtb-025a9ebd97e173153" [90m-> null[0m[0m
+      [31m-[0m[0m owner_id         = "018356302326" [90m-> null[0m[0m
+      [31m-[0m[0m propagating_vgws = [] [90m-> null[0m[0m
+      [31m-[0m[0m region           = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m route            = [
+          [31m-[0m[0m {
+              [31m-[0m[0m cidr_block                 = "0.0.0.0/0"
+              [31m-[0m[0m gateway_id                 = "igw-0434ff1ba735b94ab"
+                [90m# (12 unchanged attributes hidden)[0m[0m
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m tags             = {
+          [31m-[0m[0m "Name" = "cdc-stg-public"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all         = {
+          [31m-[0m[0m "Name" = "cdc-stg-public"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m vpc_id           = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+    }
+
+[1m  # aws_route_table_association.a[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_route_table_association" "a" {
+      [31m-[0m[0m id             = "rtbassoc-03ae21557fc76f804" [90m-> null[0m[0m
+      [31m-[0m[0m region         = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m route_table_id = "rtb-025a9ebd97e173153" [90m-> null[0m[0m
+      [31m-[0m[0m subnet_id      = "subnet-0b30edb83b5f4f7c0" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # aws_route_table_association.c[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_route_table_association" "c" {
+      [31m-[0m[0m id             = "rtbassoc-026d3b39145f38d13" [90m-> null[0m[0m
+      [31m-[0m[0m region         = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m route_table_id = "rtb-025a9ebd97e173153" [90m-> null[0m[0m
+      [31m-[0m[0m subnet_id      = "subnet-0e6fb64c5cd113466" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # aws_security_group.aurora[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_security_group" "aurora" {
+      [31m-[0m[0m arn                    = "arn:aws:ec2:ap-northeast-1:018356302326:security-group/sg-074e82f1817c592aa" [90m-> null[0m[0m
+      [31m-[0m[0m description            = "Managed by Terraform" [90m-> null[0m[0m
+      [31m-[0m[0m egress                 = [
+          [31m-[0m[0m {
+              [31m-[0m[0m cidr_blocks      = [
+                  [31m-[0m[0m "0.0.0.0/0",
+                ]
+              [31m-[0m[0m from_port        = 0
+              [31m-[0m[0m ipv6_cidr_blocks = []
+              [31m-[0m[0m prefix_list_ids  = []
+              [31m-[0m[0m protocol         = "-1"
+              [31m-[0m[0m security_groups  = []
+              [31m-[0m[0m self             = false
+              [31m-[0m[0m to_port          = 0
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m id                     = "sg-074e82f1817c592aa" [90m-> null[0m[0m
+      [31m-[0m[0m ingress                = [
+          [31m-[0m[0m {
+              [31m-[0m[0m cidr_blocks      = [
+                  [31m-[0m[0m "125.49.71.221/32",
+                ]
+              [31m-[0m[0m description      = "MySQL from admin workstation (verification only)"
+              [31m-[0m[0m from_port        = 3306
+              [31m-[0m[0m ipv6_cidr_blocks = []
+              [31m-[0m[0m prefix_list_ids  = []
+              [31m-[0m[0m protocol         = "tcp"
+              [31m-[0m[0m security_groups  = []
+              [31m-[0m[0m self             = false
+              [31m-[0m[0m to_port          = 3306
+            },
+          [31m-[0m[0m {
+              [31m-[0m[0m cidr_blocks      = []
+              [31m-[0m[0m description      = "MySQL from DMS"
+              [31m-[0m[0m from_port        = 3306
+              [31m-[0m[0m ipv6_cidr_blocks = []
+              [31m-[0m[0m prefix_list_ids  = []
+              [31m-[0m[0m protocol         = "tcp"
+              [31m-[0m[0m security_groups  = [
+                  [31m-[0m[0m "sg-0c75f7638794e6d28",
+                ]
+              [31m-[0m[0m self             = false
+              [31m-[0m[0m to_port          = 3306
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m name                   = "cdc-stg-aurora" [90m-> null[0m[0m
+      [31m-[0m[0m owner_id               = "018356302326" [90m-> null[0m[0m
+      [31m-[0m[0m region                 = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m revoke_rules_on_delete = false [90m-> null[0m[0m
+      [31m-[0m[0m tags                   = {
+          [31m-[0m[0m "Name" = "cdc-stg-aurora"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all               = {
+          [31m-[0m[0m "Name" = "cdc-stg-aurora"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m vpc_id                 = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # aws_security_group.dms[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_security_group" "dms" {
+      [31m-[0m[0m arn                    = "arn:aws:ec2:ap-northeast-1:018356302326:security-group/sg-0c75f7638794e6d28" [90m-> null[0m[0m
+      [31m-[0m[0m description            = "Managed by Terraform" [90m-> null[0m[0m
+      [31m-[0m[0m egress                 = [
+          [31m-[0m[0m {
+              [31m-[0m[0m cidr_blocks      = [
+                  [31m-[0m[0m "0.0.0.0/0",
+                ]
+              [31m-[0m[0m from_port        = 0
+              [31m-[0m[0m ipv6_cidr_blocks = []
+              [31m-[0m[0m prefix_list_ids  = []
+              [31m-[0m[0m protocol         = "-1"
+              [31m-[0m[0m security_groups  = []
+              [31m-[0m[0m self             = false
+              [31m-[0m[0m to_port          = 0
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m id                     = "sg-0c75f7638794e6d28" [90m-> null[0m[0m
+      [31m-[0m[0m ingress                = [] [90m-> null[0m[0m
+      [31m-[0m[0m name                   = "cdc-stg-dms" [90m-> null[0m[0m
+      [31m-[0m[0m owner_id               = "018356302326" [90m-> null[0m[0m
+      [31m-[0m[0m region                 = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m revoke_rules_on_delete = false [90m-> null[0m[0m
+      [31m-[0m[0m tags                   = {
+          [31m-[0m[0m "Name" = "cdc-stg-dms"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all               = {
+          [31m-[0m[0m "Name" = "cdc-stg-dms"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m vpc_id                 = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # aws_subnet.private_a[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_subnet" "private_a" {
+      [31m-[0m[0m arn                                            = "arn:aws:ec2:ap-northeast-1:018356302326:subnet/subnet-0b30edb83b5f4f7c0" [90m-> null[0m[0m
+      [31m-[0m[0m assign_ipv6_address_on_creation                = false [90m-> null[0m[0m
+      [31m-[0m[0m availability_zone                              = "ap-northeast-1a" [90m-> null[0m[0m
+      [31m-[0m[0m availability_zone_id                           = "apne1-az4" [90m-> null[0m[0m
+      [31m-[0m[0m cidr_block                                     = "10.10.1.0/24" [90m-> null[0m[0m
+      [31m-[0m[0m enable_dns64                                   = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_lni_at_device_index                     = 0 [90m-> null[0m[0m
+      [31m-[0m[0m enable_resource_name_dns_a_record_on_launch    = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false [90m-> null[0m[0m
+      [31m-[0m[0m id                                             = "subnet-0b30edb83b5f4f7c0" [90m-> null[0m[0m
+      [31m-[0m[0m ipv6_native                                    = false [90m-> null[0m[0m
+      [31m-[0m[0m map_customer_owned_ip_on_launch                = false [90m-> null[0m[0m
+      [31m-[0m[0m map_public_ip_on_launch                        = false [90m-> null[0m[0m
+      [31m-[0m[0m owner_id                                       = "018356302326" [90m-> null[0m[0m
+      [31m-[0m[0m private_dns_hostname_type_on_launch            = "ip-name" [90m-> null[0m[0m
+      [31m-[0m[0m region                                         = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m tags                                           = {
+          [31m-[0m[0m "Name" = "cdc-stg-subnet-a"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                                       = {
+          [31m-[0m[0m "Name" = "cdc-stg-subnet-a"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m vpc_id                                         = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # aws_subnet.private_c[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_subnet" "private_c" {
+      [31m-[0m[0m arn                                            = "arn:aws:ec2:ap-northeast-1:018356302326:subnet/subnet-0e6fb64c5cd113466" [90m-> null[0m[0m
+      [31m-[0m[0m assign_ipv6_address_on_creation                = false [90m-> null[0m[0m
+      [31m-[0m[0m availability_zone                              = "ap-northeast-1c" [90m-> null[0m[0m
+      [31m-[0m[0m availability_zone_id                           = "apne1-az1" [90m-> null[0m[0m
+      [31m-[0m[0m cidr_block                                     = "10.10.2.0/24" [90m-> null[0m[0m
+      [31m-[0m[0m enable_dns64                                   = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_lni_at_device_index                     = 0 [90m-> null[0m[0m
+      [31m-[0m[0m enable_resource_name_dns_a_record_on_launch    = false [90m-> null[0m[0m
+      [31m-[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false [90m-> null[0m[0m
+      [31m-[0m[0m id                                             = "subnet-0e6fb64c5cd113466" [90m-> null[0m[0m
+      [31m-[0m[0m ipv6_native                                    = false [90m-> null[0m[0m
+      [31m-[0m[0m map_customer_owned_ip_on_launch                = false [90m-> null[0m[0m
+      [31m-[0m[0m map_public_ip_on_launch                        = false [90m-> null[0m[0m
+      [31m-[0m[0m owner_id                                       = "018356302326" [90m-> null[0m[0m
+      [31m-[0m[0m private_dns_hostname_type_on_launch            = "ip-name" [90m-> null[0m[0m
+      [31m-[0m[0m region                                         = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m tags                                           = {
+          [31m-[0m[0m "Name" = "cdc-stg-subnet-c"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                                       = {
+          [31m-[0m[0m "Name" = "cdc-stg-subnet-c"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m vpc_id                                         = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # aws_vpc.main[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_vpc" "main" {
+      [31m-[0m[0m arn                                  = "arn:aws:ec2:ap-northeast-1:018356302326:vpc/vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+      [31m-[0m[0m assign_generated_ipv6_cidr_block     = false [90m-> null[0m[0m
+      [31m-[0m[0m cidr_block                           = "10.10.0.0/16" [90m-> null[0m[0m
+      [31m-[0m[0m default_network_acl_id               = "acl-0e51c9c0b88ada52a" [90m-> null[0m[0m
+      [31m-[0m[0m default_route_table_id               = "rtb-02eedd11147d6f366" [90m-> null[0m[0m
+      [31m-[0m[0m default_security_group_id            = "sg-071a9bb2f58491a57" [90m-> null[0m[0m
+      [31m-[0m[0m dhcp_options_id                      = "dopt-034e8388b78ff8d38" [90m-> null[0m[0m
+      [31m-[0m[0m enable_dns_hostnames                 = true [90m-> null[0m[0m
+      [31m-[0m[0m enable_dns_support                   = true [90m-> null[0m[0m
+      [31m-[0m[0m enable_network_address_usage_metrics = false [90m-> null[0m[0m
+      [31m-[0m[0m id                                   = "vpc-03d88350fc9dd76fd" [90m-> null[0m[0m
+      [31m-[0m[0m instance_tenancy                     = "default" [90m-> null[0m[0m
+      [31m-[0m[0m ipv6_netmask_length                  = 0 [90m-> null[0m[0m
+      [31m-[0m[0m main_route_table_id                  = "rtb-02eedd11147d6f366" [90m-> null[0m[0m
+      [31m-[0m[0m owner_id                             = "018356302326" [90m-> null[0m[0m
+      [31m-[0m[0m region                               = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m tags                                 = {
+          [31m-[0m[0m "Name" = "cdc-stg-vpc"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                             = {
+          [31m-[0m[0m "Name" = "cdc-stg-vpc"
+        } [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.pipeline.aws_iam_role.delivery[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role" "delivery" {
+      [31m-[0m[0m arn                   = "arn:aws:iam::018356302326:role/cdc-stg-delivery-role" [90m-> null[0m[0m
+      [31m-[0m[0m assume_role_policy    = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "sts:AssumeRole"
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Principal = {
+                          [31m-[0m[0m Service = "lambda.amazonaws.com"
+                        }
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m create_date           = "2026-07-12T09:24:52Z" [90m-> null[0m[0m
+      [31m-[0m[0m force_detach_policies = false [90m-> null[0m[0m
+      [31m-[0m[0m id                    = "cdc-stg-delivery-role" [90m-> null[0m[0m
+      [31m-[0m[0m managed_policy_arns   = [] [90m-> null[0m[0m
+      [31m-[0m[0m max_session_duration  = 3600 [90m-> null[0m[0m
+      [31m-[0m[0m name                  = "cdc-stg-delivery-role" [90m-> null[0m[0m
+      [31m-[0m[0m path                  = "/" [90m-> null[0m[0m
+      [31m-[0m[0m tags                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all              = {} [90m-> null[0m[0m
+      [31m-[0m[0m unique_id             = "AROAQIRQ66H3NI57KJCRJ" [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m inline_policy {
+          [31m-[0m[0m name   = "cdc-stg-delivery-policy" [90m-> null[0m[0m
+          [31m-[0m[0m policy = jsonencode(
+                {
+                  [31m-[0m[0m Statement = [
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Action   = [
+                              [31m-[0m[0m "sqs:ReceiveMessage",
+                              [31m-[0m[0m "sqs:GetQueueAttributes",
+                              [31m-[0m[0m "sqs:DeleteMessage",
+                            ]
+                          [31m-[0m[0m Effect   = "Allow"
+                          [31m-[0m[0m Resource = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery.fifo"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Action   = [
+                              [31m-[0m[0m "logs:PutLogEvents",
+                              [31m-[0m[0m "logs:CreateLogStream",
+                              [31m-[0m[0m "logs:CreateLogGroup",
+                            ]
+                          [31m-[0m[0m Effect   = "Allow"
+                          [31m-[0m[0m Resource = "*"
+                        },
+                    ]
+                  [31m-[0m[0m Version   = "2012-10-17"
+                }
+            ) [90m-> null[0m[0m
+        }
+    }
+
+[1m  # module.pipeline.aws_iam_role.fanout[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role" "fanout" {
+      [31m-[0m[0m arn                   = "arn:aws:iam::018356302326:role/cdc-stg-fanout-role" [90m-> null[0m[0m
+      [31m-[0m[0m assume_role_policy    = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action    = "sts:AssumeRole"
+                      [31m-[0m[0m Effect    = "Allow"
+                      [31m-[0m[0m Principal = {
+                          [31m-[0m[0m Service = "lambda.amazonaws.com"
+                        }
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m create_date           = "2026-07-12T09:24:52Z" [90m-> null[0m[0m
+      [31m-[0m[0m force_detach_policies = false [90m-> null[0m[0m
+      [31m-[0m[0m id                    = "cdc-stg-fanout-role" [90m-> null[0m[0m
+      [31m-[0m[0m managed_policy_arns   = [] [90m-> null[0m[0m
+      [31m-[0m[0m max_session_duration  = 3600 [90m-> null[0m[0m
+      [31m-[0m[0m name                  = "cdc-stg-fanout-role" [90m-> null[0m[0m
+      [31m-[0m[0m path                  = "/" [90m-> null[0m[0m
+      [31m-[0m[0m tags                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all              = {} [90m-> null[0m[0m
+      [31m-[0m[0m unique_id             = "AROAQIRQ66H3F74QDHOPZ" [90m-> null[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m inline_policy {
+          [31m-[0m[0m name   = "cdc-stg-fanout-policy" [90m-> null[0m[0m
+          [31m-[0m[0m policy = jsonencode(
+                {
+                  [31m-[0m[0m Statement = [
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Action   = [
+                              [31m-[0m[0m "kinesis:ListStreams",
+                              [31m-[0m[0m "kinesis:ListShards",
+                              [31m-[0m[0m "kinesis:GetShardIterator",
+                              [31m-[0m[0m "kinesis:GetRecords",
+                              [31m-[0m[0m "kinesis:DescribeStreamSummary",
+                              [31m-[0m[0m "kinesis:DescribeStream",
+                            ]
+                          [31m-[0m[0m Effect   = "Allow"
+                          [31m-[0m[0m Resource = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream"
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Action   = "sqs:SendMessage"
+                          [31m-[0m[0m Effect   = "Allow"
+                          [31m-[0m[0m Resource = [
+                              [31m-[0m[0m "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-fanout-dlq",
+                              [31m-[0m[0m "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery.fifo",
+                            ]
+                        },
+                      [31m-[0m[0m {
+                          [31m-[0m[0m Action   = [
+                              [31m-[0m[0m "logs:PutLogEvents",
+                              [31m-[0m[0m "logs:CreateLogStream",
+                              [31m-[0m[0m "logs:CreateLogGroup",
+                            ]
+                          [31m-[0m[0m Effect   = "Allow"
+                          [31m-[0m[0m Resource = "*"
+                        },
+                    ]
+                  [31m-[0m[0m Version   = "2012-10-17"
+                }
+            ) [90m-> null[0m[0m
+        }
+    }
+
+[1m  # module.pipeline.aws_iam_role_policy.delivery[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role_policy" "delivery" {
+      [31m-[0m[0m id          = "cdc-stg-delivery-role:cdc-stg-delivery-policy" [90m-> null[0m[0m
+      [31m-[0m[0m name        = "cdc-stg-delivery-policy" [90m-> null[0m[0m
+      [31m-[0m[0m policy      = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "sqs:ReceiveMessage",
+                          [31m-[0m[0m "sqs:GetQueueAttributes",
+                          [31m-[0m[0m "sqs:DeleteMessage",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery.fifo"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "logs:PutLogEvents",
+                          [31m-[0m[0m "logs:CreateLogStream",
+                          [31m-[0m[0m "logs:CreateLogGroup",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m role        = "cdc-stg-delivery-role" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # module.pipeline.aws_iam_role_policy.fanout[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_iam_role_policy" "fanout" {
+      [31m-[0m[0m id          = "cdc-stg-fanout-role:cdc-stg-fanout-policy" [90m-> null[0m[0m
+      [31m-[0m[0m name        = "cdc-stg-fanout-policy" [90m-> null[0m[0m
+      [31m-[0m[0m policy      = jsonencode(
+            {
+              [31m-[0m[0m Statement = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "kinesis:ListStreams",
+                          [31m-[0m[0m "kinesis:ListShards",
+                          [31m-[0m[0m "kinesis:GetShardIterator",
+                          [31m-[0m[0m "kinesis:GetRecords",
+                          [31m-[0m[0m "kinesis:DescribeStreamSummary",
+                          [31m-[0m[0m "kinesis:DescribeStream",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream"
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = "sqs:SendMessage"
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = [
+                          [31m-[0m[0m "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-fanout-dlq",
+                          [31m-[0m[0m "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery.fifo",
+                        ]
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m Action   = [
+                          [31m-[0m[0m "logs:PutLogEvents",
+                          [31m-[0m[0m "logs:CreateLogStream",
+                          [31m-[0m[0m "logs:CreateLogGroup",
+                        ]
+                      [31m-[0m[0m Effect   = "Allow"
+                      [31m-[0m[0m Resource = "*"
+                    },
+                ]
+              [31m-[0m[0m Version   = "2012-10-17"
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m role        = "cdc-stg-fanout-role" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # module.pipeline.aws_kinesis_stream.cdc[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_kinesis_stream" "cdc" {
+      [31m-[0m[0m arn                       = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream" [90m-> null[0m[0m
+      [31m-[0m[0m encryption_type           = "NONE" [90m-> null[0m[0m
+      [31m-[0m[0m enforce_consumer_deletion = false [90m-> null[0m[0m
+      [31m-[0m[0m id                        = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream" [90m-> null[0m[0m
+      [31m-[0m[0m max_record_size_in_kib    = 1024 [90m-> null[0m[0m
+      [31m-[0m[0m name                      = "cdc-stg-cdc-stream" [90m-> null[0m[0m
+      [31m-[0m[0m region                    = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m retention_period          = 24 [90m-> null[0m[0m
+      [31m-[0m[0m shard_count               = 1 [90m-> null[0m[0m
+      [31m-[0m[0m shard_level_metrics       = [] [90m-> null[0m[0m
+      [31m-[0m[0m tags                      = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                  = {} [90m-> null[0m[0m
+      [31m-[0m[0m warm_throughput_mib_ps    = 0 [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+
+      [31m-[0m[0m stream_mode_details {
+          [31m-[0m[0m stream_mode = "PROVISIONED" [90m-> null[0m[0m
+        }
+    }
+
+[1m  # module.pipeline.aws_lambda_event_source_mapping.kinesis_to_fanout[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_lambda_event_source_mapping" "kinesis_to_fanout" {
+      [31m-[0m[0m arn                                = "arn:aws:lambda:ap-northeast-1:018356302326:event-source-mapping:63827540-a18b-4eec-b823-ded152ef8536" [90m-> null[0m[0m
+      [31m-[0m[0m batch_size                         = 100 [90m-> null[0m[0m
+      [31m-[0m[0m bisect_batch_on_function_error     = false [90m-> null[0m[0m
+      [31m-[0m[0m enabled                            = true [90m-> null[0m[0m
+      [31m-[0m[0m event_source_arn                   = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream" [90m-> null[0m[0m
+      [31m-[0m[0m function_arn                       = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-fanout" [90m-> null[0m[0m
+      [31m-[0m[0m function_name                      = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-fanout" [90m-> null[0m[0m
+      [31m-[0m[0m function_response_types            = [
+          [31m-[0m[0m "ReportBatchItemFailures",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m id                                 = "63827540-a18b-4eec-b823-ded152ef8536" [90m-> null[0m[0m
+      [31m-[0m[0m last_modified                      = "2026-07-12T09:47:00Z" [90m-> null[0m[0m
+      [31m-[0m[0m last_processing_result             = "OK" [90m-> null[0m[0m
+      [31m-[0m[0m maximum_batching_window_in_seconds = 0 [90m-> null[0m[0m
+      [31m-[0m[0m maximum_record_age_in_seconds      = -1 [90m-> null[0m[0m
+      [31m-[0m[0m maximum_retry_attempts             = 10 [90m-> null[0m[0m
+      [31m-[0m[0m parallelization_factor             = 1 [90m-> null[0m[0m
+      [31m-[0m[0m queues                             = [] [90m-> null[0m[0m
+      [31m-[0m[0m region                             = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m starting_position                  = "LATEST" [90m-> null[0m[0m
+      [31m-[0m[0m state                              = "Enabled" [90m-> null[0m[0m
+      [31m-[0m[0m state_transition_reason            = "User action" [90m-> null[0m[0m
+      [31m-[0m[0m tags                               = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                           = {} [90m-> null[0m[0m
+      [31m-[0m[0m topics                             = [] [90m-> null[0m[0m
+      [31m-[0m[0m tumbling_window_in_seconds         = 0 [90m-> null[0m[0m
+      [31m-[0m[0m uuid                               = "63827540-a18b-4eec-b823-ded152ef8536" [90m-> null[0m[0m
+        [90m# (2 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m destination_config {
+          [31m-[0m[0m on_failure {
+              [31m-[0m[0m destination_arn = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-fanout-dlq" [90m-> null[0m[0m
+            }
+        }
+    }
+
+[1m  # module.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_lambda_event_source_mapping" "sqs_to_delivery" {
+      [31m-[0m[0m arn                                = "arn:aws:lambda:ap-northeast-1:018356302326:event-source-mapping:575bf92a-f200-4dee-ac65-af94bfe8cf73" [90m-> null[0m[0m
+      [31m-[0m[0m batch_size                         = 10 [90m-> null[0m[0m
+      [31m-[0m[0m bisect_batch_on_function_error     = false [90m-> null[0m[0m
+      [31m-[0m[0m enabled                            = true [90m-> null[0m[0m
+      [31m-[0m[0m event_source_arn                   = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m function_arn                       = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-delivery" [90m-> null[0m[0m
+      [31m-[0m[0m function_name                      = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-delivery" [90m-> null[0m[0m
+      [31m-[0m[0m function_response_types            = [
+          [31m-[0m[0m "ReportBatchItemFailures",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m id                                 = "575bf92a-f200-4dee-ac65-af94bfe8cf73" [90m-> null[0m[0m
+      [31m-[0m[0m last_modified                      = "2026-07-12T09:51:04Z" [90m-> null[0m[0m
+      [31m-[0m[0m maximum_batching_window_in_seconds = 0 [90m-> null[0m[0m
+      [31m-[0m[0m maximum_record_age_in_seconds      = 0 [90m-> null[0m[0m
+      [31m-[0m[0m maximum_retry_attempts             = 0 [90m-> null[0m[0m
+      [31m-[0m[0m parallelization_factor             = 0 [90m-> null[0m[0m
+      [31m-[0m[0m queues                             = [] [90m-> null[0m[0m
+      [31m-[0m[0m region                             = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m state                              = "Enabled" [90m-> null[0m[0m
+      [31m-[0m[0m state_transition_reason            = "USER_INITIATED" [90m-> null[0m[0m
+      [31m-[0m[0m tags                               = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                           = {} [90m-> null[0m[0m
+      [31m-[0m[0m topics                             = [] [90m-> null[0m[0m
+      [31m-[0m[0m tumbling_window_in_seconds         = 0 [90m-> null[0m[0m
+      [31m-[0m[0m uuid                               = "575bf92a-f200-4dee-ac65-af94bfe8cf73" [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.pipeline.aws_lambda_function.delivery[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_lambda_function" "delivery" {
+      [31m-[0m[0m architectures                  = [
+          [31m-[0m[0m "arm64",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m arn                            = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-delivery" [90m-> null[0m[0m
+      [31m-[0m[0m code_sha256                    = "a4DmfhSePWNwL1DZN1Ih5AQeCICB7R+zNh1UizaNDDU=" [90m-> null[0m[0m
+      [31m-[0m[0m filename                       = "./../../../dist/delivery.zip" [90m-> null[0m[0m
+      [31m-[0m[0m function_name                  = "cdc-stg-delivery" [90m-> null[0m[0m
+      [31m-[0m[0m handler                        = "bootstrap" [90m-> null[0m[0m
+      [31m-[0m[0m id                             = "cdc-stg-delivery" [90m-> null[0m[0m
+      [31m-[0m[0m invoke_arn                     = "arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-delivery/invocations" [90m-> null[0m[0m
+      [31m-[0m[0m last_modified                  = "2026-07-12T09:25:01.987+0000" [90m-> null[0m[0m
+      [31m-[0m[0m layers                         = [] [90m-> null[0m[0m
+      [31m-[0m[0m memory_size                    = 128 [90m-> null[0m[0m
+      [31m-[0m[0m package_type                   = "Zip" [90m-> null[0m[0m
+      [31m-[0m[0m publish                        = false [90m-> null[0m[0m
+      [31m-[0m[0m qualified_arn                  = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-delivery:$LATEST" [90m-> null[0m[0m
+      [31m-[0m[0m qualified_invoke_arn           = "arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-delivery:$LATEST/invocations" [90m-> null[0m[0m
+      [31m-[0m[0m region                         = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m reserved_concurrent_executions = -1 [90m-> null[0m[0m
+      [31m-[0m[0m response_streaming_invoke_arn  = "arn:aws:apigateway:ap-northeast-1:lambda:path/2021-11-15/functions/arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-delivery/response-streaming-invocations" [90m-> null[0m[0m
+      [31m-[0m[0m role                           = "arn:aws:iam::018356302326:role/cdc-stg-delivery-role" [90m-> null[0m[0m
+      [31m-[0m[0m runtime                        = "provided.al2023" [90m-> null[0m[0m
+      [31m-[0m[0m skip_destroy                   = false [90m-> null[0m[0m
+      [31m-[0m[0m source_code_hash               = "a4DmfhSePWNwL1DZN1Ih5AQeCICB7R+zNh1UizaNDDU=" [90m-> null[0m[0m
+      [31m-[0m[0m source_code_size               = 4648881 [90m-> null[0m[0m
+      [31m-[0m[0m tags                           = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                       = {} [90m-> null[0m[0m
+      [31m-[0m[0m timeout                        = 30 [90m-> null[0m[0m
+      [31m-[0m[0m version                        = "$LATEST" [90m-> null[0m[0m
+        [90m# (7 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m environment {
+          [31m-[0m[0m variables = {
+              [31m-[0m[0m "TARGET_API_TOKEN" = (sensitive value)
+              [31m-[0m[0m "TARGET_API_URL"   = "https://target.invalid"
+            } [90m-> null[0m[0m
+        }
+
+      [31m-[0m[0m ephemeral_storage {
+          [31m-[0m[0m size = 512 [90m-> null[0m[0m
+        }
+
+      [31m-[0m[0m logging_config {
+          [31m-[0m[0m log_format            = "Text" [90m-> null[0m[0m
+          [31m-[0m[0m log_group             = "/aws/lambda/cdc-stg-delivery" [90m-> null[0m[0m
+            [90m# (2 unchanged attributes hidden)[0m[0m
+        }
+
+      [31m-[0m[0m tracing_config {
+          [31m-[0m[0m mode = "PassThrough" [90m-> null[0m[0m
+        }
+    }
+
+[1m  # module.pipeline.aws_lambda_function.fanout[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_lambda_function" "fanout" {
+      [31m-[0m[0m architectures                  = [
+          [31m-[0m[0m "arm64",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m arn                            = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-fanout" [90m-> null[0m[0m
+      [31m-[0m[0m code_sha256                    = "33h3t7fuK+Gax43Smaemwxh2tcAgKr7Bd3m1kpRp/aY=" [90m-> null[0m[0m
+      [31m-[0m[0m filename                       = "./../../../dist/fanout.zip" [90m-> null[0m[0m
+      [31m-[0m[0m function_name                  = "cdc-stg-fanout" [90m-> null[0m[0m
+      [31m-[0m[0m handler                        = "bootstrap" [90m-> null[0m[0m
+      [31m-[0m[0m id                             = "cdc-stg-fanout" [90m-> null[0m[0m
+      [31m-[0m[0m invoke_arn                     = "arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-fanout/invocations" [90m-> null[0m[0m
+      [31m-[0m[0m last_modified                  = "2026-07-12T09:29:05.791+0000" [90m-> null[0m[0m
+      [31m-[0m[0m layers                         = [] [90m-> null[0m[0m
+      [31m-[0m[0m memory_size                    = 128 [90m-> null[0m[0m
+      [31m-[0m[0m package_type                   = "Zip" [90m-> null[0m[0m
+      [31m-[0m[0m publish                        = false [90m-> null[0m[0m
+      [31m-[0m[0m qualified_arn                  = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-fanout:$LATEST" [90m-> null[0m[0m
+      [31m-[0m[0m qualified_invoke_arn           = "arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-fanout:$LATEST/invocations" [90m-> null[0m[0m
+      [31m-[0m[0m region                         = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m reserved_concurrent_executions = -1 [90m-> null[0m[0m
+      [31m-[0m[0m response_streaming_invoke_arn  = "arn:aws:apigateway:ap-northeast-1:lambda:path/2021-11-15/functions/arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-fanout/response-streaming-invocations" [90m-> null[0m[0m
+      [31m-[0m[0m role                           = "arn:aws:iam::018356302326:role/cdc-stg-fanout-role" [90m-> null[0m[0m
+      [31m-[0m[0m runtime                        = "provided.al2023" [90m-> null[0m[0m
+      [31m-[0m[0m skip_destroy                   = false [90m-> null[0m[0m
+      [31m-[0m[0m source_code_hash               = "33h3t7fuK+Gax43Smaemwxh2tcAgKr7Bd3m1kpRp/aY=" [90m-> null[0m[0m
+      [31m-[0m[0m source_code_size               = 6491999 [90m-> null[0m[0m
+      [31m-[0m[0m tags                           = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                       = {} [90m-> null[0m[0m
+      [31m-[0m[0m timeout                        = 30 [90m-> null[0m[0m
+      [31m-[0m[0m version                        = "$LATEST" [90m-> null[0m[0m
+        [90m# (7 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m environment {
+          [31m-[0m[0m variables = {
+              [31m-[0m[0m "DELIVERY_QUEUE_URL" = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo"
+            } [90m-> null[0m[0m
+        }
+
+      [31m-[0m[0m ephemeral_storage {
+          [31m-[0m[0m size = 512 [90m-> null[0m[0m
+        }
+
+      [31m-[0m[0m logging_config {
+          [31m-[0m[0m log_format            = "Text" [90m-> null[0m[0m
+          [31m-[0m[0m log_group             = "/aws/lambda/cdc-stg-fanout" [90m-> null[0m[0m
+            [90m# (2 unchanged attributes hidden)[0m[0m
+        }
+
+      [31m-[0m[0m tracing_config {
+          [31m-[0m[0m mode = "PassThrough" [90m-> null[0m[0m
+        }
+    }
+
+[1m  # module.pipeline.aws_sqs_queue.delivery[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_sqs_queue" "delivery" {
+      [31m-[0m[0m arn                               = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m content_based_deduplication       = false [90m-> null[0m[0m
+      [31m-[0m[0m deduplication_scope               = "queue" [90m-> null[0m[0m
+      [31m-[0m[0m delay_seconds                     = 0 [90m-> null[0m[0m
+      [31m-[0m[0m fifo_queue                        = true [90m-> null[0m[0m
+      [31m-[0m[0m fifo_throughput_limit             = "perQueue" [90m-> null[0m[0m
+      [31m-[0m[0m id                                = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m kms_data_key_reuse_period_seconds = 300 [90m-> null[0m[0m
+      [31m-[0m[0m max_message_size                  = 262144 [90m-> null[0m[0m
+      [31m-[0m[0m message_retention_seconds         = 345600 [90m-> null[0m[0m
+      [31m-[0m[0m name                              = "cdc-stg-delivery.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m receive_wait_time_seconds         = 0 [90m-> null[0m[0m
+      [31m-[0m[0m redrive_policy                    = jsonencode(
+            {
+              [31m-[0m[0m deadLetterTargetArn = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery-dlq.fifo"
+              [31m-[0m[0m maxReceiveCount     = 5
+            }
+        ) [90m-> null[0m[0m
+      [31m-[0m[0m region                            = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m sqs_managed_sse_enabled           = true [90m-> null[0m[0m
+      [31m-[0m[0m tags                              = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                          = {} [90m-> null[0m[0m
+      [31m-[0m[0m url                               = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m visibility_timeout_seconds        = 60 [90m-> null[0m[0m
+        [90m# (4 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.pipeline.aws_sqs_queue.delivery_dlq[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_sqs_queue" "delivery_dlq" {
+      [31m-[0m[0m arn                               = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery-dlq.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m content_based_deduplication       = false [90m-> null[0m[0m
+      [31m-[0m[0m deduplication_scope               = "queue" [90m-> null[0m[0m
+      [31m-[0m[0m delay_seconds                     = 0 [90m-> null[0m[0m
+      [31m-[0m[0m fifo_queue                        = true [90m-> null[0m[0m
+      [31m-[0m[0m fifo_throughput_limit             = "perQueue" [90m-> null[0m[0m
+      [31m-[0m[0m id                                = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m kms_data_key_reuse_period_seconds = 300 [90m-> null[0m[0m
+      [31m-[0m[0m max_message_size                  = 262144 [90m-> null[0m[0m
+      [31m-[0m[0m message_retention_seconds         = 345600 [90m-> null[0m[0m
+      [31m-[0m[0m name                              = "cdc-stg-delivery-dlq.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m receive_wait_time_seconds         = 0 [90m-> null[0m[0m
+      [31m-[0m[0m region                            = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m sqs_managed_sse_enabled           = true [90m-> null[0m[0m
+      [31m-[0m[0m tags                              = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                          = {} [90m-> null[0m[0m
+      [31m-[0m[0m url                               = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo" [90m-> null[0m[0m
+      [31m-[0m[0m visibility_timeout_seconds        = 30 [90m-> null[0m[0m
+        [90m# (5 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.pipeline.aws_sqs_queue.fanout_dlq[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "aws_sqs_queue" "fanout_dlq" {
+      [31m-[0m[0m arn                               = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-fanout-dlq" [90m-> null[0m[0m
+      [31m-[0m[0m content_based_deduplication       = false [90m-> null[0m[0m
+      [31m-[0m[0m delay_seconds                     = 0 [90m-> null[0m[0m
+      [31m-[0m[0m fifo_queue                        = false [90m-> null[0m[0m
+      [31m-[0m[0m id                                = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq" [90m-> null[0m[0m
+      [31m-[0m[0m kms_data_key_reuse_period_seconds = 300 [90m-> null[0m[0m
+      [31m-[0m[0m max_message_size                  = 262144 [90m-> null[0m[0m
+      [31m-[0m[0m message_retention_seconds         = 345600 [90m-> null[0m[0m
+      [31m-[0m[0m name                              = "cdc-stg-fanout-dlq" [90m-> null[0m[0m
+      [31m-[0m[0m receive_wait_time_seconds         = 0 [90m-> null[0m[0m
+      [31m-[0m[0m region                            = "ap-northeast-1" [90m-> null[0m[0m
+      [31m-[0m[0m sqs_managed_sse_enabled           = true [90m-> null[0m[0m
+      [31m-[0m[0m tags                              = {} [90m-> null[0m[0m
+      [31m-[0m[0m tags_all                          = {} [90m-> null[0m[0m
+      [31m-[0m[0m url                               = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq" [90m-> null[0m[0m
+      [31m-[0m[0m visibility_timeout_seconds        = 30 [90m-> null[0m[0m
+        [90m# (7 unchanged attributes hidden)[0m[0m
+    }
+
+[1mPlan:[0m [0m0 to add, 0 to change, 36 to destroy.
+
+Changes to Outputs:
+  [31m-[0m[0m delivery_queue_url      = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo" [90m-> null[0m[0m
+  [31m-[0m[0m dms_task_arn            = "arn:aws:dms:ap-northeast-1:018356302326:task:KVJWIDHEPNEQLBXNGL7KOMBH4A" [90m-> null[0m[0m
+  [31m-[0m[0m kinesis_stream_name     = "cdc-stg-cdc-stream" [90m-> null[0m[0m
+  [31m-[0m[0m source_cluster_endpoint = "cdc-stg-source.cluster-cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+  [31m-[0m[0m target_cluster_endpoint = "cdc-stg-target.cluster-cl03wlqt2c78.ap-northeast-1.rds.amazonaws.com" [90m-> null[0m[0m
+[0m[1maws_iam_role_policy.dms_kinesis: Destroying... [id=cdc-stg-dms-kinesis-role:cdc-stg-dms-kinesis-policy][0m[0m
+[0m[1maws_route_table_association.a: Destroying... [id=rtbassoc-03ae21557fc76f804][0m[0m
+[0m[1maws_route_table_association.c: Destroying... [id=rtbassoc-026d3b39145f38d13][0m[0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.fanout: Destroying... [id=cdc-stg-fanout-role:cdc-stg-fanout-policy][0m[0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.delivery: Destroying... [id=cdc-stg-delivery-role:cdc-stg-delivery-policy][0m[0m
+[0m[1maws_dms_replication_task.outbox_cdc: Destroying... [id=cdc-stg-outbox-cdc][0m[0m
+[0m[1maws_rds_cluster_instance.target: Destroying... [id=cdc-stg-target-1][0m[0m
+[0m[1maws_rds_cluster_instance.source: Destroying... [id=cdc-stg-source-1][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.kinesis_to_fanout: Destroying... [id=63827540-a18b-4eec-b823-ded152ef8536][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery: Destroying... [id=575bf92a-f200-4dee-ac65-af94bfe8cf73][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.kinesis_to_fanout: Destruction complete after 0s[0m
+[0m[1mmodule.pipeline.aws_lambda_function.fanout: Destroying... [id=cdc-stg-fanout][0m[0m
+[0m[1maws_route_table_association.c: Destruction complete after 0s[0m
+[0m[1maws_route_table_association.a: Destruction complete after 0s[0m
+[0m[1maws_route_table.public: Destroying... [id=rtb-025a9ebd97e173153][0m[0m
+[0m[1maws_iam_role_policy.dms_kinesis: Destruction complete after 1s[0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.fanout: Destruction complete after 1s[0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.delivery: Destruction complete after 1s[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq][0m[0m
+[0m[1maws_route_table.public: Destruction complete after 1s[0m
+[0m[1maws_internet_gateway.main: Destroying... [id=igw-0434ff1ba735b94ab][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_function.fanout: Destruction complete after 5s[0m
+[0m[1mmodule.pipeline.aws_iam_role.fanout: Destroying... [id=cdc-stg-fanout-role][0m[0m
+[0m[1mmodule.pipeline.aws_iam_role.fanout: Destruction complete after 1s[0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery: Destruction complete after 7s[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_function.delivery: Destroying... [id=cdc-stg-delivery][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still destroying... [id=cdc-stg-target-1, 00m10s elapsed][0m[0m
+[0m[1maws_dms_replication_task.outbox_cdc: Still destroying... [id=cdc-stg-outbox-cdc, 00m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still destroying... [id=cdc-stg-source-1, 00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq, 00m10s elapsed][0m[0m
+[0m[1maws_internet_gateway.main: Still destroying... [id=igw-0434ff1ba735b94ab, 00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_function.delivery: Destruction complete after 5s[0m
+[0m[1mmodule.pipeline.aws_iam_role.delivery: Destroying... [id=cdc-stg-delivery-role][0m[0m
+[0m[1mmodule.pipeline.aws_iam_role.delivery: Destruction complete after 1s[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo, 00m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still destroying... [id=cdc-stg-source-1, 00m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still destroying... [id=cdc-stg-target-1, 00m20s elapsed][0m[0m
+[0m[1maws_dms_replication_task.outbox_cdc: Still destroying... [id=cdc-stg-outbox-cdc, 00m20s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq, 00m20s elapsed][0m[0m
+[0m[1maws_internet_gateway.main: Still destroying... [id=igw-0434ff1ba735b94ab, 00m20s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo, 00m20s elapsed][0m[0m
+[0m[1maws_dms_replication_task.outbox_cdc: Still destroying... [id=cdc-stg-outbox-cdc, 00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still destroying... [id=cdc-stg-source-1, 00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still destroying... [id=cdc-stg-target-1, 00m30s elapsed][0m[0m
+[0m[1maws_dms_replication_task.outbox_cdc: Destruction complete after 30s[0m
+[0m[1maws_dms_replication_instance.main: Destroying... [id=cdc-stg-dms][0m[0m
+[0m[1maws_dms_endpoint.kinesis_target: Destroying... [id=cdc-stg-target-kinesis][0m[0m
+[0m[1maws_dms_endpoint.source: Destroying... [id=cdc-stg-source-aurora][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq, 00m30s elapsed][0m[0m
+[0m[1maws_internet_gateway.main: Still destroying... [id=igw-0434ff1ba735b94ab, 00m30s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo, 00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still destroying... [id=cdc-stg-target-1, 00m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still destroying... [id=cdc-stg-source-1, 00m40s elapsed][0m[0m
+[0m[1maws_dms_endpoint.source: Still destroying... [id=cdc-stg-source-aurora, 00m10s elapsed][0m[0m
+[0m[1maws_dms_endpoint.kinesis_target: Still destroying... [id=cdc-stg-target-kinesis, 00m10s elapsed][0m[0m
+[0m[1maws_dms_replication_instance.main: Still destroying... [id=cdc-stg-dms, 00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq, 00m40s elapsed][0m[0m
+[0m[1maws_internet_gateway.main: Still destroying... [id=igw-0434ff1ba735b94ab, 00m40s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Destruction complete after 42s[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo, 00m40s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Destruction complete after 42s[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still destroying... [id=cdc-stg-source-1, 00m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still destroying... [id=cdc-stg-target-1, 00m50s elapsed][0m[0m
+[0m[1maws_dms_replication_instance.main: Still destroying... [id=cdc-stg-dms, 00m20s elapsed][0m[0m
+[0m[1maws_dms_endpoint.source: Still destroying... [id=cdc-stg-source-aurora, 00m20s elapsed][0m[0m
+[0m[1maws_dms_endpoint.kinesis_target: Still destroying... [id=cdc-stg-target-kinesis, 00m20s elapsed][0m[0m
+[0m[1maws_internet_gateway.main: Still destroying... [id=igw-0434ff1ba735b94ab, 00m50s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo, 00m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still destroying... [id=cdc-stg-target-1, 01m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still destroying... [id=cdc-stg-source-1, 01m00s elapsed][0m[0m
+[0m[1maws_dms_endpoint.kinesis_target: Still destroying... [id=cdc-stg-target-kinesis, 00m30s elapsed][0m[0m
+[0m[1maws_dms_endpoint.source: Still destroying... [id=cdc-stg-source-aurora, 00m30s elapsed][0m[0m
+[0m[1maws_dms_replication_instance.main: Still destroying... [id=cdc-stg-dms, 00m30s elapsed][0m[0m
+[0m[1maws_internet_gateway.main: Still destroying... [id=igw-0434ff1ba735b94ab, 01m00s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo, 00m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still destroying... [id=cdc-stg-source-1, 01m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still destroying... [id=cdc-stg-target-1, 01m10s elapsed][0m[0m
+[0m[1maws_dms_replication_instance.main: Still destroying... [id=cdc-stg-dms, 00m40s elapsed][0m[0m
+[0m[1maws_dms_endpoint.kinesis_target: Still destroying... [id=cdc-stg-target-kinesis, 00m40s elapsed][0m[0m
+[0m[1maws_dms_endpoint.source: Still destroying... [id=cdc-stg-source-aurora, 00m40s elapsed][0m[0m
+[0m[1maws_internet_gateway.main: Still destroying... [id=igw-0434ff1ba735b94ab, 01m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo, 00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still destroying... [id=cdc-stg-target-1, 01m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still destroying... [id=cdc-stg-source-1, 01m20s elapsed][0m[0m
+[0m[1maws_dms_endpoint.source: Still destroying... [id=cdc-stg-source-aurora, 00m50s elapsed][0m[0m
+[0m[1maws_dms_replication_instance.main: Still destroying... [id=cdc-stg-dms, 00m50s elapsed][0m[0m
+[0m[1maws_dms_endpoint.kinesis_target: Still destroying... [id=cdc-stg-target-kinesis, 00m50s elapsed][0m[0m
+[0m[1maws_internet_gateway.main: Still destroying... [id=igw-0434ff1ba735b94ab, 01m20s elapsed][0m[0m

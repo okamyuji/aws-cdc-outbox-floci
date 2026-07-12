@@ -47,6 +47,11 @@ variable "target_api_token" {
   sensitive   = true
 }
 
+variable "admin_cidr" {
+  description = "検証用にDB接続を許可する作業端末のCIDR"
+  type        = string
+}
+
 provider "aws" {
   region = var.region
 }

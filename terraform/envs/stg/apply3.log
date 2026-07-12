@@ -1,0 +1,811 @@
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.lambda_assume: Reading...[0m[0m
+[0m[1mdata.aws_iam_policy_document.dms_assume: Reading...[0m[0m
+[0m[1maws_vpc.main: Refreshing state... [id=vpc-03d88350fc9dd76fd][0m
+[0m[1mmodule.pipeline.aws_kinesis_stream.cdc: Refreshing state... [id=arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream][0m
+[0m[1maws_rds_cluster_parameter_group.source: Refreshing state... [id=cdc-stg-source-params][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Refreshing state... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Refreshing state... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo][0m
+[0m[1mdata.aws_iam_policy_document.dms_assume: Read complete after 0s [id=3935035000][0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.lambda_assume: Read complete after 0s [id=2690255455][0m
+[0m[1maws_iam_role.dms_kinesis: Refreshing state... [id=cdc-stg-dms-kinesis-role][0m
+[0m[1mmodule.pipeline.aws_iam_role.delivery: Refreshing state... [id=cdc-stg-delivery-role][0m
+[0m[1mmodule.pipeline.aws_iam_role.fanout: Refreshing state... [id=cdc-stg-fanout-role][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Refreshing state... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo][0m
+[0m[1mdata.aws_iam_policy_document.dms_kinesis: Reading...[0m[0m
+[0m[1mdata.aws_iam_policy_document.dms_kinesis: Read complete after 0s [id=3141570068][0m
+[0m[1maws_internet_gateway.main: Refreshing state... [id=igw-0434ff1ba735b94ab][0m
+[0m[1maws_subnet.private_a: Refreshing state... [id=subnet-0b30edb83b5f4f7c0][0m
+[0m[1maws_security_group.dms: Refreshing state... [id=sg-0c75f7638794e6d28][0m
+[0m[1maws_subnet.private_c: Refreshing state... [id=subnet-0e6fb64c5cd113466][0m
+[0m[1maws_route_table.public: Refreshing state... [id=rtb-025a9ebd97e173153][0m
+[0m[1maws_db_subnet_group.main: Refreshing state... [id=cdc-stg-db-subnet][0m
+[0m[1maws_route_table_association.c: Refreshing state... [id=rtbassoc-026d3b39145f38d13][0m
+[0m[1maws_route_table_association.a: Refreshing state... [id=rtbassoc-03ae21557fc76f804][0m
+[0m[1mmodule.pipeline.aws_lambda_function.delivery: Refreshing state... [id=cdc-stg-delivery][0m
+[0m[1maws_iam_role_policy.dms_kinesis: Refreshing state... [id=cdc-stg-dms-kinesis-role:cdc-stg-dms-kinesis-policy][0m
+[0m[1maws_dms_endpoint.kinesis_target: Refreshing state... [id=cdc-stg-target-kinesis][0m
+
+[1m[36mNote:[0m[1m Objects have changed outside of Terraform
+[0m
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+[1m  # module.pipeline.aws_sqs_queue.delivery[0m has changed
+[0m  [33m~[0m[0m resource "aws_sqs_queue" "delivery" {
+      [32m+[0m[0m arn                         = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery.fifo"
+        id                          = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo"
+        name                        = "cdc-stg-delivery.fifo"
+      [32m+[0m[0m url                         = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo"
+        [90m# (9 unchanged attributes hidden)[0m[0m
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+[31m-[0m/[32m+[0m destroy and then create replacement[0m
+ [36m<=[0m read (data resources)[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_dms_endpoint.source[0m will be created
+[0m  [32m+[0m[0m resource "aws_dms_endpoint" "source" {
+      [32m+[0m[0m certificate_arn             = (known after apply)
+      [32m+[0m[0m database_name               = "source_orders"
+      [32m+[0m[0m endpoint_arn                = (known after apply)
+      [32m+[0m[0m endpoint_id                 = "cdc-stg-source-aurora"
+      [32m+[0m[0m endpoint_type               = "source"
+      [32m+[0m[0m engine_name                 = "aurora"
+      [32m+[0m[0m extra_connection_attributes = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m kms_key_arn                 = (known after apply)
+      [32m+[0m[0m password                    = (sensitive value)
+      [32m+[0m[0m port                        = 3306
+      [32m+[0m[0m region                      = "ap-northeast-1"
+      [32m+[0m[0m server_name                 = (known after apply)
+      [32m+[0m[0m ssl_mode                    = "require"
+      [32m+[0m[0m tags_all                    = (known after apply)
+      [32m+[0m[0m username                    = "admin_user"
+
+      [32m+[0m[0m redshift_settings (known after apply)
+    }
+
+[1m  # aws_dms_replication_instance.main[0m will be created
+[0m  [32m+[0m[0m resource "aws_dms_replication_instance" "main" {
+      [32m+[0m[0m allocated_storage                = 20
+      [32m+[0m[0m auto_minor_version_upgrade       = (known after apply)
+      [32m+[0m[0m availability_zone                = (known after apply)
+      [32m+[0m[0m engine_version                   = (known after apply)
+      [32m+[0m[0m id                               = (known after apply)
+      [32m+[0m[0m kms_key_arn                      = (known after apply)
+      [32m+[0m[0m multi_az                         = false
+      [32m+[0m[0m network_type                     = (known after apply)
+      [32m+[0m[0m preferred_maintenance_window     = (known after apply)
+      [32m+[0m[0m publicly_accessible              = true
+      [32m+[0m[0m region                           = "ap-northeast-1"
+      [32m+[0m[0m replication_instance_arn         = (known after apply)
+      [32m+[0m[0m replication_instance_class       = "dms.t3.micro"
+      [32m+[0m[0m replication_instance_id          = "cdc-stg-dms"
+      [32m+[0m[0m replication_instance_private_ips = (known after apply)
+      [32m+[0m[0m replication_instance_public_ips  = (known after apply)
+      [32m+[0m[0m replication_subnet_group_id      = (known after apply)
+      [32m+[0m[0m tags_all                         = (known after apply)
+      [32m+[0m[0m vpc_security_group_ids           = [
+          [32m+[0m[0m "sg-0c75f7638794e6d28",
+        ]
+    }
+
+[1m  # aws_dms_replication_subnet_group.main[0m will be created
+[0m  [32m+[0m[0m resource "aws_dms_replication_subnet_group" "main" {
+      [32m+[0m[0m id                                   = (known after apply)
+      [32m+[0m[0m region                               = "ap-northeast-1"
+      [32m+[0m[0m replication_subnet_group_arn         = (known after apply)
+      [32m+[0m[0m replication_subnet_group_description = "DMS subnet group"
+      [32m+[0m[0m replication_subnet_group_id          = "cdc-stg-dms-subnet"
+      [32m+[0m[0m subnet_ids                           = [
+          [32m+[0m[0m "subnet-0b30edb83b5f4f7c0",
+          [32m+[0m[0m "subnet-0e6fb64c5cd113466",
+        ]
+      [32m+[0m[0m tags_all                             = (known after apply)
+      [32m+[0m[0m vpc_id                               = (known after apply)
+    }
+
+[1m  # aws_dms_replication_task.outbox_cdc[0m will be created
+[0m  [32m+[0m[0m resource "aws_dms_replication_task" "outbox_cdc" {
+      [32m+[0m[0m cdc_start_position        = (known after apply)
+      [32m+[0m[0m id                        = (known after apply)
+      [32m+[0m[0m migration_type            = "cdc"
+      [32m+[0m[0m region                    = "ap-northeast-1"
+      [32m+[0m[0m replication_instance_arn  = (known after apply)
+      [32m+[0m[0m replication_task_arn      = (known after apply)
+      [32m+[0m[0m replication_task_id       = "cdc-stg-outbox-cdc"
+      [32m+[0m[0m replication_task_settings = jsonencode(
+            {
+              [32m+[0m[0m Logging        = {
+                  [32m+[0m[0m EnableLogging = true
+                }
+              [32m+[0m[0m TargetMetadata = {
+                  [32m+[0m[0m TargetSchema = ""
+                }
+            }
+        )
+      [32m+[0m[0m source_endpoint_arn       = (known after apply)
+      [32m+[0m[0m start_replication_task    = false
+      [32m+[0m[0m status                    = (known after apply)
+      [32m+[0m[0m table_mappings            = jsonencode(
+            {
+              [32m+[0m[0m rules = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m object-locator = {
+                          [32m+[0m[0m schema-name = "source_orders"
+                          [32m+[0m[0m table-name  = "outbox"
+                        }
+                      [32m+[0m[0m rule-action    = "include"
+                      [32m+[0m[0m rule-id        = "1"
+                      [32m+[0m[0m rule-name      = "select-outbox"
+                      [32m+[0m[0m rule-type      = "selection"
+                    },
+                ]
+            }
+        )
+      [32m+[0m[0m tags_all                  = (known after apply)
+      [32m+[0m[0m target_endpoint_arn       = "arn:aws:dms:ap-northeast-1:018356302326:endpoint:PSZX4W5XNFB75E2F5DKSEVL5LA"
+    }
+
+[1m  # aws_rds_cluster.source[0m will be created
+[0m  [32m+[0m[0m resource "aws_rds_cluster" "source" {
+      [32m+[0m[0m allocated_storage                     = (known after apply)
+      [32m+[0m[0m apply_immediately                     = (known after apply)
+      [32m+[0m[0m arn                                   = (known after apply)
+      [32m+[0m[0m auto_minor_version_upgrade            = (known after apply)
+      [32m+[0m[0m availability_zones                    = (known after apply)
+      [32m+[0m[0m backup_retention_period               = 1
+      [32m+[0m[0m ca_certificate_identifier             = (known after apply)
+      [32m+[0m[0m ca_certificate_valid_till             = (known after apply)
+      [32m+[0m[0m cluster_identifier                    = "cdc-stg-source"
+      [32m+[0m[0m cluster_identifier_prefix             = (known after apply)
+      [32m+[0m[0m cluster_members                       = (known after apply)
+      [32m+[0m[0m cluster_resource_id                   = (known after apply)
+      [32m+[0m[0m cluster_scalability_type              = (known after apply)
+      [32m+[0m[0m copy_tags_to_snapshot                 = false
+      [32m+[0m[0m database_insights_mode                = (known after apply)
+      [32m+[0m[0m database_name                         = "source_orders"
+      [32m+[0m[0m db_cluster_parameter_group_name       = "cdc-stg-source-params"
+      [32m+[0m[0m db_subnet_group_name                  = "cdc-stg-db-subnet"
+      [32m+[0m[0m db_system_id                          = (known after apply)
+      [32m+[0m[0m delete_automated_backups              = true
+      [32m+[0m[0m enable_global_write_forwarding        = false
+      [32m+[0m[0m enable_http_endpoint                  = false
+      [32m+[0m[0m enable_local_write_forwarding         = false
+      [32m+[0m[0m endpoint                              = (known after apply)
+      [32m+[0m[0m engine                                = "aurora-mysql"
+      [32m+[0m[0m engine_lifecycle_support              = (known after apply)
+      [32m+[0m[0m engine_mode                           = "provisioned"
+      [32m+[0m[0m engine_version                        = "8.0.mysql_aurora.3.10.0"
+      [32m+[0m[0m engine_version_actual                 = (known after apply)
+      [32m+[0m[0m hosted_zone_id                        = (known after apply)
+      [32m+[0m[0m iam_roles                             = (known after apply)
+      [32m+[0m[0m id                                    = (known after apply)
+      [32m+[0m[0m kms_key_id                            = (known after apply)
+      [32m+[0m[0m master_password                       = (sensitive value)
+      [32m+[0m[0m master_password_wo                    = (write-only attribute)
+      [32m+[0m[0m master_user_secret                    = (known after apply)
+      [32m+[0m[0m master_user_secret_kms_key_id         = (known after apply)
+      [32m+[0m[0m master_username                       = "admin_user"
+      [32m+[0m[0m monitoring_interval                   = (known after apply)
+      [32m+[0m[0m monitoring_role_arn                   = (known after apply)
+      [32m+[0m[0m network_type                          = (known after apply)
+      [32m+[0m[0m performance_insights_kms_key_id       = (known after apply)
+      [32m+[0m[0m performance_insights_retention_period = (known after apply)
+      [32m+[0m[0m port                                  = (known after apply)
+      [32m+[0m[0m preferred_backup_window               = (known after apply)
+      [32m+[0m[0m preferred_maintenance_window          = (known after apply)
+      [32m+[0m[0m reader_endpoint                       = (known after apply)
+      [32m+[0m[0m region                                = "ap-northeast-1"
+      [32m+[0m[0m skip_final_snapshot                   = true
+      [32m+[0m[0m storage_encrypted                     = (known after apply)
+      [32m+[0m[0m storage_type                          = (known after apply)
+      [32m+[0m[0m tags_all                              = (known after apply)
+      [32m+[0m[0m upgrade_rollout_order                 = (known after apply)
+      [32m+[0m[0m vpc_security_group_ids                = (known after apply)
+
+      [32m+[0m[0m serverlessv2_scaling_configuration {
+          [32m+[0m[0m max_capacity             = 1
+          [32m+[0m[0m min_capacity             = 0.5
+          [32m+[0m[0m seconds_until_auto_pause = (known after apply)
+        }
+    }
+
+[1m  # aws_rds_cluster.target[0m will be created
+[0m  [32m+[0m[0m resource "aws_rds_cluster" "target" {
+      [32m+[0m[0m allocated_storage                     = (known after apply)
+      [32m+[0m[0m apply_immediately                     = (known after apply)
+      [32m+[0m[0m arn                                   = (known after apply)
+      [32m+[0m[0m auto_minor_version_upgrade            = (known after apply)
+      [32m+[0m[0m availability_zones                    = (known after apply)
+      [32m+[0m[0m backup_retention_period               = 1
+      [32m+[0m[0m ca_certificate_identifier             = (known after apply)
+      [32m+[0m[0m ca_certificate_valid_till             = (known after apply)
+      [32m+[0m[0m cluster_identifier                    = "cdc-stg-target"
+      [32m+[0m[0m cluster_identifier_prefix             = (known after apply)
+      [32m+[0m[0m cluster_members                       = (known after apply)
+      [32m+[0m[0m cluster_resource_id                   = (known after apply)
+      [32m+[0m[0m cluster_scalability_type              = (known after apply)
+      [32m+[0m[0m copy_tags_to_snapshot                 = false
+      [32m+[0m[0m database_insights_mode                = (known after apply)
+      [32m+[0m[0m database_name                         = "target_orders"
+      [32m+[0m[0m db_cluster_parameter_group_name       = (known after apply)
+      [32m+[0m[0m db_subnet_group_name                  = "cdc-stg-db-subnet"
+      [32m+[0m[0m db_system_id                          = (known after apply)
+      [32m+[0m[0m delete_automated_backups              = true
+      [32m+[0m[0m enable_global_write_forwarding        = false
+      [32m+[0m[0m enable_http_endpoint                  = false
+      [32m+[0m[0m enable_local_write_forwarding         = false
+      [32m+[0m[0m endpoint                              = (known after apply)
+      [32m+[0m[0m engine                                = "aurora-mysql"
+      [32m+[0m[0m engine_lifecycle_support              = (known after apply)
+      [32m+[0m[0m engine_mode                           = "provisioned"
+      [32m+[0m[0m engine_version                        = "8.0.mysql_aurora.3.10.0"
+      [32m+[0m[0m engine_version_actual                 = (known after apply)
+      [32m+[0m[0m hosted_zone_id                        = (known after apply)
+      [32m+[0m[0m iam_roles                             = (known after apply)
+      [32m+[0m[0m id                                    = (known after apply)
+      [32m+[0m[0m kms_key_id                            = (known after apply)
+      [32m+[0m[0m master_password                       = (sensitive value)
+      [32m+[0m[0m master_password_wo                    = (write-only attribute)
+      [32m+[0m[0m master_user_secret                    = (known after apply)
+      [32m+[0m[0m master_user_secret_kms_key_id         = (known after apply)
+      [32m+[0m[0m master_username                       = "admin_user"
+      [32m+[0m[0m monitoring_interval                   = (known after apply)
+      [32m+[0m[0m monitoring_role_arn                   = (known after apply)
+      [32m+[0m[0m network_type                          = (known after apply)
+      [32m+[0m[0m performance_insights_kms_key_id       = (known after apply)
+      [32m+[0m[0m performance_insights_retention_period = (known after apply)
+      [32m+[0m[0m port                                  = (known after apply)
+      [32m+[0m[0m preferred_backup_window               = (known after apply)
+      [32m+[0m[0m preferred_maintenance_window          = (known after apply)
+      [32m+[0m[0m reader_endpoint                       = (known after apply)
+      [32m+[0m[0m region                                = "ap-northeast-1"
+      [32m+[0m[0m skip_final_snapshot                   = true
+      [32m+[0m[0m storage_encrypted                     = (known after apply)
+      [32m+[0m[0m storage_type                          = (known after apply)
+      [32m+[0m[0m tags_all                              = (known after apply)
+      [32m+[0m[0m upgrade_rollout_order                 = (known after apply)
+      [32m+[0m[0m vpc_security_group_ids                = (known after apply)
+
+      [32m+[0m[0m serverlessv2_scaling_configuration {
+          [32m+[0m[0m max_capacity             = 1
+          [32m+[0m[0m min_capacity             = 0.5
+          [32m+[0m[0m seconds_until_auto_pause = (known after apply)
+        }
+    }
+
+[1m  # aws_rds_cluster_instance.source[0m will be created
+[0m  [32m+[0m[0m resource "aws_rds_cluster_instance" "source" {
+      [32m+[0m[0m apply_immediately                     = (known after apply)
+      [32m+[0m[0m arn                                   = (known after apply)
+      [32m+[0m[0m auto_minor_version_upgrade            = true
+      [32m+[0m[0m availability_zone                     = (known after apply)
+      [32m+[0m[0m ca_cert_identifier                    = (known after apply)
+      [32m+[0m[0m cluster_identifier                    = (known after apply)
+      [32m+[0m[0m copy_tags_to_snapshot                 = false
+      [32m+[0m[0m db_parameter_group_name               = (known after apply)
+      [32m+[0m[0m db_subnet_group_name                  = (known after apply)
+      [32m+[0m[0m dbi_resource_id                       = (known after apply)
+      [32m+[0m[0m endpoint                              = (known after apply)
+      [32m+[0m[0m engine                                = "aurora-mysql"
+      [32m+[0m[0m engine_version                        = "8.0.mysql_aurora.3.10.0"
+      [32m+[0m[0m engine_version_actual                 = (known after apply)
+      [32m+[0m[0m force_destroy                         = false
+      [32m+[0m[0m id                                    = (known after apply)
+      [32m+[0m[0m identifier                            = "cdc-stg-source-1"
+      [32m+[0m[0m identifier_prefix                     = (known after apply)
+      [32m+[0m[0m instance_class                        = "db.serverless"
+      [32m+[0m[0m kms_key_id                            = (known after apply)
+      [32m+[0m[0m monitoring_interval                   = 0
+      [32m+[0m[0m monitoring_role_arn                   = (known after apply)
+      [32m+[0m[0m network_type                          = (known after apply)
+      [32m+[0m[0m performance_insights_enabled          = (known after apply)
+      [32m+[0m[0m performance_insights_kms_key_id       = (known after apply)
+      [32m+[0m[0m performance_insights_retention_period = (known after apply)
+      [32m+[0m[0m port                                  = (known after apply)
+      [32m+[0m[0m preferred_backup_window               = (known after apply)
+      [32m+[0m[0m preferred_maintenance_window          = (known after apply)
+      [32m+[0m[0m promotion_tier                        = 0
+      [32m+[0m[0m publicly_accessible                   = true
+      [32m+[0m[0m region                                = "ap-northeast-1"
+      [32m+[0m[0m storage_encrypted                     = (known after apply)
+      [32m+[0m[0m tags_all                              = (known after apply)
+      [32m+[0m[0m writer                                = (known after apply)
+    }
+
+[1m  # aws_rds_cluster_instance.target[0m will be created
+[0m  [32m+[0m[0m resource "aws_rds_cluster_instance" "target" {
+      [32m+[0m[0m apply_immediately                     = (known after apply)
+      [32m+[0m[0m arn                                   = (known after apply)
+      [32m+[0m[0m auto_minor_version_upgrade            = true
+      [32m+[0m[0m availability_zone                     = (known after apply)
+      [32m+[0m[0m ca_cert_identifier                    = (known after apply)
+      [32m+[0m[0m cluster_identifier                    = (known after apply)
+      [32m+[0m[0m copy_tags_to_snapshot                 = false
+      [32m+[0m[0m db_parameter_group_name               = (known after apply)
+      [32m+[0m[0m db_subnet_group_name                  = (known after apply)
+      [32m+[0m[0m dbi_resource_id                       = (known after apply)
+      [32m+[0m[0m endpoint                              = (known after apply)
+      [32m+[0m[0m engine                                = "aurora-mysql"
+      [32m+[0m[0m engine_version                        = "8.0.mysql_aurora.3.10.0"
+      [32m+[0m[0m engine_version_actual                 = (known after apply)
+      [32m+[0m[0m force_destroy                         = false
+      [32m+[0m[0m id                                    = (known after apply)
+      [32m+[0m[0m identifier                            = "cdc-stg-target-1"
+      [32m+[0m[0m identifier_prefix                     = (known after apply)
+      [32m+[0m[0m instance_class                        = "db.serverless"
+      [32m+[0m[0m kms_key_id                            = (known after apply)
+      [32m+[0m[0m monitoring_interval                   = 0
+      [32m+[0m[0m monitoring_role_arn                   = (known after apply)
+      [32m+[0m[0m network_type                          = (known after apply)
+      [32m+[0m[0m performance_insights_enabled          = (known after apply)
+      [32m+[0m[0m performance_insights_kms_key_id       = (known after apply)
+      [32m+[0m[0m performance_insights_retention_period = (known after apply)
+      [32m+[0m[0m port                                  = (known after apply)
+      [32m+[0m[0m preferred_backup_window               = (known after apply)
+      [32m+[0m[0m preferred_maintenance_window          = (known after apply)
+      [32m+[0m[0m promotion_tier                        = 0
+      [32m+[0m[0m publicly_accessible                   = true
+      [32m+[0m[0m region                                = "ap-northeast-1"
+      [32m+[0m[0m storage_encrypted                     = (known after apply)
+      [32m+[0m[0m tags_all                              = (known after apply)
+      [32m+[0m[0m writer                                = (known after apply)
+    }
+
+[1m  # aws_security_group.aurora[0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "aurora" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "Managed by Terraform"
+      [32m+[0m[0m egress                 = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "0.0.0.0/0",
+                ]
+              [32m+[0m[0m from_port        = 0
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "-1"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 0
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ]
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = [
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = [
+                  [32m+[0m[0m "125.49.71.221/32",
+                ]
+              [32m+[0m[0m description      = "MySQL from admin workstation (verification only)"
+              [32m+[0m[0m from_port        = 3306
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = []
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 3306
+            },
+          [32m+[0m[0m {
+              [32m+[0m[0m cidr_blocks      = []
+              [32m+[0m[0m description      = "MySQL from DMS"
+              [32m+[0m[0m from_port        = 3306
+              [32m+[0m[0m ipv6_cidr_blocks = []
+              [32m+[0m[0m prefix_list_ids  = []
+              [32m+[0m[0m protocol         = "tcp"
+              [32m+[0m[0m security_groups  = [
+                  [32m+[0m[0m "sg-0c75f7638794e6d28",
+                ]
+              [32m+[0m[0m self             = false
+              [32m+[0m[0m to_port          = 3306
+            },
+        ]
+      [32m+[0m[0m name                   = "cdc-stg-aurora"
+      [32m+[0m[0m name_prefix            = (known after apply)
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m region                 = "ap-northeast-1"
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Name" = "cdc-stg-aurora"
+        }
+      [32m+[0m[0m tags_all               = {
+          [32m+[0m[0m "Name" = "cdc-stg-aurora"
+        }
+      [32m+[0m[0m vpc_id                 = "vpc-03d88350fc9dd76fd"
+    }
+
+[1m  # module.pipeline.data.aws_iam_policy_document.delivery[0m will be read during apply
+  # (config refers to values not yet known)
+[0m [36m<=[0m[0m data "aws_iam_policy_document" "delivery" {
+      [32m+[0m[0m id            = (known after apply)
+      [32m+[0m[0m json          = (known after apply)
+      [32m+[0m[0m minified_json = (known after apply)
+
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions   = [
+              [32m+[0m[0m "sqs:DeleteMessage",
+              [32m+[0m[0m "sqs:GetQueueAttributes",
+              [32m+[0m[0m "sqs:ReceiveMessage",
+            ]
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m (known after apply),
+            ]
+        }
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions   = [
+              [32m+[0m[0m "logs:CreateLogGroup",
+              [32m+[0m[0m "logs:CreateLogStream",
+              [32m+[0m[0m "logs:PutLogEvents",
+            ]
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "*",
+            ]
+        }
+    }
+
+[1m  # module.pipeline.data.aws_iam_policy_document.fanout[0m will be read during apply
+  # (config refers to values not yet known)
+[0m [36m<=[0m[0m data "aws_iam_policy_document" "fanout" {
+      [32m+[0m[0m id            = (known after apply)
+      [32m+[0m[0m json          = (known after apply)
+      [32m+[0m[0m minified_json = (known after apply)
+
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions   = [
+              [32m+[0m[0m "kinesis:DescribeStream",
+              [32m+[0m[0m "kinesis:DescribeStreamSummary",
+              [32m+[0m[0m "kinesis:GetRecords",
+              [32m+[0m[0m "kinesis:GetShardIterator",
+              [32m+[0m[0m "kinesis:ListShards",
+              [32m+[0m[0m "kinesis:ListStreams",
+            ]
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream",
+            ]
+        }
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions   = [
+              [32m+[0m[0m "sqs:SendMessage",
+            ]
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-fanout-dlq",
+              [32m+[0m[0m (known after apply),
+            ]
+        }
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions   = [
+              [32m+[0m[0m "logs:CreateLogGroup",
+              [32m+[0m[0m "logs:CreateLogStream",
+              [32m+[0m[0m "logs:PutLogEvents",
+            ]
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "*",
+            ]
+        }
+    }
+
+[1m  # module.pipeline.aws_iam_role_policy.delivery[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy" "delivery" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = "cdc-stg-delivery-policy"
+      [32m+[0m[0m name_prefix = (known after apply)
+      [32m+[0m[0m policy      = (known after apply)
+      [32m+[0m[0m role        = "cdc-stg-delivery-role"
+    }
+
+[1m  # module.pipeline.aws_iam_role_policy.fanout[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy" "fanout" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = "cdc-stg-fanout-policy"
+      [32m+[0m[0m name_prefix = (known after apply)
+      [32m+[0m[0m policy      = (known after apply)
+      [32m+[0m[0m role        = "cdc-stg-fanout-role"
+    }
+
+[1m  # module.pipeline.aws_lambda_event_source_mapping.kinesis_to_fanout[0m will be created
+[0m  [32m+[0m[0m resource "aws_lambda_event_source_mapping" "kinesis_to_fanout" {
+      [32m+[0m[0m arn                           = (known after apply)
+      [32m+[0m[0m batch_size                    = 100
+      [32m+[0m[0m enabled                       = true
+      [32m+[0m[0m event_source_arn              = "arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream"
+      [32m+[0m[0m function_arn                  = (known after apply)
+      [32m+[0m[0m function_name                 = (known after apply)
+      [32m+[0m[0m function_response_types       = [
+          [32m+[0m[0m "ReportBatchItemFailures",
+        ]
+      [32m+[0m[0m id                            = (known after apply)
+      [32m+[0m[0m last_modified                 = (known after apply)
+      [32m+[0m[0m last_processing_result        = (known after apply)
+      [32m+[0m[0m maximum_record_age_in_seconds = (known after apply)
+      [32m+[0m[0m maximum_retry_attempts        = 10
+      [32m+[0m[0m parallelization_factor        = (known after apply)
+      [32m+[0m[0m region                        = "ap-northeast-1"
+      [32m+[0m[0m starting_position             = "LATEST"
+      [32m+[0m[0m state                         = (known after apply)
+      [32m+[0m[0m state_transition_reason       = (known after apply)
+      [32m+[0m[0m tags_all                      = (known after apply)
+      [32m+[0m[0m uuid                          = (known after apply)
+
+      [32m+[0m[0m amazon_managed_kafka_event_source_config (known after apply)
+
+      [32m+[0m[0m destination_config {
+          [32m+[0m[0m on_failure {
+              [32m+[0m[0m destination_arn = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-fanout-dlq"
+            }
+        }
+
+      [32m+[0m[0m self_managed_kafka_event_source_config (known after apply)
+    }
+
+[1m  # module.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery[0m will be created
+[0m  [32m+[0m[0m resource "aws_lambda_event_source_mapping" "sqs_to_delivery" {
+      [32m+[0m[0m arn                           = (known after apply)
+      [32m+[0m[0m batch_size                    = 10
+      [32m+[0m[0m enabled                       = true
+      [32m+[0m[0m event_source_arn              = (known after apply)
+      [32m+[0m[0m function_arn                  = (known after apply)
+      [32m+[0m[0m function_name                 = "arn:aws:lambda:ap-northeast-1:018356302326:function:cdc-stg-delivery"
+      [32m+[0m[0m function_response_types       = [
+          [32m+[0m[0m "ReportBatchItemFailures",
+        ]
+      [32m+[0m[0m id                            = (known after apply)
+      [32m+[0m[0m last_modified                 = (known after apply)
+      [32m+[0m[0m last_processing_result        = (known after apply)
+      [32m+[0m[0m maximum_record_age_in_seconds = (known after apply)
+      [32m+[0m[0m maximum_retry_attempts        = (known after apply)
+      [32m+[0m[0m parallelization_factor        = (known after apply)
+      [32m+[0m[0m region                        = "ap-northeast-1"
+      [32m+[0m[0m state                         = (known after apply)
+      [32m+[0m[0m state_transition_reason       = (known after apply)
+      [32m+[0m[0m tags_all                      = (known after apply)
+      [32m+[0m[0m uuid                          = (known after apply)
+
+      [32m+[0m[0m amazon_managed_kafka_event_source_config (known after apply)
+
+      [32m+[0m[0m self_managed_kafka_event_source_config (known after apply)
+    }
+
+[1m  # module.pipeline.aws_lambda_function.fanout[0m will be created
+[0m  [32m+[0m[0m resource "aws_lambda_function" "fanout" {
+      [32m+[0m[0m architectures                  = [
+          [32m+[0m[0m "arm64",
+        ]
+      [32m+[0m[0m arn                            = (known after apply)
+      [32m+[0m[0m code_sha256                    = (known after apply)
+      [32m+[0m[0m filename                       = "./../../../dist/fanout.zip"
+      [32m+[0m[0m function_name                  = "cdc-stg-fanout"
+      [32m+[0m[0m handler                        = "bootstrap"
+      [32m+[0m[0m id                             = (known after apply)
+      [32m+[0m[0m invoke_arn                     = (known after apply)
+      [32m+[0m[0m last_modified                  = (known after apply)
+      [32m+[0m[0m memory_size                    = 128
+      [32m+[0m[0m package_type                   = "Zip"
+      [32m+[0m[0m publish                        = false
+      [32m+[0m[0m qualified_arn                  = (known after apply)
+      [32m+[0m[0m qualified_invoke_arn           = (known after apply)
+      [32m+[0m[0m region                         = "ap-northeast-1"
+      [32m+[0m[0m reserved_concurrent_executions = -1
+      [32m+[0m[0m response_streaming_invoke_arn  = (known after apply)
+      [32m+[0m[0m role                           = "arn:aws:iam::018356302326:role/cdc-stg-fanout-role"
+      [32m+[0m[0m runtime                        = "provided.al2023"
+      [32m+[0m[0m signing_job_arn                = (known after apply)
+      [32m+[0m[0m signing_profile_version_arn    = (known after apply)
+      [32m+[0m[0m skip_destroy                   = false
+      [32m+[0m[0m source_code_hash               = "33h3t7fuK+Gax43Smaemwxh2tcAgKr7Bd3m1kpRp/aY="
+      [32m+[0m[0m source_code_size               = (known after apply)
+      [32m+[0m[0m tags_all                       = (known after apply)
+      [32m+[0m[0m timeout                        = 30
+      [32m+[0m[0m version                        = (known after apply)
+
+      [32m+[0m[0m environment {
+          [32m+[0m[0m variables = (known after apply)
+        }
+
+      [32m+[0m[0m ephemeral_storage (known after apply)
+
+      [32m+[0m[0m logging_config (known after apply)
+
+      [32m+[0m[0m tracing_config (known after apply)
+    }
+
+[1m  # module.pipeline.aws_sqs_queue.delivery[0m is tainted, so must be [1m[31mreplaced[0m
+[0m[31m-[0m/[32m+[0m[0m resource "aws_sqs_queue" "delivery" {
+      [33m~[0m[0m arn                               = "arn:aws:sqs:ap-northeast-1:018356302326:cdc-stg-delivery.fifo" -> (known after apply)
+      [33m~[0m[0m deduplication_scope               = "queue" -> (known after apply)
+      [33m~[0m[0m fifo_throughput_limit             = "perQueue" -> (known after apply)
+      [33m~[0m[0m id                                = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo" -> (known after apply)
+      [33m~[0m[0m kms_data_key_reuse_period_seconds = 300 -> (known after apply)
+        name                              = "cdc-stg-delivery.fifo"
+      [32m+[0m[0m name_prefix                       = (known after apply)
+      [32m+[0m[0m policy                            = (known after apply)
+      [32m+[0m[0m redrive_allow_policy              = (known after apply)
+      [33m~[0m[0m sqs_managed_sse_enabled           = true -> (known after apply)
+      [31m-[0m[0m tags                              = {} [90m-> null[0m[0m
+      [33m~[0m[0m tags_all                          = {} -> (known after apply)
+      [33m~[0m[0m url                               = "https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo" -> (known after apply)
+        [90m# (10 unchanged attributes hidden)[0m[0m
+    }
+
+[1mPlan:[0m [0m15 to add, 0 to change, 1 to destroy.
+
+Changes to Outputs:
+  [32m+[0m[0m delivery_queue_url      = (known after apply)
+  [32m+[0m[0m dms_task_arn            = (known after apply)
+  [32m+[0m[0m source_cluster_endpoint = (known after apply)
+  [32m+[0m[0m target_cluster_endpoint = (known after apply)
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Creating...[0m[0m
+[0m[1maws_security_group.aurora: Creating...[0m[0m
+[0m[1maws_security_group.aurora: Creation complete after 3s [id=sg-074e82f1817c592aa][0m
+[0m[1maws_rds_cluster.source: Creating...[0m[0m
+[0m[1maws_rds_cluster.target: Creating...[0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo, 00m10s elapsed][0m[0m
+[0m[1maws_rds_cluster.source: Still creating... [00m10s elapsed][0m[0m
+[0m[1maws_rds_cluster.target: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo, 00m20s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_rds_cluster.target: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_rds_cluster.source: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [00m30s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo, 00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster.source: Still creating... [00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster.target: Still creating... [00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster.target: Creation complete after 31s [id=cdc-stg-target][0m
+[0m[1maws_rds_cluster.source: Creation complete after 31s [id=cdc-stg-source][0m
+[0m[1maws_rds_cluster_instance.target: Creating...[0m[0m
+[0m[1maws_rds_cluster_instance.source: Creating...[0m[0m
+[0m[1maws_dms_endpoint.source: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still destroying... [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo, 00m40s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [00m40s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Destruction complete after 42s[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Creating...[0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [00m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [00m10s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [00m50s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still creating... [00m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [01m00s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [00m30s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [01m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still creating... [00m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [00m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [00m40s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [01m20s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still creating... [00m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [00m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [00m50s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [01m30s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Still creating... [00m50s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Creation complete after 51s [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo][0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.delivery: Reading...[0m[0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.fanout: Reading...[0m[0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.delivery: Read complete after 0s [id=431009911][0m
+[0m[1mmodule.pipeline.data.aws_iam_policy_document.fanout: Read complete after 0s [id=412058112][0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_lambda_function.fanout: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.delivery: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.fanout: Creating...[0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [01m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [01m00s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.fanout: Creation complete after 2s [id=cdc-stg-fanout-role:cdc-stg-fanout-policy][0m
+[0m[1mmodule.pipeline.aws_iam_role_policy.delivery: Creation complete after 2s [id=cdc-stg-delivery-role:cdc-stg-delivery-policy][0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [01m40s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_function.fanout: Creation complete after 8s [id=cdc-stg-fanout][0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.kinesis_to_fanout: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.kinesis_to_fanout: Creation complete after 1s [id=63827540-a18b-4eec-b823-ded152ef8536][0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery: Still creating... [00m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [01m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [01m10s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [01m50s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery: Still creating... [00m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [01m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [01m20s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_event_source_mapping.sqs_to_delivery: Creation complete after 22s [id=575bf92a-f200-4dee-ac65-af94bfe8cf73][0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [02m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [01m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [01m30s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [02m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [01m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [01m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [01m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [01m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [02m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [02m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [02m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [02m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [02m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [02m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [02m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [02m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [02m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [02m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [02m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [02m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [03m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [03m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [03m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [03m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [03m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [03m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [03m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [03m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [03m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [03m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [03m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [03m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [04m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [04m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [04m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [04m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [04m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [04m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [04m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [04m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [04m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [04m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [04m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [04m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [05m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [05m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [05m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [05m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [05m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [05m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [05m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [05m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [05m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [05m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [05m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [05m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [06m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [06m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [06m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [06m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [06m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [06m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [06m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [06m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [06m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [06m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [06m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [06m50s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [07m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Still creating... [07m00s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.target: Creation complete after 7m7s [id=cdc-stg-target-1][0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [07m10s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [07m20s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [07m30s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Still creating... [07m40s elapsed][0m[0m
+[0m[1maws_rds_cluster_instance.source: Creation complete after 7m48s [id=cdc-stg-source-1][0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mcreating DMS Replication Subnet Group (cdc-stg-dms-subnet): operation error Database Migration Service: CreateReplicationSubnetGroup, https response error StatusCode: 400, RequestID: 8b58bc8d-8657-461f-a028-9c8e1fdd3f25, AccessDeniedFault: The IAM Role arn:aws:iam::018356302326:role/dms-vpc-role is not configured properly.[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with aws_dms_replication_subnet_group.main,
+[31m│[0m [0m  on dms.tf line 4, in resource "aws_dms_replication_subnet_group" "main":
+[31m│[0m [0m   4: resource "aws_dms_replication_subnet_group" "main" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mcreating DMS Endpoint (cdc-stg-source-aurora): operation error Database Migration Service: CreateEndpoint, https response error StatusCode: 400, RequestID: 5d5d92b2-5d55-4374-9070-1a647942a540, api error InvalidParameterCombinationException: The require SSL mode is not supported by the 'aurora' engine.[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with aws_dms_endpoint.source,
+[31m│[0m [0m  on dms.tf line 20, in resource "aws_dms_endpoint" "source":
+[31m│[0m [0m  20: resource "aws_dms_endpoint" "source" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m

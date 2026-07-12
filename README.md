@@ -67,7 +67,14 @@ repositoryのテストはtestcontainers（mysql:8.0）で実DBに対して実行
 
 ## stg環境
 
-`terraform/envs/stg`にAurora MySQL 8.0（ソース・ターゲット）、DMS（binlog CDC→Kinesis）、共通パイプラインの定義があります。適用は費用が発生するため手動で行います。
+`terraform/envs/stg`にAurora MySQL 8.0（ソース・ターゲット）、DMS（binlog CDC→Kinesis）、共通パイプラインの定義があります。適用は費用が発生するため手動で行います。実測済みの検証手順は次のとおりです。
+
+1. `terraform apply`（admin_cidrに作業端末のIPを指定）
+2. 両Auroraへ`db/*.sql`を適用し、`binlog_format=ROW`と`binlog retention hours`を確認
+3. `aws dms start-replication-task`でCDCタスクを起動
+4. outboxへテストINSERT（ロールバック分はKinesisへ流れないことも確認）
+5. Kinesisの実レコード（DMSエンベロープ）とSQS FIFOのメッセージを突き合わせ
+6. `terraform destroy`
 
 ```bash
 cd terraform/envs/stg
@@ -75,7 +82,14 @@ terraform init
 terraform plan -var db_master_password=... -var target_api_url=https://...
 ```
 
-## 既知の制約
+## 既知の制約（stg/DMS）
+
+- アカウントに固定名の`dms-vpc-role`が必要です（無いとサブネットグループ作成が「is not configured properly」で失敗）。Terraformで作成しています
+- `aurora`エンジンのDMSエンドポイントは`ssl_mode = "require"`非対応です
+- `dms.t3.micro`は提供終了。最小クラスは`dms.t3.small`です
+- Kinesisターゲットの既定パーティションキーは`スキーマ.テーブル`です。複数シャードで集約単位に分散させるにはオブジェクトマッピングが必要です
+
+## 既知の制約（floci）
 
 - flociは`DescribeDBInstances`の`dbi-resource-id`フィルタ未実装のため、Terraform AWS provider v5系の`aws_db_instance`が使えません。ローカルのDB作成のみ`scripts/local-db.sh`（AWS CLI）で行います。
 - flociのRDSプロキシはTLS非対応のため、mysqlクライアントは`--ssl-mode=DISABLED`で接続します。

@@ -43,11 +43,12 @@ resource "aws_rds_cluster" "source" {
 }
 
 resource "aws_rds_cluster_instance" "source" {
-  identifier         = "${var.name_prefix}-source-1"
-  cluster_identifier = aws_rds_cluster.source.id
-  engine             = aws_rds_cluster.source.engine
-  engine_version     = aws_rds_cluster.source.engine_version
-  instance_class     = "db.serverless"
+  identifier          = "${var.name_prefix}-source-1"
+  cluster_identifier  = aws_rds_cluster.source.id
+  engine              = aws_rds_cluster.source.engine
+  engine_version      = aws_rds_cluster.source.engine_version
+  instance_class      = "db.serverless"
+  publicly_accessible = true # 検証用。スキーマ適用とテストデータ投入を作業端末から行う
 }
 
 resource "aws_rds_cluster" "target" {
@@ -69,9 +70,10 @@ resource "aws_rds_cluster" "target" {
 }
 
 resource "aws_rds_cluster_instance" "target" {
-  identifier         = "${var.name_prefix}-target-1"
-  cluster_identifier = aws_rds_cluster.target.id
-  engine             = aws_rds_cluster.target.engine
-  engine_version     = aws_rds_cluster.target.engine_version
-  instance_class     = "db.serverless"
+  identifier          = "${var.name_prefix}-target-1"
+  cluster_identifier  = aws_rds_cluster.target.id
+  engine              = aws_rds_cluster.target.engine
+  engine_version      = aws_rds_cluster.target.engine_version
+  instance_class      = "db.serverless"
+  publicly_accessible = true # 検証用
 }

@@ -1,0 +1,109 @@
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_iam_role.delivery: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_iam_role.fanout: Creating...[0m[0m
+[0m[1maws_rds_cluster_parameter_group.source: Creating...[0m[0m
+[0m[1maws_iam_role.dms_kinesis: Creating...[0m[0m
+[0m[1maws_vpc.main: Creating...[0m[0m
+[0m[1mmodule.pipeline.aws_kinesis_stream.cdc: Creating...[0m[0m
+[0m[1maws_rds_cluster_parameter_group.source: Creation complete after 1s [id=cdc-stg-source-params][0m
+[0m[1maws_iam_role.dms_kinesis: Creation complete after 2s [id=cdc-stg-dms-kinesis-role][0m
+[0m[1mmodule.pipeline.aws_iam_role.fanout: Creation complete after 2s [id=cdc-stg-fanout-role][0m
+[0m[1mmodule.pipeline.aws_iam_role.delivery: Creation complete after 2s [id=cdc-stg-delivery-role][0m
+[0m[1mmodule.pipeline.aws_lambda_function.delivery: Creating...[0m[0m
+[0m[1maws_vpc.main: Creation complete after 3s [id=vpc-03d88350fc9dd76fd][0m
+[0m[1maws_internet_gateway.main: Creating...[0m[0m
+[0m[1maws_subnet.private_a: Creating...[0m[0m
+[0m[1maws_subnet.private_c: Creating...[0m[0m
+[0m[1maws_security_group.dms: Creating...[0m[0m
+[0m[1maws_internet_gateway.main: Creation complete after 0s [id=igw-0434ff1ba735b94ab][0m
+[0m[1maws_route_table.public: Creating...[0m[0m
+[0m[1maws_subnet.private_c: Creation complete after 0s [id=subnet-0e6fb64c5cd113466][0m
+[0m[1maws_subnet.private_a: Creation complete after 0s [id=subnet-0b30edb83b5f4f7c0][0m
+[0m[1maws_dms_replication_subnet_group.main: Creating...[0m[0m
+[0m[1maws_db_subnet_group.main: Creating...[0m[0m
+[0m[1maws_route_table.public: Creation complete after 2s [id=rtb-025a9ebd97e173153][0m
+[0m[1maws_route_table_association.a: Creating...[0m[0m
+[0m[1maws_route_table_association.c: Creating...[0m[0m
+[0m[1maws_route_table_association.a: Creation complete after 0s [id=rtbassoc-03ae21557fc76f804][0m
+[0m[1maws_route_table_association.c: Creation complete after 0s [id=rtbassoc-026d3b39145f38d13][0m
+[0m[1maws_db_subnet_group.main: Creation complete after 2s [id=cdc-stg-db-subnet][0m
+[0m[1maws_security_group.dms: Creation complete after 2s [id=sg-0c75f7638794e6d28][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_kinesis_stream.cdc: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_function.delivery: Still creating... [00m10s elapsed][0m[0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [00m10s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_lambda_function.delivery: Creation complete after 15s [id=cdc-stg-delivery][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_kinesis_stream.cdc: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_kinesis_stream.cdc: Creation complete after 20s [id=arn:aws:kinesis:ap-northeast-1:018356302326:stream/cdc-stg-cdc-stream][0m
+[0m[1mdata.aws_iam_policy_document.dms_kinesis: Reading...[0m[0m
+[0m[1mdata.aws_iam_policy_document.dms_kinesis: Read complete after 0s [id=3141570068][0m
+[0m[1maws_dms_endpoint.kinesis_target: Creating...[0m[0m
+[0m[1maws_iam_role_policy.dms_kinesis: Creating...[0m[0m
+[0m[1maws_dms_endpoint.kinesis_target: Creation complete after 0s [id=cdc-stg-target-kinesis][0m
+[0m[1maws_iam_role_policy.dms_kinesis: Creation complete after 1s [id=cdc-stg-dms-kinesis-role:cdc-stg-dms-kinesis-policy][0m
+[0m[1maws_dms_replication_subnet_group.main: Still creating... [00m20s elapsed][0m[0m
+[0m[1mmodule.pipeline.aws_sqs_queue.fanout_dlq: Creation complete after 26s [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-fanout-dlq][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery_dlq: Creation complete after 26s [id=https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery-dlq.fifo][0m
+[0m[1mmodule.pipeline.aws_sqs_queue.delivery: Creating...[0m[0m
+Stopping operation...
+
+Interrupt received.
+Please wait for Terraform to exit or data loss may occur.
+Gracefully shutting down...
+
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mexecution halted[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mexecution halted[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mexecution halted[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mexecution halted[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mcreating DMS Replication Subnet Group (cdc-stg-dms-subnet): operation error Database Migration Service: CreateReplicationSubnetGroup, https response error StatusCode: 400, RequestID: a74dd4a5-f0e1-405f-9df4-20b9aca2b6af, AccessDeniedFault: The IAM Role arn:aws:iam::018356302326:role/dms-vpc-role is not configured properly.[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with aws_dms_replication_subnet_group.main,
+[31m│[0m [0m  on dms.tf line 4, in resource "aws_dms_replication_subnet_group" "main":
+[31m│[0m [0m   4: resource "aws_dms_replication_subnet_group" "main" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1m"ingress.0.description" doesn't comply with restrictions ("^[0-9A-Za-z_ .:/()#,@\\[\\]+=&;{}!$*-]*$"): "検証用: 作業端末からのMySQL接続"[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with aws_security_group.aurora,
+[31m│[0m [0m  on network.tf line 55, in resource "aws_security_group" "aurora":
+[31m│[0m [0m  55: resource "aws_security_group" "aurora" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1m"ingress.1.description" doesn't comply with restrictions ("^[0-9A-Za-z_ .:/()#,@\\[\\]+=&;{}!$*-]*$"): "DMSからのMySQL接続"[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with aws_security_group.aurora,
+[31m│[0m [0m  on network.tf line 55, in resource "aws_security_group" "aurora":
+[31m│[0m [0m  55: resource "aws_security_group" "aurora" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mwaiting for SQS Queue (https://sqs.ap-northeast-1.amazonaws.com/018356302326/cdc-stg-delivery.fifo) attributes create: context canceled[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  with module.pipeline.aws_sqs_queue.delivery,
+[31m│[0m [0m  on ../../modules/pipeline/main.tf line 16, in resource "aws_sqs_queue" "delivery":
+[31m│[0m [0m  16: resource "aws_sqs_queue" "delivery" [4m{[0m[0m
+[31m│[0m [0m
+[31m╵[0m[0m
