@@ -1,0 +1,23 @@
+# DB接続。CI(rails-ci.ymlのMySQLサービス)とローカル(docker run mysql)の両方で
+# DB_HOST/DB_PORT/DB_USER/DB_PASSWORD の環境変数だけで切り替えられるようにする
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DB_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("DB_PORT", "3306").to_i %>
+  username: <%= ENV.fetch("DB_USER", "root") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "") %>
+  <%= 'ssl_mode: disabled' if ENV["DB_SSL_DISABLED"] == "1" %>
+
+development:
+  <<: *default
+  database: target_orders
+
+test:
+  <<: *default
+  database: target_api_test
+
+production:
+  <<: *default
+  database: target_orders

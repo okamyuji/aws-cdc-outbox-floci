@@ -9,6 +9,7 @@ jobs:
   go-ci:
     uses: okamyuji/reusable-workflows/.github/workflows/go-ci.yml@main
     with:
+      working-directory: golang
       test-command: "go test ./... -coverprofile=coverage.out -covermode=atomic"
 
   security-scan:
@@ -20,15 +21,32 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v6
         with:
-          go-version-file: go.mod
+          go-version-file: golang/go.mod
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v9
         with:
           version: latest
+          working-directory: golang
+      - name: staticcheck
+        working-directory: golang
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+          staticcheck ./...
       - name: govulncheck
+        working-directory: golang
         run: |
           go install golang.org/x/vuln/cmd/govulncheck@latest
           govulncheck ./...
+
+  rails-ci:
+    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@main
+    with:
+      working-directory: rails/source_api
+
+  rails-ci-target:
+    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@main
+    with:
+      working-directory: rails/target_api
 
   terraform-validate:
     runs-on: ubuntu-latest
