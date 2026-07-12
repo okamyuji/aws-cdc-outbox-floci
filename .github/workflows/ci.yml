@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
 
+# 最小権限。全ジョブ(reusable呼び出し含む)へ継承される。
+# gitleaksはSARIFアップロードをせずartifact化のみのためcontents: readで足りる
+permissions:
+  contents: read
+
 jobs:
   go-ci:
     uses: okamyuji/reusable-workflows/.github/workflows/go-ci.yml@main
