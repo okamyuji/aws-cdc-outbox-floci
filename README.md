@@ -46,6 +46,16 @@ SOURCE_DB_DSN='...' KINESIS_STREAM_NAME=local-cdc-stream AWS_ENDPOINT_URL=http:/
   AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test AWS_REGION=ap-northeast-1 go run ./cmd/relay
 ```
 
+### 疎通確認（記事中の実測ログの再現手順）
+
+```bash
+curl -s -X POST http://localhost:8081/orders \
+  -H 'Authorization: Bearer local-dev-token' -H 'Content-Type: application/json' \
+  -d '{"customer_id":"cust-e2e-1","amount":"1980.00"}'
+# 返ってきたidで数秒後にターゲット側を照会する
+curl -s -H 'Authorization: Bearer local-dev-token' http://localhost:8082/orders/<id>
+```
+
 ## 品質ゲート
 
 ```bash
