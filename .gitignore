@@ -14,3 +14,10 @@ terraform/envs/*/*.log
 logs/
 bin/
 *.tfplan
+rails/*/log/*
+rails/*/tmp/*
+rails/*/storage/*
+rails/*/config/master.key
+rails/*/config/credentials.yml.enc
+!rails/*/log/.keep
+!rails/*/tmp/.keep
