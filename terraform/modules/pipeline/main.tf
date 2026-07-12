@@ -157,3 +157,41 @@ resource "aws_lambda_event_source_mapping" "sqs_to_delivery" {
   batch_size              = 10
   function_response_types = ["ReportBatchItemFailures"]
 }
+
+# DLQ滞留の監視。1件でも退避されたらALARMにする
+# (退避は設計上「異常の可視化」なので、放置検知を最優先にする)
+resource "aws_cloudwatch_metric_alarm" "delivery_dlq_depth" {
+  alarm_name          = "${var.name_prefix}-delivery-dlq-depth"
+  alarm_description   = "配送DLQにメッセージが滞留しています。原因解消後にリドライブしてください"
+  namespace           = "AWS/SQS"
+  metric_name         = "ApproximateNumberOfMessagesVisible"
+  statistic           = "Maximum"
+  period              = 60
+  evaluation_periods  = 1
+  threshold           = 1
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = var.alarm_actions
+
+  dimensions = {
+    QueueName = aws_sqs_queue.delivery_dlq.name
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "fanout_dlq_depth" {
+  alarm_name          = "${var.name_prefix}-fanout-dlq-depth"
+  alarm_description   = "fanoutの再試行上限超過レコードが退避されています"
+  namespace           = "AWS/SQS"
+  metric_name         = "ApproximateNumberOfMessagesVisible"
+  statistic           = "Maximum"
+  period              = 60
+  evaluation_periods  = 1
+  threshold           = 1
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = var.alarm_actions
+
+  dimensions = {
+    QueueName = aws_sqs_queue.fanout_dlq.name
+  }
+}

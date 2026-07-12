@@ -51,6 +51,13 @@ func TestNewInsertRecordAndParse(t *testing.T) {
 		}
 	})
 
+	t.Run("payloadが空ならエラー", func(t *testing.T) {
+		raw := []byte(`{"data":{"event_id":"e","aggregate_id":"a","payload":""},"metadata":{"record-type":"data","operation":"insert","table-name":"outbox"}}`)
+		if _, _, err := ParseOutboxInsert(raw); err == nil {
+			t.Error("エラーを期待しました")
+		}
+	})
+
 	t.Run("event_idが空ならエラー", func(t *testing.T) {
 		raw := []byte(`{"data":{"aggregate_id":"a"},"metadata":{"record-type":"data","operation":"insert","table-name":"outbox"}}`)
 		if _, _, err := ParseOutboxInsert(raw); err == nil {

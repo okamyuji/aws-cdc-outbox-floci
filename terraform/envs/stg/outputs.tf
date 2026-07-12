@@ -22,3 +22,11 @@ output "dms_task_arn" {
   description = "DMSレプリケーションタスクARN"
   value       = aws_dms_replication_task.outbox_cdc.replication_task_arn
 }
+
+# APIサーバー側のAUTH_TOKENとdelivery Lambda側のTARGET_API_TOKENの単一ソース。
+# 起動時は terraform output -raw target_api_token から取得し、二重管理をしない
+output "target_api_token" {
+  description = "ターゲットAPIのBearerトークン(単一ソース)"
+  value       = var.target_api_token
+  sensitive   = true
+}

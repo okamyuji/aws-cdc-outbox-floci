@@ -30,3 +30,9 @@ variable "target_api_token" {
   default     = ""
   sensitive   = true
 }
+
+variable "alarm_actions" {
+  description = "DLQ滞留アラームの通知先ARN(SNS等)。空なら通知なしでアラーム状態のみ"
+  type        = list(string)
+  default     = []
+}

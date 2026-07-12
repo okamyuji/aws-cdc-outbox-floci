@@ -3,6 +3,17 @@
 
 terraform {
   required_version = ">= 1.10"
+
+  # tfstateにはdb_master_password等の機微情報が平文で入るため、ローカル保存を避けて
+  # 暗号化済みのS3へ置く(S3ネイティブロック使用)。バケットは scripts/tfstate-bucket.sh で作成する
+  backend "s3" {
+    bucket       = "cdc-outbox-tfstate-018356302326"
+    key          = "stg/terraform.tfstate"
+    region       = "ap-northeast-1"
+    encrypt      = true
+    use_lockfile = true
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
