@@ -56,18 +56,35 @@ class ReplicationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
+  test "境界値: seqは数字文字列・上限超過・巨大数も400を返す" do
+    post "/orders/replicate", params: valid_body(seq: "5"), as: :json
+    assert_response :bad_request
+    post "/orders/replicate", params: valid_body(seq: 2**63), as: :json
+    assert_response :bad_request
+    post "/orders/replicate", params: valid_body(seq: 10**20), as: :json
+    assert_response :bad_request
+  end
+
+  test "異常系: 文字列以外の型のパラメータは400を返す" do
+    post "/orders/replicate", params: valid_body(customer_id: { x: 1 }), as: :json
+    assert_response :bad_request
+    post "/orders/replicate", params: valid_body(amount: 100), as: :json
+    assert_response :bad_request
+  end
+
   test "異常系: 存在しない注文の照会は404を返す" do
     get "/orders/00000000-0000-7000-8000-000000000000"
     assert_response :not_found
   end
 
-  test "異常系: AUTH_TOKEN設定時は認証なしアクセスが401になる" do
-    ENV["AUTH_TOKEN"] = "secret-token"
+  test "異常系: トークン設定時は認証なしアクセスが401になる" do
+    original = Rails.configuration.x.auth_token
+    Rails.configuration.x.auth_token = "secret-token"
     post "/orders/replicate", params: valid_body, as: :json
     assert_response :unauthorized
     get "/healthz"
     assert_response :ok
   ensure
-    ENV.delete("AUTH_TOKEN")
+    Rails.configuration.x.auth_token = original
   end
 end

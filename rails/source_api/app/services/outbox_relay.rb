@@ -1,6 +1,9 @@
 # ローカル環境専用のリレー。outboxをポーリングし、DMSのKinesisターゲット互換
 # エンベロープでKinesisへ中継する。stg環境ではAWS DMSがこの役割を担う
 class OutboxRelay
+  # ストリームへの発行に失敗したことを表す
+  class PublishError < StandardError; end
+
   BATCH_SIZE = 100
 
   def initialize(kinesis:, stream_name:, logger: Rails.logger)
@@ -19,7 +22,7 @@ class OutboxRelay
       stream_name: @stream_name,
       records: events.map { |event| to_record(event) }
     )
-    raise "ストリームへの送信に#{response.failed_record_count}件失敗しました" if response.failed_record_count.to_i.positive?
+    raise PublishError, "ストリームへの送信に#{response.failed_record_count}件失敗しました" if response.failed_record_count.to_i.positive?
 
     OutboxEvent.mark_published!(events.map(&:id))
     events.size

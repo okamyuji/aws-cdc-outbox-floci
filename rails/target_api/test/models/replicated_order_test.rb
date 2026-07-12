@@ -50,12 +50,12 @@ class ReplicatedOrderTest < ActiveSupport::TestCase
   end
 
   test "境界値: seqは1以上の整数のみ受理される" do
-    [ 0, -1, nil, "abc" ].each do |seq|
+    [ 0, -1, nil, "abc", "5", 2**63 ].each do |seq|
       assert_raises(ReplicatedOrder::InvalidInput, "seq=#{seq.inspect}") do
         ReplicatedOrder.replicate!(**valid_attrs(seq: seq))
       end
     end
-    assert_nothing_raised { ReplicatedOrder.replicate!(**valid_attrs(seq: 2**62)) }
+    assert_nothing_raised { ReplicatedOrder.replicate!(**valid_attrs(seq: 2**63 - 1)) }
   end
 
   test "境界値: amountの受理と拒否" do

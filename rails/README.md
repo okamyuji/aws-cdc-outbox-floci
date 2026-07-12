@@ -34,7 +34,11 @@ KINESIS_STREAM_NAME=local-cdc-stream AWS_ENDPOINT_URL=http://localhost:4566 \
   (上記DB/認証環境変数と合わせて) bin/rails outbox:relay
 ```
 
-APP_ENVがlocal以外でAUTH_TOKEN未設定の場合は起動に失敗します（fail-closed）。
+production環境ではAUTH_TOKEN未設定だと起動に失敗します（fail-closed）。トークンは起動時に読み込まれて固定され、実行中の環境変数変更では変わりません。
+
+## Go実装との契約ノート
+
+REST APIのパス・ステータスコード・JSONキー・ヘッダ意味論はGo実装と揃えています。唯一の意図的な差異として、outboxペイロードとAPI応答の`created_at`はISO 8601のサブ秒精度としてのみ規定し、末尾ゼロの有無など表現の細部は実装依存です（下流はこの値に依存しません）。
 
 ## 品質ゲート
 

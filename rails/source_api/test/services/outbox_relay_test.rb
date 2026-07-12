@@ -55,7 +55,7 @@ class OutboxRelayTest < ActiveSupport::TestCase
   test "異常系: 部分失敗もエラーになり再送対象が残る" do
     create_order
     relay = OutboxRelay.new(kinesis: FakeKinesis.new(failed_record_count: 1), stream_name: "s")
-    assert_raises(RuntimeError) { relay.relay_once }
+    assert_raises(OutboxRelay::PublishError) { relay.relay_once }
     assert_equal 1, OutboxEvent.unpublished_in_order.count
   end
 
