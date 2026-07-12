@@ -1,0 +1,12 @@
+coverage.out
+coverage_nomain.out
+dist/
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.tfplan
+node_modules/
+e2e/test-results/
+e2e/playwright-report/
+.DS_Store

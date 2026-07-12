@@ -1,0 +1,4 @@
+{"time":"2026-07-12T18:08:55.753009+09:00","level":"INFO","msg":"リレーを起動します","stream":"local-cdc-stream","interval":"500ms"}
+{"time":"2026-07-12T18:08:57.764701+09:00","level":"INFO","msg":"outboxイベントを中継しました","count":1}
+{"time":"2026-07-12T18:09:00.268342+09:00","level":"INFO","msg":"outboxイベントを中継しました","count":3}
+{"time":"2026-07-12T18:09:02.270863+09:00","level":"INFO","msg":"outboxイベントを中継しました","count":1}

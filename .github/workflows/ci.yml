@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  go-ci:
+    uses: okamyuji/reusable-workflows/.github/workflows/go-ci.yml@main
+    with:
+      test-command: "go test ./... -coverprofile=coverage.out -covermode=atomic"
+
+  security-scan:
+    uses: okamyuji/reusable-workflows/.github/workflows/security-scan.yml@main
+
+  lint-and-vuln:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v9
+        with:
+          version: latest
+      - name: govulncheck
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          govulncheck ./...
+
+  terraform-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v3
+      - name: fmt check
+        run: terraform fmt -check -recursive terraform/
+      - name: validate local
+        working-directory: terraform/envs/local
+        run: terraform init -backend=false -input=false && terraform validate
+      - name: validate stg
+        working-directory: terraform/envs/stg
+        run: terraform init -backend=false -input=false && terraform validate

@@ -1,0 +1,30 @@
+version: "2"
+
+linters:
+  default: standard
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - ineffassign
+    - misspell
+    - unconvert
+    - errorlint
+    - bodyclose
+    - noctx
+  settings:
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+  exclusions:
+    rules:
+      # テストコードではhttptestへの単発リクエストが主のため、noctx/bodycloseは対象外にする
+      - path: _test\.go
+        linters:
+          - noctx
+          - bodyclose
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

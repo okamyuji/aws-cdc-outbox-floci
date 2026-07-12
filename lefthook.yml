@@ -1,0 +1,6 @@
+# pre-commitで品質ゲートの軽量サブセットを実行する
+# フルゲート（make gate。testcontainers込みテストとterraform validateを含む）はCIと手動実行
+pre-commit:
+  commands:
+    quality-gate:
+      run: make precommit
