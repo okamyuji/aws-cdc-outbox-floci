@@ -65,6 +65,12 @@ class ReplicationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
+  test "異常系: event_idが数値でヘッダ併用の場合も型不正として400を返す" do
+    post "/orders/replicate", params: valid_body(event_id: 12345), as: :json,
+      headers: { "X-Idempotency-Key" => SecureRandom.uuid_v7 }
+    assert_response :bad_request
+  end
+
   test "異常系: 文字列以外の型のパラメータは400を返す" do
     post "/orders/replicate", params: valid_body(customer_id: { x: 1 }), as: :json
     assert_response :bad_request
