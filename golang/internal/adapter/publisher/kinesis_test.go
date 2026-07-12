@@ -72,7 +72,7 @@ func TestKinesisPublisherPublish(t *testing.T) {
 	})
 
 	t.Run("エンベロープはJSONとして往復可能", func(t *testing.T) {
-		rec, err := envelope.NewInsertRecord(envelope.OutboxRow{EventID: "e", AggregateID: "a"}, time.Now())
+		rec, err := envelope.NewInsertRecord(envelope.OutboxRow{EventID: "e", AggregateID: "a", Payload: "{}"}, time.Now())
 		if err != nil {
 			t.Fatalf("生成に失敗しました: %v", err)
 		}

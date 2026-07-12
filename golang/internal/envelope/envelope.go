@@ -68,5 +68,9 @@ func ParseOutboxInsert(raw []byte) (OutboxRow, bool, error) {
 	if row.EventID == "" || row.AggregateID == "" {
 		return OutboxRow{}, false, fmt.Errorf("event_idまたはaggregate_idが空です: event_id=%q aggregate_id=%q", row.EventID, row.AggregateID)
 	}
+	// ペイロード破損はSequenceNumberを持つ最も早い地点(fanout)で検知して追跡可能にする
+	if row.Payload == "" {
+		return OutboxRow{}, false, fmt.Errorf("payloadが空です: event_id=%q", row.EventID)
+	}
 	return row, true, nil
 }

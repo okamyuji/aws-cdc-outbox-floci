@@ -111,6 +111,9 @@ resource "aws_dms_replication_task" "outbox_cdc" {
   target_endpoint_arn      = aws_dms_endpoint.kinesis_target.endpoint_arn
   migration_type           = "cdc"
 
+  # selectionでoutboxのみを対象にし、object-mappingでKinesisのパーティションキーを
+  # 集約ID(aggregate_id)にする。既定のスキーマ.テーブル固定だと複数シャード時に
+  # 集約単位の順序分散にならない
   table_mappings = jsonencode({
     rules = [
       {
@@ -122,6 +125,20 @@ resource "aws_dms_replication_task" "outbox_cdc" {
           table-name  = "outbox"
         }
         rule-action = "include"
+      },
+      {
+        rule-type   = "object-mapping"
+        rule-id     = "2"
+        rule-name   = "outbox-partition-by-aggregate"
+        rule-action = "map-record-to-record"
+        object-locator = {
+          schema-name = "source_orders"
+          table-name  = "outbox"
+        }
+        mapping-parameters = {
+          partition-key-type           = "attribute-name"
+          partition-key-attribute-name = "aggregate_id"
+        }
       }
     ]
   })

@@ -68,6 +68,26 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
+// resetSourceTables サブテスト間の共有状態を排除するため、ソース側テーブルを空にします。
+func resetSourceTables(t *testing.T) {
+	t.Helper()
+	for _, table := range []string{"outbox", "orders"} {
+		if _, err := sourceDB.Exec("TRUNCATE TABLE " + table); err != nil {
+			t.Fatalf("%sのTRUNCATEに失敗しました: %v", table, err)
+		}
+	}
+}
+
+// resetTargetTables ターゲット側テーブルを空にします。
+func resetTargetTables(t *testing.T) {
+	t.Helper()
+	for _, table := range []string{"orders_replica", "processed_events"} {
+		if _, err := targetDB.Exec("TRUNCATE TABLE " + table); err != nil {
+			t.Fatalf("%sのTRUNCATEに失敗しました: %v", table, err)
+		}
+	}
+}
+
 func mustOrderAndEvent(t *testing.T) (domain.Order, domain.OutboxEvent) {
 	t.Helper()
 	order, err := domain.NewOrder("cust-1", "1200.50", time.Now())
@@ -86,6 +106,7 @@ func TestSourceMySQL(t *testing.T) {
 	repo := NewSourceMySQL(sourceDB)
 
 	t.Run("注文とoutboxが同一トランザクションで挿入される", func(t *testing.T) {
+		resetSourceTables(t)
 		order, event := mustOrderAndEvent(t)
 		if err := repo.CreateOrderWithOutbox(ctx, order, event); err != nil {
 			t.Fatalf("エラーは想定外です: %v", err)
@@ -105,6 +126,7 @@ func TestSourceMySQL(t *testing.T) {
 	})
 
 	t.Run("outbox挿入が失敗すると注文もロールバックされる", func(t *testing.T) {
+		resetSourceTables(t)
 		order, event := mustOrderAndEvent(t)
 		// 同じevent_idを2回挿入してUNIQUE制約違反を誘発する
 		if err := repo.CreateOrderWithOutbox(ctx, order, event); err != nil {
@@ -126,9 +148,7 @@ func TestSourceMySQL(t *testing.T) {
 	})
 
 	t.Run("未発行の取得と発行済み更新がID昇順で機能する", func(t *testing.T) {
-		if _, err := sourceDB.ExecContext(ctx, `UPDATE outbox SET published = 1`); err != nil {
-			t.Fatalf("初期化に失敗しました: %v", err)
-		}
+		resetSourceTables(t)
 		var wantEventIDs []string
 		for i := 0; i < 3; i++ {
 			order, event := mustOrderAndEvent(t)
@@ -163,6 +183,7 @@ func TestSourceMySQL(t *testing.T) {
 	})
 
 	t.Run("空のID配列では何も更新しない", func(t *testing.T) {
+		resetSourceTables(t)
 		if err := repo.MarkPublished(ctx, nil); err != nil {
 			t.Errorf("エラーは想定外です: %v", err)
 		}
@@ -189,6 +210,7 @@ func TestTargetMySQL(t *testing.T) {
 	}
 
 	t.Run("反映した注文が取得できる", func(t *testing.T) {
+		resetTargetTables(t)
 		in := newInput(t)
 		if err := repo.ReplicateOrder(ctx, in); err != nil {
 			t.Fatalf("エラーは想定外です: %v", err)
@@ -203,6 +225,7 @@ func TestTargetMySQL(t *testing.T) {
 	})
 
 	t.Run("同じイベントIDの2回目はErrDuplicateEventで反映されない", func(t *testing.T) {
+		resetTargetTables(t)
 		in := newInput(t)
 		if err := repo.ReplicateOrder(ctx, in); err != nil {
 			t.Fatalf("1回目に失敗しました: %v", err)
@@ -222,6 +245,7 @@ func TestTargetMySQL(t *testing.T) {
 	})
 
 	t.Run("順序が逆転して届いた古いイベントでは上書きされない", func(t *testing.T) {
+		resetTargetTables(t)
 		newer := newInput(t)
 		newer.Seq = 20
 		newer.Status = "shipped"
@@ -251,6 +275,7 @@ func TestTargetMySQL(t *testing.T) {
 	})
 
 	t.Run("同一seqのイベントでは上書きされない", func(t *testing.T) {
+		resetTargetTables(t)
 		first := newInput(t)
 		first.Seq = 5
 		if err := repo.ReplicateOrder(ctx, first); err != nil {
@@ -276,6 +301,7 @@ func TestTargetMySQL(t *testing.T) {
 	})
 
 	t.Run("存在しない注文はErrNotFound", func(t *testing.T) {
+		resetTargetTables(t)
 		if _, err := repo.FindOrder(ctx, "missing"); !errors.Is(err, domain.ErrNotFound) {
 			t.Errorf("ErrNotFoundを期待しました: %v", err)
 		}

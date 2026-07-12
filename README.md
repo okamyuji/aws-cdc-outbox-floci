@@ -56,14 +56,27 @@ cd terraform/envs/local && terraform apply -var target_api_token=local-dev-token
 
 ## stg環境（実AWS）
 
-`terraform/envs/stg`にAurora MySQL 8.0（ソース・ターゲット）、DMS（binlog CDC→Kinesis）、共通パイプラインの定義があります。適用は費用が発生するため手動で行います。実測済みの検証手順は次のとおりです。
+`terraform/envs/stg`にAurora MySQL 8.0（ソース・ターゲット）、DMS（binlog CDC→Kinesis）、共通パイプラインの定義があります。tfstateは機微情報を含むため、暗号化済みS3バケット（`scripts/tfstate-bucket.sh`で作成）に保存します。適用は費用が発生するため手動で行います。実測済みの検証手順は次のとおりです。
 
-1. `terraform apply`（`admin_cidr`に作業端末のIPを指定）
-2. 両Auroraへ`db/*.sql`を適用し、`binlog_format=ROW`と`binlog retention hours`を確認
-3. `aws dms start-replication-task`でCDCタスクを起動
-4. outboxへテストデータを投入（ロールバック分はKinesisへ流れないことも確認）
-5. Kinesisの実レコード（DMSエンベロープ）とSQS FIFOのメッセージを突き合わせ
-6. `terraform destroy`
+1. `./scripts/tfstate-bucket.sh`でtfstateバケットを用意し、`terraform init`
+2. `terraform apply`（`admin_cidr`に作業端末のIPを指定）
+3. 両Auroraへ`db/*.sql`を適用し、`binlog_format=ROW`と`binlog retention hours`を確認
+4. `aws dms start-replication-task`でCDCタスクを起動
+5. outboxへテストデータを投入（ロールバック分はKinesisへ流れないことも確認）
+6. Kinesisの実レコード（DMSエンベロープ）とSQS FIFOのメッセージを突き合わせ
+7. `terraform destroy`
+
+認証トークンの単一ソースはTerraform変数`target_api_token`で、delivery Lambdaへは自動で渡り、APIサーバー起動時は`terraform output -raw target_api_token`から`AUTH_TOKEN`に設定します（二重管理をしない）。
+
+### DLQ運用
+
+DLQ（`<prefix>-delivery-dlq.fifo` / `<prefix>-fanout-dlq`）には滞留1件以上でALARMになるCloudWatchアラームが付属します（通知先は`alarm_actions`変数で指定）。滞留を検知したら、原因（ターゲットAPI障害・毒メッセージ）を解消したうえで、[SQSのリドライブ](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues-redrive.html)で元キューへ再投入します。
+
+```bash
+aws sqs start-message-move-task --source-arn <DLQのARN>
+```
+
+同一注文の後続メッセージが毒メッセージと一緒に退避される設計のため、リドライブは原因解消後にまとめて行うと順序どおり回復します。
 
 ## 既知の制約（stg/DMS）
 

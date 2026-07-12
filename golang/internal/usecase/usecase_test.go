@@ -174,6 +174,77 @@ func TestRelayUsecaseRelayOnce(t *testing.T) {
 	})
 }
 
+func TestRelayPartialFailureAbsorbedByIdempotency(t *testing.T) {
+	t.Run("部分失敗の全件再送が下流のべき等化で吸収される", func(t *testing.T) {
+		repo := newFakeSourceRepo()
+		for i := 0; i < 3; i++ {
+			order, err := domain.NewOrder("cust", "100", time.Now())
+			if err != nil {
+				t.Fatalf("注文生成に失敗しました: %v", err)
+			}
+			event, err := domain.NewOrderCreatedEvent(order)
+			if err != nil {
+				t.Fatalf("イベント生成に失敗しました: %v", err)
+			}
+			if err := repo.CreateOrderWithOutbox(context.Background(), order, event); err != nil {
+				t.Fatalf("挿入に失敗しました: %v", err)
+			}
+		}
+		// 1回目は部分失敗(エラー)、2回目は成功するpublisher
+		pub := &flakyPublisher{failFirst: true}
+		relay := NewRelayUsecase(repo, pub, 10)
+
+		if _, err := relay.RelayOnce(context.Background()); err == nil {
+			t.Fatal("1回目はエラーを期待しました")
+		}
+		n, err := relay.RelayOnce(context.Background())
+		if err != nil || n != 3 {
+			t.Fatalf("2回目で3件の再送を期待しました: n=%d err=%v", n, err)
+		}
+
+		// 1回目に部分的に届いた分と2回目の全件を、ターゲットのべき等化で重複適用しない
+		target := NewReplicationUsecase(newFakeTargetRepo())
+		applied := 0
+		for _, batch := range pub.delivered {
+			for _, e := range batch {
+				in := domain.ReplicatedOrder{
+					EventID: e.EventID, OrderID: e.AggregateID,
+					CustomerID: "cust", Amount: "100", Status: "created", Seq: e.ID,
+				}
+				err := target.Replicate(context.Background(), in)
+				if err == nil {
+					applied++
+					continue
+				}
+				if !errors.Is(err, domain.ErrDuplicateEvent) {
+					t.Fatalf("べき等化以外のエラーです: %v", err)
+				}
+			}
+		}
+		if applied != 3 {
+			t.Errorf("適用は3件であるべきです(重複は吸収): %d件", applied)
+		}
+	})
+}
+
+// flakyPublisher 1回目のPublishで一部だけ届いた状態を再現してエラーを返すフェイクです。
+type flakyPublisher struct {
+	failFirst bool
+	calls     int
+	delivered [][]domain.OutboxEvent
+}
+
+func (f *flakyPublisher) Publish(_ context.Context, events []domain.OutboxEvent) error {
+	f.calls++
+	if f.failFirst && f.calls == 1 {
+		// 部分失敗: 先頭1件だけ実際には届いてしまった状態でエラーを返す
+		f.delivered = append(f.delivered, events[:1])
+		return errors.New("ストリームへの送信に2件失敗しました")
+	}
+	f.delivered = append(f.delivered, events)
+	return nil
+}
+
 // fakeTargetRepo TargetRepositoryのインメモリ実装です。
 type fakeTargetRepo struct {
 	processed map[string]bool
