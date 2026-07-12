@@ -37,12 +37,16 @@ class ReplicatedOrder < ApplicationRecord
     end
   end
 
+  # seqの上限。Go実装のint64と同じ範囲のみ受理し、範囲外はDBエラー(500)ではなく
+  # 検証エラー(400)として拒否する
+  MAX_SEQ = 2**63 - 1
+
   def self.validate_input!(event_id:, order_id:, customer_id:, amount:, status:, seq:)
     raise InvalidInput, "event_idは必須です" if event_id.blank?
     raise InvalidInput, "order_idは必須です" if order_id.blank?
     raise InvalidInput, "customer_idとstatusは必須です" if customer_id.blank? || status.blank?
-    raise InvalidInput, "amountは正の数値文字列で指定します" unless amount.to_s.match?(AMOUNT_PATTERN)
-    raise InvalidInput, "seqは正の整数で指定します" unless seq.is_a?(Integer) && seq.positive?
+    raise InvalidInput, "amountは文字列の数値で指定します" unless amount.is_a?(String) && amount.match?(AMOUNT_PATTERN)
+    raise InvalidInput, "seqは正の整数で指定します" unless seq.is_a?(Integer) && seq.positive? && seq <= MAX_SEQ
   end
 
   def as_api_json

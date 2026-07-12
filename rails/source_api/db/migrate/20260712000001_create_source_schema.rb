@@ -1,5 +1,7 @@
 # ソース側スキーマ。ルートのdb/source_schema.sql(Go側と共通のSSOT)と同じ構造を
-# Railsのマイグレーションとして定義する
+# Railsのマイグレーションとして定義する。
+# 相違点はordersのupdated_atのON UPDATE句のみ(Railsはupdated_atを自前で更新する
+# ため省略。Go実装はordersを更新しないので実害はない)
 class CreateSourceSchema < ActiveRecord::Migration[8.1]
   def change
     create_table :orders, id: false do |t|
@@ -7,7 +9,9 @@ class CreateSourceSchema < ActiveRecord::Migration[8.1]
       t.string :customer_id, limit: 36, null: false
       t.decimal :amount, precision: 12, scale: 2, null: false
       t.string :status, limit: 32, null: false
-      t.timestamps
+      # Go実装のINSERTはこの2列を省略しDBデフォルトに依存するため、デフォルト必須
+      t.datetime :created_at, null: false, default: -> { "CURRENT_TIMESTAMP(6)" }
+      t.datetime :updated_at, null: false, default: -> { "CURRENT_TIMESTAMP(6)" }
     end
 
     create_table :outbox, id: { type: :bigint, unsigned: true } do |t|

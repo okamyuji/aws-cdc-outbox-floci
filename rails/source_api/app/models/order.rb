@@ -6,16 +6,17 @@ class Order < ApplicationRecord
 
   validates :customer_id, presence: true
   validates :status, presence: true
-  validates :amount_input, format: { with: AMOUNT_PATTERN }, allow_nil: false
+  # 入力文字列としての金額。DECIMAL型の丸めで検証がすり抜けないよう文字列のまま
+  # 検証する。作成時のみの検証とし、既存レコードの更新を妨げない
+  validates :amount_input, format: { with: AMOUNT_PATTERN }, on: :create
 
   attribute :status, :string, default: "created"
 
-  # 入力文字列としての金額。DECIMAL型の丸めで検証がすり抜けないよう文字列のまま検証する
   attr_reader :amount_input
 
   def amount_input=(value)
-    @amount_input = value.to_s
-    self.amount = value if @amount_input.match?(AMOUNT_PATTERN)
+    @amount_input = value
+    self.amount = value if value.is_a?(String) && value.match?(AMOUNT_PATTERN)
   end
 
   # 注文とoutboxイベントを単一トランザクションで作成する
@@ -35,12 +36,13 @@ class Order < ApplicationRecord
     end
   end
 
-  # outboxのpayloadに載せる注文情報（Go実装とキーを揃える）
+  # outboxのpayloadに載せる注文情報。amountはGo実装と同様に入力文字列を
+  # そのまま透過させる(DECIMAL経由の"100"→"100.00"正規化をしない)
   def event_payload
     {
       id: id,
       customer_id: customer_id,
-      amount: format("%.2f", amount),
+      amount: amount_input || format("%.2f", amount),
       status: status,
       created_at: created_at&.iso8601(6)
     }

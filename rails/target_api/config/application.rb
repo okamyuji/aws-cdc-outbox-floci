@@ -40,5 +40,9 @@ module TargetApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # 不正JSONへの400応答形式をGo実装と揃える(app/middleware参照)
+    require_relative "../app/middleware/json_parse_error_handler"
+    config.middleware.insert_before ActionDispatch::ShowExceptions, JsonParseErrorHandler
   end
 end

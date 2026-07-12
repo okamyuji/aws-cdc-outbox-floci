@@ -48,6 +48,21 @@ func TestWithBearerAuth(t *testing.T) {
 		}
 	})
 
+	t.Run("エッジケース: 401応答のContent-Typeはapplication/json", func(t *testing.T) {
+		srv := httptest.NewServer(WithBearerAuth("secret-token", okHandler))
+		defer srv.Close()
+		resp, err := http.Get(srv.URL + "/orders")
+		if err != nil {
+			t.Fatalf("リクエストに失敗しました: %v", err)
+		}
+		if err := resp.Body.Close(); err != nil {
+			t.Errorf("ボディのクローズに失敗しました: %v", err)
+		}
+		if ct := resp.Header.Get("Content-Type"); ct != "application/json" {
+			t.Errorf("application/jsonを期待しました: %s", ct)
+		}
+	})
+
 	t.Run("エッジケース: healthzは認証なしで通過する", func(t *testing.T) {
 		srv := httptest.NewServer(WithBearerAuth("secret-token", okHandler))
 		defer srv.Close()

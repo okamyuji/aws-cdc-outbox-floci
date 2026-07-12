@@ -6,7 +6,7 @@ class OutboxEventTest < ActiveSupport::TestCase
       event_id: SecureRandom.uuid_v7,
       aggregate_id: aggregate_id,
       event_type: "order.created",
-      payload: { id: aggregate_id }.to_json
+      payload: { id: aggregate_id }
     )
   end
 
@@ -33,7 +33,7 @@ class OutboxEventTest < ActiveSupport::TestCase
         event_id: event.event_id,
         aggregate_id: "ord-2",
         event_type: "order.created",
-        payload: "{}"
+        payload: { id: "x" }
       )
     end
   end

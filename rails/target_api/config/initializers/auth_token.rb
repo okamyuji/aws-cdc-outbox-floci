@@ -1,5 +1,8 @@
-# fail-closed: 明示的にローカル環境を宣言した場合のみ無認証を許容する。
-# テスト環境はテストコード側でAUTH_TOKENを制御するため対象外
-if ENV["AUTH_TOKEN"].to_s.empty? && ENV["APP_ENV"] != "local" && !Rails.env.test?
-  abort("AUTH_TOKENが未設定です。ローカルで無認証にする場合はAPP_ENV=localを設定してください")
+# 認証トークンは起動時に一度だけ読み込んで固定する。
+# fail-closed: production環境ではAUTH_TOKEN必須(未設定なら起動失敗)。
+# development/testは開発体験のため未設定(無認証)を許容する
+Rails.application.config.x.auth_token = ENV["AUTH_TOKEN"].to_s
+
+if Rails.application.config.x.auth_token.empty? && Rails.env.production?
+  abort("AUTH_TOKENが未設定です。productionでは必須です")
 end

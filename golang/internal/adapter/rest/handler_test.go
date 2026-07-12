@@ -51,6 +51,24 @@ func TestSourceHandlerCreateOrder(t *testing.T) {
 		}
 	})
 
+	t.Run("異常系: JSON数値のamountは型不一致で400を返す", func(t *testing.T) {
+		srv := newServer(&fakeOrderUsecase{})
+		defer srv.Close()
+		resp, err := http.Post(srv.URL+"/orders", "application/json",
+			strings.NewReader(`{"customer_id":"c1","amount":100}`))
+		if err != nil {
+			t.Fatalf("リクエストに失敗しました: %v", err)
+		}
+		defer func() {
+			if err := resp.Body.Close(); err != nil {
+				t.Errorf("ボディのクローズに失敗しました: %v", err)
+			}
+		}()
+		if resp.StatusCode != http.StatusBadRequest {
+			t.Errorf("400を期待しました: %d", resp.StatusCode)
+		}
+	})
+
 	t.Run("不正なJSONは400を返す", func(t *testing.T) {
 		srv := newServer(&fakeOrderUsecase{})
 		defer srv.Close()

@@ -20,7 +20,11 @@ func WithBearerAuth(token string, next http.Handler) http.Handler {
 		}
 		got, ok := strings.CutPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if !ok || subtle.ConstantTimeCompare([]byte(got), []byte(token)) != 1 {
-			http.Error(w, `{"error":"認証に失敗しました"}`, http.StatusUnauthorized)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusUnauthorized)
+			if _, err := w.Write([]byte(`{"error":"認証に失敗しました"}` + "\n")); err != nil {
+				return
+			}
 			return
 		}
 		next.ServeHTTP(w, r)
