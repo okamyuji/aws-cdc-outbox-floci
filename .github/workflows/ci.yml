@@ -42,11 +42,13 @@ jobs:
     uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@main
     with:
       working-directory: rails/source_api
+      with-mysql: true
 
   rails-ci-target:
     uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@main
     with:
       working-directory: rails/target_api
+      with-mysql: true
 
   terraform-validate:
     runs-on: ubuntu-latest
