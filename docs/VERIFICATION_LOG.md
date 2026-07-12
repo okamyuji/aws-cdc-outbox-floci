@@ -59,3 +59,13 @@ stg（実AWS）での実測記録です。記事とREADMEの記述の根拠成�
 - Go実装: POSTから約3秒でリレー→Kinesis→fanout→SQS FIFO→delivery→ターゲットAPIを通過し反映
 - Rails実装: 同一のPlaywright E2Eスイート7件がGo実装と同様に全件パス
 - production相当設定の不正JSONボディ: `{"error":"リクエストボディが不正です"}` / 400 / application/json を実測（JsonParseErrorHandlerの挿入位置修正後）
+
+## 2026-07-12 オブジェクトマッピング検証ラウンド（apply_om → destroy3）
+
+DMSタスクにobject-mappingを追加し、Kinesisのパーティションキーを集約ID（aggregate_id）へ変更した検証です。
+
+- 実測結果: データレコードのPartitionKeyが`om-verify-order-0001`（=aggregate_id）になり、エンベロープの`data`構造は全列を保持したまま不変。fanout Lambdaはそのまま解釈し、SQS FIFOに`group=aggregate_id`のメッセージを生成
+- 構文の落とし穴を2つ実測: `partition-key-type: attribute-name`では(1)パラメータ名は`partition-key-name`（`partition-key-attribute-name`はInvalidParameterValueException）、(2)`attribute-mappings`の併記が必須（無いと「Attribute mappings are empty」で拒否）。ソース列を素通しでマップすれば要件を満たす
+- DLQ滞留アラーム（delivery/fanout）が両方作成されOK状態であることを確認
+- tfstateはS3バックエンド（cdc-outbox-tfstate-018356302326、暗号化+バージョニング+公開ブロック）へ移行済みで、このラウンドからS3上のstateで運用
+- destroy完了後、残存リソースゼロを確認（tfstateバケットは意図的に残置）

@@ -135,9 +135,19 @@ resource "aws_dms_replication_task" "outbox_cdc" {
           schema-name = "source_orders"
           table-name  = "outbox"
         }
+        # attribute-name指定時はpartition-key-nameとattribute-mappingsの両方が必須
+        # (公式: CHAP_Target.Kinesis)。aggregate_idはソース列なので素通しでマップする
         mapping-parameters = {
-          partition-key-type           = "attribute-name"
-          partition-key-attribute-name = "aggregate_id"
+          partition-key-type = "attribute-name"
+          partition-key-name = "aggregate_id"
+          attribute-mappings = [
+            {
+              target-attribute-name = "aggregate_id"
+              attribute-type        = "scalar"
+              attribute-sub-type    = "string"
+              value                 = "$${aggregate_id}"
+            }
+          ]
         }
       }
     ]
