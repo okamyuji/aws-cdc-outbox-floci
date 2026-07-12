@@ -1,5 +1,11 @@
 class ReplicationsController < ApplicationController
   def create
+    # event_idが存在して文字列でない場合は「欠落」ではなく型不正として拒否する
+    # (Go実装のJSONデコードと同じ意味論)
+    if !params[:event_id].nil? && !params[:event_id].is_a?(String)
+      return render json: { error: "入力値が不正です" }, status: :bad_request
+    end
+
     event_id = string_param(:event_id).to_s
     # X-Idempotency-Keyを優先し、ボディのevent_idと不一致なら拒否する
     header_key = request.headers["X-Idempotency-Key"].to_s

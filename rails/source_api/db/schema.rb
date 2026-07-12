@@ -13,10 +13,10 @@
 ActiveRecord::Schema[8.1].define(version: 2026_07_12_000001) do
   create_table "orders", id: { type: :string, limit: 36 }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.decimal "amount", precision: 12, scale: 2, null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP(6)" }, null: false
     t.string "customer_id", limit: 36, null: false
     t.string "status", limit: 32, null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP(6)" }, null: false
   end
 
   create_table "outbox", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
