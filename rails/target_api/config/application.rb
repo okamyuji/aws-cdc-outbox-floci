@@ -41,8 +41,10 @@ module TargetApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # 不正JSONへの400応答形式をGo実装と揃える(app/middleware参照)
+    # 不正JSONへの400応答形式をGo実装と揃える(app/middleware参照)。
+    # ShowExceptions/DebugExceptionsより内側に置かないと、productionでは
+    # ShowExceptionsが先に例外を拾いtext/htmlの空ボディ400になる
     require_relative "../app/middleware/json_parse_error_handler"
-    config.middleware.insert_before ActionDispatch::ShowExceptions, JsonParseErrorHandler
+    config.middleware.insert_after ActionDispatch::DebugExceptions, JsonParseErrorHandler
   end
 end

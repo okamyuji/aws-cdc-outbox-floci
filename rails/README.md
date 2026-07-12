@@ -34,7 +34,7 @@ KINESIS_STREAM_NAME=local-cdc-stream AWS_ENDPOINT_URL=http://localhost:4566 \
   (上記DB/認証環境変数と合わせて) bin/rails outbox:relay
 ```
 
-production環境ではAUTH_TOKEN未設定だと起動に失敗します（fail-closed）。トークンは起動時に読み込まれて固定され、実行中の環境変数変更では変わりません。
+production環境ではAUTH_TOKEN未設定だと起動に失敗します（fail-closed）。トークンは起動時に読み込まれて固定され、実行中の環境変数変更では変わりません。無認証を許容するのはdevelopment/testのみで、stgを含む外部到達可能な環境では必ずRAILS_ENV=productionで起動する運用を前提とします（stg実測もproductionで実施）。
 
 ## Go実装との契約ノート
 

@@ -9,9 +9,21 @@ class CreateSourceSchema < ActiveRecord::Migration[8.1]
       t.string :customer_id, limit: 36, null: false
       t.decimal :amount, precision: 12, scale: 2, null: false
       t.string :status, limit: 32, null: false
-      # Go実装のINSERTはこの2列を省略しDBデフォルトに依存するため、デフォルト必須
-      t.datetime :created_at, null: false, default: -> { "CURRENT_TIMESTAMP(6)" }
-      t.datetime :updated_at, null: false, default: -> { "CURRENT_TIMESTAMP(6)" }
+      t.datetime :created_at, null: false
+      t.datetime :updated_at, null: false
+    end
+
+    # Go実装のINSERTはcreated_at/updated_atを省略しDBデフォルトに依存するため必須。
+    # create_tableのdefaultラムダはこの2列名では反映されなかったため、明示的にALTERする
+    # (実DBに反映されればschema.rbのダンプにもデフォルトとして現れる)
+    reversible do |dir|
+      dir.up do
+        execute <<~SQL
+          ALTER TABLE orders
+            MODIFY created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+            MODIFY updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+        SQL
+      end
     end
 
     create_table :outbox, id: { type: :bigint, unsigned: true } do |t|

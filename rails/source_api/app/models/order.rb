@@ -37,12 +37,16 @@ class Order < ApplicationRecord
   end
 
   # outboxのpayloadに載せる注文情報。amountはGo実装と同様に入力文字列を
-  # そのまま透過させる(DECIMAL経由の"100"→"100.00"正規化をしない)
+  # そのまま透過させる(DECIMAL経由の"100"→"100.00"正規化をしない)。
+  # amount_inputは作成時のみ保持されるメモリ上の値のため、DBから再ロードした
+  # インスタンスでの呼び出しは契約違反として即座に失敗させる
   def event_payload
+    raise "event_payloadは作成トランザクション内でのみ使用できます" if amount_input.nil?
+
     {
       id: id,
       customer_id: customer_id,
-      amount: amount_input || format("%.2f", amount),
+      amount: amount_input,
       status: status,
       created_at: created_at&.iso8601(6)
     }
