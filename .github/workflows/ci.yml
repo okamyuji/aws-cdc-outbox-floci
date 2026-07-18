@@ -12,13 +12,13 @@ permissions:
 
 jobs:
   go-ci:
-    uses: okamyuji/reusable-workflows/.github/workflows/go-ci.yml@main
+    uses: okamyuji/reusable-workflows/.github/workflows/go-ci.yml@v1
     with:
       working-directory: golang
       test-command: "go test ./... -coverprofile=coverage.out -covermode=atomic"
 
   security-scan:
-    uses: okamyuji/reusable-workflows/.github/workflows/security-scan.yml@main
+    uses: okamyuji/reusable-workflows/.github/workflows/security-scan.yml@v1
 
   lint-and-vuln:
     runs-on: ubuntu-latest
@@ -44,13 +44,13 @@ jobs:
           govulncheck ./...
 
   rails-ci:
-    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@main
+    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@v1
     with:
       working-directory: rails/source_api
       with-mysql: true
 
   rails-ci-target:
-    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@main
+    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@v1
     with:
       working-directory: rails/target_api
       with-mysql: true
