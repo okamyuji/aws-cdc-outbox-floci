@@ -53,7 +53,9 @@ func (p *kinesisPublisher) Publish(ctx context.Context, events []domain.OutboxEv
 		}
 		entries = append(entries, types.PutRecordsRequestEntry{
 			Data: data,
-			// 同一集約は同一シャードに載せて順序を守る
+			// 同一集約を同一シャードへ寄せる。PutRecordsはリクエスト内の順序を
+			// 保証しないため、これで守れるのはシャードの一致まで。同一集約内の
+			// 適用順序はターゲット側のseq比較（巻き戻り防止）で担保する
 			PartitionKey: aws.String(e.AggregateID),
 		})
 	}

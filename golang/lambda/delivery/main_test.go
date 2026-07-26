@@ -21,6 +21,9 @@ func sqsRecord(t *testing.T, messageID string) events.SQSMessage {
 		AggregateID: "ord-1",
 		EventType:   "order.created",
 		Payload:     `{"id":"ord-1","customer_id":"c1","amount":"100","status":"created"}`,
+		// ターゲットAPIはseq<=0を400で拒否する。0のままだと実APIが受け付けない
+		// 入力でテストが通ってしまう
+		Seq: 1,
 	})
 	if err != nil {
 		t.Fatalf("JSON変換に失敗しました: %v", err)
@@ -49,7 +52,7 @@ func TestHandleSQS(t *testing.T) {
 			if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 				t.Errorf("リクエストの解析に失敗しました: %v", err)
 			}
-			if req.OrderID != "ord-1" || req.EventID != "ev-1" {
+			if req.OrderID != "ord-1" || req.EventID != "ev-1" || req.Seq <= 0 {
 				t.Errorf("リクエスト内容が不正です: %+v", req)
 			}
 			w.WriteHeader(http.StatusCreated)
@@ -171,6 +174,71 @@ func TestHandleSQS(t *testing.T) {
 		}
 		if len(resp.BatchItemFailures) != 1 {
 			t.Errorf("失敗1件を期待しました: %+v", resp.BatchItemFailures)
+		}
+	})
+}
+
+// TestHandleSQSDeadlineBudget 残り実行時間による打ち切りを検証します。
+// 関数ごとタイムアウトすると部分バッチ応答自体を返せず、成功済みを含む
+// バッチ全体が再配信されるため、その手前で打ち切る必要があります。
+func TestHandleSQSDeadlineBudget(t *testing.T) {
+	t.Run("残り時間が1件分に満たないとAPIを呼ばず全件を失敗として返す", func(t *testing.T) {
+		var calls atomic.Int32
+		srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			calls.Add(1)
+			w.WriteHeader(http.StatusCreated)
+		}))
+		defer srv.Close()
+
+		// messageBudget(12秒)を下回るデッドラインを与える
+		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+		defer cancel()
+
+		h := newHandler(srv.URL)
+		resp, err := h.HandleSQS(ctx, events.SQSEvent{
+			Records: []events.SQSMessage{sqsRecord(t, "m1"), sqsRecord(t, "m2")},
+		})
+		if err != nil {
+			t.Fatalf("エラーを期待していません: %v", err)
+		}
+		if len(resp.BatchItemFailures) != 2 {
+			t.Errorf("2件とも失敗として返すことを期待しました: %+v", resp.BatchItemFailures)
+		}
+		if got := calls.Load(); got != 0 {
+			t.Errorf("ターゲットAPIを呼ばないことを期待しました: 呼び出し%d回", got)
+		}
+	})
+
+	t.Run("残り時間が十分なら通常どおり配送する", func(t *testing.T) {
+		var calls atomic.Int32
+		srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			calls.Add(1)
+			w.WriteHeader(http.StatusCreated)
+		}))
+		defer srv.Close()
+
+		ctx, cancel := context.WithTimeout(context.Background(), messageBudget+5*time.Second)
+		defer cancel()
+
+		h := newHandler(srv.URL)
+		resp, err := h.HandleSQS(ctx, events.SQSEvent{
+			Records: []events.SQSMessage{sqsRecord(t, "m1")},
+		})
+		if err != nil {
+			t.Fatalf("エラーを期待していません: %v", err)
+		}
+		if len(resp.BatchItemFailures) != 0 {
+			t.Errorf("失敗0件を期待しました: %+v", resp.BatchItemFailures)
+		}
+		if got := calls.Load(); got != 1 {
+			t.Errorf("1回の配送を期待しました: 呼び出し%d回", got)
+		}
+	})
+
+	t.Run("デッドラインが無いコンテキストでは打ち切らない", func(t *testing.T) {
+		h := newHandler("http://127.0.0.1:1")
+		if !h.hasBudgetForOneMessage(context.Background()) {
+			t.Error("デッドライン無しでは常に処理を続けることを期待しました")
 		}
 	})
 }

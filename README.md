@@ -61,7 +61,7 @@ cd terraform/envs/local && terraform apply -var target_api_token=local-dev-token
 1. `./scripts/tfstate-bucket.sh`でtfstateバケットを用意し、`terraform init`
 2. `terraform apply`（`admin_cidr`に作業端末のIPを指定）
 3. 両Auroraへ`db/*.sql`を適用し、`binlog_format=ROW`と`binlog retention hours`を確認
-4. `aws dms start-replication-task`でCDCタスクを起動
+4. `aws dms start-replication-task`でCDCタスクを起動し、`running`になるまで待つ（`migration_type = "cdc"`はタスク開始以降の変更だけを対象にするため、開始前にコミットしたoutbox行は捕捉されない）
 5. outboxへテストデータを投入（ロールバック分はKinesisへ流れないことも確認）
 6. Kinesisの実レコード（DMSエンベロープ）とSQS FIFOのメッセージを突き合わせ
 7. `terraform destroy`
@@ -70,13 +70,15 @@ cd terraform/envs/local && terraform apply -var target_api_token=local-dev-token
 
 ### DLQ運用
 
-DLQ（`<prefix>-delivery-dlq.fifo` / `<prefix>-fanout-dlq`）には滞留1件以上でALARMになるCloudWatchアラームが付属します（通知先は`alarm_actions`変数で指定）。滞留を検知したら、原因（ターゲットAPI障害・毒メッセージ）を解消したうえで、[SQSのリドライブ](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues-redrive.html)で元キューへ再投入します。
+配送DLQ（`<prefix>-delivery-dlq.fifo`）には滞留1件以上でALARMになるCloudWatchアラームが付属します（通知先は`alarm_actions`変数で指定）。滞留を検知したら、原因（ターゲットAPI障害・毒メッセージ）を解消したうえで、[SQSのリドライブ](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues-redrive.html)で元キューへ再投入します。
+
+fanout側は、Kinesisイベントソースマッピングの再試行上限（10回）を超えたレコードをS3バケット`<prefix>-fanout-failures`へ退避します。退避先にSQSを指定するとシャードIDと開始・終了シーケンス番号などのメタデータしか残らず、本体はKinesisの保持期間内に読み直すしかありません。S3ならレコード本体が保存されるため、保持期間に依存せず再投入できます（保持日数は`fanout_failure_retention_days`、既定30日）。S3にはキュー滞留に相当するメトリクスが無いため、滞留の予兆は`<prefix>-fanout-iterator-age`（fanoutがシャードを進められていない状態）で拾います。fanout Lambdaの`Errors`は使えません。部分バッチ応答を返す実装ではハンドラが正常終了するため加算されないからです。退避そのものの通知（S3の`ObjectCreated`など）は運用監視の領域なので、この検証リポジトリの範囲外です。
 
 ```bash
 aws sqs start-message-move-task --source-arn <DLQのARN>
 ```
 
-同一注文の後続メッセージが毒メッセージと一緒に退避される設計のため、リドライブは原因解消後にまとめて行うと順序どおり回復します。
+同じバッチに入っていた同一注文の後続メッセージは、毒メッセージと一緒に失敗として返されます。ただしDLQ退避まで含めた順序は保証されません。SQSの受信回数はメッセージごとに数えるため、先頭が先に`maxReceiveCount`へ達してDLQへ移ると、あとから到着した後続はそのまま配送されます。リドライブしても元の順序には戻らないので、最終状態が古い値へ巻き戻らないことはターゲット側のseq比較で担保します。
 
 ## 既知の制約（stg/DMS）
 
