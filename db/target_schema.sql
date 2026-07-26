@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS orders_replica (
     status       VARCHAR(32)    NOT NULL,
     source_event_id VARCHAR(36) NOT NULL,
     -- ソースoutboxのID。順序逆行（古いイベントによる上書き）を防ぐ順序番号
-    source_seq   BIGINT UNSIGNED NOT NULL,
+    source_seq   BIGINT NOT NULL,
     replicated_at DATETIME(6)   NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     PRIMARY KEY (id)
 ) ENGINE = InnoDB;
