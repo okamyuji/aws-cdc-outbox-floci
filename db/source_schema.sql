@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS orders (
 
 -- Outboxテーブル（業務テーブルと同一トランザクションで書き込む）
 CREATE TABLE IF NOT EXISTS outbox (
-    id            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    -- 符号付き。seqとして下流へ運ぶ値の上限をGoのint64・Railsの受理上限(2^63-1)と揃える
+    id            BIGINT NOT NULL AUTO_INCREMENT,
     event_id      VARCHAR(36)     NOT NULL,
     aggregate_id  VARCHAR(36)     NOT NULL,
     event_type    VARCHAR(64)     NOT NULL,

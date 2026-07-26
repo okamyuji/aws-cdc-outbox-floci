@@ -34,7 +34,10 @@ class OutboxRelay
   def to_record(event)
     payload = event.payload.is_a?(String) ? event.payload : event.payload.to_json
     {
-      partition_key: event.aggregate_id, # 同一集約は同一シャードに載せて順序を守る
+      # 同一集約を同一シャードへ寄せる。put_recordsはリクエスト内の順序を保証
+      # しないため、これで守れるのはシャードの一致まで。同一集約内の適用順序は
+      # ターゲット側のseq比較（巻き戻り防止）で担保する
+      partition_key: event.aggregate_id,
       data: {
         data: {
           id: event.id,
