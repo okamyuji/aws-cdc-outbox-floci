@@ -58,15 +58,26 @@ type Handler struct {
 // 失敗として返した分はFIFOキューが順序を保ったまま再配信する。
 // 再試行してもエラーが続くメッセージはmaxReceiveCount超過でDLQへ退避される。
 //
-// 設計判断: 先頭が恒久的に失敗する（毒メッセージ）場合、同一グループの後続も
-// 受信回数を同時に消費するため、先頭と一緒にDLQへ退避される。これは「順序を
-// 崩して後続だけ先に適用する」ことを避けるための意図的なトレードオフで、
-// 後続はDLQに残るため失われない。原因解消後にDLQからの再投入で順序どおり
-// 回復する運用を前提とする。
+// 設計判断: 先頭が恒久的に失敗する（毒メッセージ）場合、同じバッチに入っていた
+// 同一グループの後続も一緒に失敗として返すため、後続だけが先に適用されることはない。
+//
+// ただしDLQ退避まで含めた順序は保証しない。SQSの受信回数はメッセージごとに数えるので、
+// 先頭が先にmaxReceiveCountへ達してDLQへ移ると、そのあと到着した後続は正常に配送される。
+// この場合の適用順序は入れ替わり、DLQからの再投入でも元の順序には戻らない。
+// 最終状態が古い値へ巻き戻らないことは、ターゲット側のseq比較が担保する。
 func (h *Handler) HandleSQS(ctx context.Context, event events.SQSEvent) (events.SQSEventResponse, error) {
 	var failures []events.SQSBatchItemFailure
 	failedGroups := map[string]bool{}
 	for _, rec := range event.Records {
+		// 残り実行時間が1件分に満たなければ、そこから先は処理せず失敗として返す。
+		// 関数ごとタイムアウトすると部分バッチ応答自体を返せず、成功済みを含む
+		// バッチ全体が再配信されて受信回数を無駄に消費する。それを避けるための打ち切り。
+		if !h.hasBudgetForOneMessage(ctx) {
+			h.logger.Warn("残り実行時間が不足したため以降のメッセージを次回へ送ります",
+				"message_id", rec.MessageId)
+			failures = append(failures, events.SQSBatchItemFailure{ItemIdentifier: rec.MessageId})
+			continue
+		}
 		group := rec.Attributes["MessageGroupId"]
 		if group != "" && failedGroups[group] {
 			h.logger.Info("同一グループの先行メッセージが失敗したため後続を保留します",
@@ -83,6 +94,22 @@ func (h *Handler) HandleSQS(ctx context.Context, event events.SQSEvent) (events.
 		}
 	}
 	return events.SQSEventResponse{BatchItemFailures: failures}, nil
+}
+
+// httpTimeout ターゲットAPIへの1リクエストの上限です。
+const httpTimeout = 10 * time.Second
+
+// messageBudget 1メッセージの処理に見込む時間です。HTTPの上限に後処理の余裕を足した値。
+const messageBudget = httpTimeout + 2*time.Second
+
+// hasBudgetForOneMessage 残り実行時間が1メッセージ分あるかを返します。
+// Lambdaのコンテキストにデッドラインが無い場合（ローカルテストなど）は常にtrueです。
+func (h *Handler) hasBudgetForOneMessage(ctx context.Context) bool {
+	deadline, ok := ctx.Deadline()
+	if !ok {
+		return true
+	}
+	return time.Until(deadline) >= messageBudget
 }
 
 func (h *Handler) deliver(ctx context.Context, body string) error {
@@ -145,7 +172,7 @@ func main() {
 		os.Exit(1)
 	}
 	h := &Handler{
-		client:    &http.Client{Timeout: 10 * time.Second},
+		client:    &http.Client{Timeout: httpTimeout},
 		targetURL: targetURL,
 		authToken: os.Getenv("TARGET_API_TOKEN"),
 		logger:    logger,

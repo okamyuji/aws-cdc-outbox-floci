@@ -69,3 +69,24 @@ DMSタスクにobject-mappingを追加し、Kinesisのパーティションキ�
 - DLQ滞留アラーム（delivery/fanout）が両方作成されOK状態であることを確認
 - tfstateはS3バックエンド（cdc-outbox-tfstate-018356302326、暗号化+バージョニング+公開ブロック）へ移行済みで、このラウンドからS3上のstateで運用
 - destroy完了後、残存リソースゼロを確認（tfstateバケットは意図的に残置）
+
+## 2026-07-26 stg再検証（apply → 実測 → destroy）
+
+構成はAurora MySQL 8.0（source/target、Serverless v2）+ DMS（dms.t3.small、CDC専用タスク）+ 共有パイプライン。`terraform apply`は40リソースをエラーなく作成。
+
+観測できたこと:
+
+- `scripts/stg-binlog-retention.sh <endpoint> admin_user <pw> 168` → `OK: binlog retention hours = 168`（実Auroraでの初検証）
+- `SHOW VARIABLES` → `binlog_format=ROW` / `binlog_row_image=FULL`
+- outboxへコミット1件・ロールバック1件を投入 → Kinesisのデータレコードはコミット分の1件のみ
+- Kinesisの実レコード: `record-type=control`（awsdms_apply_exceptions / outbox の create-table）が2件先行し、`record-type=data` `operation=insert` `partition-key-type=attribute-name` が1件
+- SQS FIFO: `MessageGroupId` は注文ID、本文の `seq` は outbox の `id`（=1）
+- delivery Lambdaを到達不能URL（`http://10.0.0.1:8082`）宛にした状態で、受信回数6でDLQへ退避（`maxReceiveCount=5`）
+- ESMの退避先は `arn:aws:s3:::cdc-stg-fanout-failures`、`MaximumRetryAttempts=10`
+- SQS: `MessageRetentionPeriod=1209600`（14日）/ `VisibilityTimeout=180`
+- CloudWatchアラーム: `cdc-stg-delivery-dlq-depth` と `cdc-stg-fanout-iterator-age` がともに `OK` 状態で作成
+
+**測定していないこと（未確認）:**
+
+- 再試行上限を超えたレコードが実際にS3へ保存されること。毒レコードを投入していないため、`s3:PutObject` の実行は未観測。必要権限（`s3:PutObject` + `s3:ListBucket`）がAWS公式の要件と一致していることと、ESMに退避先が設定されていることまでの確認にとどまる
+- `starting_position = TRIM_HORIZON` の効果。flociは `starting_position` を保持しないため、実AWSでの再適用時に確認する

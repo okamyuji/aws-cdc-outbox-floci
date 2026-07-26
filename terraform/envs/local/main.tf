@@ -49,6 +49,9 @@ provider "aws" {
     sts     = var.floci_endpoint
     s3      = var.floci_endpoint
     logs    = var.floci_endpoint
+    # CloudWatchメトリクスアラームの向け先。指定しないとPutMetricAlarmだけ実AWSへ飛び、
+    # InvalidClientTokenIdでapplyが失敗する
+    cloudwatch = var.floci_endpoint
   }
 }
 
