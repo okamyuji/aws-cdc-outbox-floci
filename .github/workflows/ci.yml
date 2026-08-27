@@ -45,15 +45,23 @@ jobs:
 
   rails-ci:
     uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@v1
+    permissions:
+      contents: read
+      pull-requests: write
     with:
       working-directory: rails/source_api
       with-mysql: true
+      dependabot-recreate: true
 
   rails-ci-target:
     uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@v1
+    permissions:
+      contents: read
+      pull-requests: write
     with:
       working-directory: rails/target_api
       with-mysql: true
+      dependabot-recreate: true
 
   terraform-validate:
     runs-on: ubuntu-latest
