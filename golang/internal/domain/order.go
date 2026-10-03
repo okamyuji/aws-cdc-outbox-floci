@@ -19,6 +19,8 @@ var ErrInvalidInput = errors.New("入力値が不正です")
 // ErrNotFound 対象が存在しないことを表します。
 var ErrNotFound = errors.New("対象が見つかりません")
 
+var eventIDPattern = regexp.MustCompile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+
 var amountPattern = regexp.MustCompile(`^[0-9]{1,10}(\.[0-9]{1,2})?$`)
 
 // Order 注文エンティティです。
@@ -97,6 +99,10 @@ type ReplicatedOrder struct {
 func (r ReplicatedOrder) Validate() error {
 	if r.EventID == "" {
 		return fmt.Errorf("%w: event_idは必須です", ErrInvalidInput)
+	}
+	// event_id 列の照合順序は大文字小文字を区別せず、INSERT IGNOREは不正UTF-8で値を切り詰めるため、小文字UUIDに限定します。
+	if !eventIDPattern.MatchString(r.EventID) {
+		return fmt.Errorf("%w: event_idは小文字のUUID形式で指定します", ErrInvalidInput)
 	}
 	if r.OrderID == "" {
 		return fmt.Errorf("%w: order_idは必須です", ErrInvalidInput)

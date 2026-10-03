@@ -274,7 +274,7 @@ func (f *fakeTargetRepo) FindOrder(_ context.Context, orderID string) (domain.Re
 
 func TestReplicationUsecase(t *testing.T) {
 	valid := domain.ReplicatedOrder{
-		EventID: "ev-1", OrderID: "ord-1", CustomerID: "cust-1", Amount: "100", Status: "created", Seq: 1,
+		EventID: "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b", OrderID: "ord-1", CustomerID: "cust-1", Amount: "100", Status: "created", Seq: 1,
 	}
 
 	t.Run("反映して取得できる", func(t *testing.T) {
@@ -283,7 +283,7 @@ func TestReplicationUsecase(t *testing.T) {
 			t.Fatalf("エラーは想定外です: %v", err)
 		}
 		got, err := uc.GetOrder(context.Background(), "ord-1")
-		if err != nil || got.EventID != "ev-1" {
+		if err != nil || got.EventID != "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b" {
 			t.Errorf("取得結果が不正です: %+v err=%v", got, err)
 		}
 	})

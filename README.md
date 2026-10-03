@@ -92,3 +92,5 @@ aws sqs start-message-move-task --source-arn <DLQのARN>
 - flociは`DescribeDBInstances`の`dbi-resource-id`フィルタ未実装のため、Terraform AWS provider v5系の`aws_db_instance`が使えません。ローカルのDB作成のみ`scripts/local-db.sh`（AWS CLI）で行います
 - flociのRDSプロキシはTLS非対応のため、mysqlクライアントは`--ssl-mode=DISABLED`で接続します
 - macOSはAirPlayが7000番を使うため、RDSプロキシポートは7001始まりにしています
+- floci 2.1.0のKinesisイベントソースマッピングは、部分バッチ応答（`BatchItemFailures`）を反映しません。再試行上限とon-failure退避（S3）も動作しません。毒レコードと同じバッチの正常レコードは、退避されずに読み飛ばされます。これらの挙動は実AWSでのみ確認できます
+- flociのSQS FIFOは、`MessageDeduplicationId`による5分間の重複排除が一部しか効きません。同じIDの再送がターゲットまで届くことがあります。重複はターゲット側の冪等化で吸収されます

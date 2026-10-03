@@ -2,6 +2,7 @@ package domain
 
 import (
 	"encoding/json"
+	"errors"
 	"math"
 	"regexp"
 	"strings"
@@ -124,7 +125,7 @@ func TestNewOrderCreatedEvent(t *testing.T) {
 
 func TestReplicatedOrderValidate(t *testing.T) {
 	valid := ReplicatedOrder{
-		EventID:    "ev-1",
+		EventID:    "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b",
 		OrderID:    "ord-1",
 		CustomerID: "cust-1",
 		Amount:     "100",
@@ -149,6 +150,32 @@ func TestReplicatedOrderValidate(t *testing.T) {
 		for i, mutate := range cases {
 			if err := mutate(valid).Validate(); err == nil {
 				t.Errorf("ケース%dで検証エラーを期待しました", i)
+			}
+		}
+	})
+
+	t.Run("境界値: event_idは小文字UUIDだけを受理する", func(t *testing.T) {
+		const lower = "0190a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b"
+		cases := []struct {
+			name string
+			id   string
+			want bool
+		}{
+			{"小文字UUID", lower, true},
+			{"大文字版", strings.ToUpper(lower), false},
+			{"37文字", lower + "a", false},
+			{"35文字", lower[:35], false},
+			{"不正UTF-8を含む36バイト", "\xff" + lower[1:], false},
+		}
+		for _, c := range cases {
+			r := valid
+			r.EventID = c.id
+			err := r.Validate()
+			if c.want && err != nil {
+				t.Errorf("%s: 受理を期待しました: %v", c.name, err)
+			}
+			if !c.want && !errors.Is(err, ErrInvalidInput) {
+				t.Errorf("%s: ErrInvalidInputを期待しました: %v", c.name, err)
 			}
 		}
 	})
