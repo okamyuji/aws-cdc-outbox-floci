@@ -12,16 +12,16 @@ permissions:
 
 jobs:
   go-ci:
-    uses: okamyuji/reusable-workflows/.github/workflows/go-ci.yml@v1
+    uses: okamyuji/reusable-workflows/.github/workflows/go-ci.yml@test/ubuntu-26.04
     with:
       working-directory: golang
       test-command: "go test ./... -coverprofile=coverage.out -covermode=atomic"
 
   security-scan:
-    uses: okamyuji/reusable-workflows/.github/workflows/security-scan.yml@v1
+    uses: okamyuji/reusable-workflows/.github/workflows/security-scan.yml@test/ubuntu-26.04
 
   lint-and-vuln:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v6
@@ -44,7 +44,7 @@ jobs:
           govulncheck ./...
 
   rails-ci:
-    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@v1
+    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@test/ubuntu-26.04
     permissions:
       contents: read
       pull-requests: write
@@ -54,7 +54,7 @@ jobs:
       dependabot-recreate: true
 
   rails-ci-target:
-    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@v1
+    uses: okamyuji/reusable-workflows/.github/workflows/rails-ci.yml@test/ubuntu-26.04
     permissions:
       contents: read
       pull-requests: write
@@ -64,7 +64,7 @@ jobs:
       dependabot-recreate: true
 
   terraform-validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v3
