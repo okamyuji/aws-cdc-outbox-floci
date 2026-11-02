@@ -11,6 +11,14 @@ permissions:
   contents: read
 
 jobs:
+  # E2E 本体は floci と API サーバーの起動が要るので手元で回す。CI では Playwright の更新で設定とテストが読めるかを確かめる
+  e2e-deps:
+    uses: okamyuji/reusable-workflows/.github/workflows/node-ci.yml@v1
+    with:
+      node-version: "24"
+      working-directory: e2e
+      test-command: "exec playwright test --list"
+
   go-ci:
     uses: okamyuji/reusable-workflows/.github/workflows/go-ci.yml@v1
     with:
