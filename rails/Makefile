@@ -4,7 +4,8 @@
 
 APPS := source_api target_api
 # mise activateはリポジトリ直下のRubyをPATHに置いたままにし、cdしても切り替えない。各アプリの.ruby-versionで動かすため、miseがあればmise execを通す
-RUN := $(if $(shell command -v mise 2>/dev/null),mise exec --,)
+# miseは既定で.ruby-versionを読まない（idiomatic_version_file_enable_toolsの既定は空）ので、rubyだけ有効にする
+RUN := $(if $(shell command -v mise 2>/dev/null),MISE_IDIOMATIC_VERSION_FILE_ENABLE_TOOLS=ruby mise exec --,)
 
 lint:
 	@for app in $(APPS); do (cd $$app && $(RUN) bin/rubocop) || exit 1; done
