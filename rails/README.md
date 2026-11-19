@@ -1,6 +1,6 @@
 # Rails実装
 
-Rails 8.1（API mode）/ Ruby 3.4のVanilla Rails実装です。`source_api`（注文+outbox）と`target_api`（べき等な反映）の2アプリで、Go実装とREST APIの契約を揃えています。
+Rails 8.1（API mode）/ Ruby 4.0のVanilla Rails実装です。`source_api`（注文+outbox）と`target_api`（べき等な反映）の2アプリで、Go実装とREST APIの契約を揃えています。
 
 ## 構成
 
